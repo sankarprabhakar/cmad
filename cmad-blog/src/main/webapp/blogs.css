@@ -1,0 +1,3 @@
+#addUserForm, #addBlogForm,#addCommentForm, #addUserResult, #addBlogResult, #addCommentResult, #findForm, #findResult {
+    display: none;
+}

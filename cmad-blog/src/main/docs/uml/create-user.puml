@@ -1,0 +1,23 @@
+@startuml
+autonumber
+actor user
+Participant httpstack
+Participant UsersController
+Participant UsersService
+Participant UsersDAO
+Participant PasswordUtils
+user -> httpstack : /users/user POST request
+httpstack -> UsersController : create(User user)
+UsersController -> UsersService : create(User user)
+UsersService -> UsersDAO : create(User user)
+UsersDAO -> PasswordUtils : encryptPassword(user.password)
+UsersDAO <-- PasswordUtils : encrypted password digest
+UsersService <-- UsersDAO : error or exception
+UsersController <-- UsersService : error or exception
+httpstack <-- UsersController : 500 - INTERNAL_SERVER_ERROR
+user <-- httpstack : 500 - INTERNAL_SERVER_ERROR
+UsersService <-- UsersDAO : success
+UsersController <-- UsersService : success
+httpstack <-- UsersController : 200 - OK
+user <-- httpstack : 200 - OK user got registered / added
+@enduml

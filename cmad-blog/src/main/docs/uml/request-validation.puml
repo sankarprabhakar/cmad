@@ -1,0 +1,23 @@
+@startuml
+autonumber
+actor User
+Participant httpstack
+Participant JwtTokenFilter
+Participant ContainerRequestContext
+Participant JwtParser
+Participant BlogsController
+User -> httpstack : POST /Blogs/blog or any other requests
+httpstack -> JwtTokenFilter : filter(ContainerRequestContext requestContext)
+JwtTokenFilter -> ContainerRequestContext : getHeaderString(HttpHeaders.AUTHORIZATION)
+JwtTokenFilter <-- ContainerRequestContext : authorizationHeader
+JwtTokenFilter ->  JwtTokenFilter : getAuthorizationToken(authorizationHeader)
+JwtTokenFilter <-- JwtTokenFilter : Bearer token string(token)
+JwtTokenFilter -> JwtParser : parseClaimsJws(token)
+JwtTokenFilter <-- JwtParser : error or exception
+JwtTokenFilter -> ContainerRequestContext : abortWith(UNAUTHORIZED)
+User <-- ContainerRequestContext : 401 UNAUTHORIZED
+JwtTokenFilter <-- JwtParser : success
+httpstack <-- JwtTokenFilter : success
+httpstack -> BlogsController : create(Blog blog)
+User <-- BlogsController : 200 OK - blog created
+@enduml

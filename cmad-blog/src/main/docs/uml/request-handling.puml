@@ -1,0 +1,20 @@
+@startuml
+autonumber
+actor User
+Participant httpstack
+Participant BlogsController
+Participant BlogsService
+Participant BlogsDAO
+User -> httpstack : POST /Blogs/blog
+httpstack -> BlogsController : create(Blog blog)
+BlogsController -> BlogsService : create(Blog blog)
+BlogsService -> BlogsDAO : create(Blog blog)
+BlogsService <-- BlogsDAO : success
+BlogsController <-- BlogsService : success
+httpstack <-- BlogsController : 200 OK success
+User <-- httpstack : 200 OK - blog created
+BlogsService <-- BlogsDAO : error
+BlogsController <-- BlogsService : error
+httpstack <-- BlogsController : 500 server internal error
+User <-- httpstack : 500  INTERNAL_SERVER_ERROR - blog creation failed
+@enduml

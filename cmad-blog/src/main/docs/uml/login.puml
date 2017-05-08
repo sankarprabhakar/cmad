@@ -1,0 +1,19 @@
+@startuml
+autonumber
+actor User
+Participant UsersController
+Participant UsersService
+Participant UsersDAO
+User -> UsersController : /login POST request
+UsersController -> UsersController : authenticateUser(userId, password)
+UsersController -> UsersService : authenticate(userId, password)
+UsersService -> UsersDAO : readByUserIdAndPassword(userId, password)
+UsersService <-- UsersDAO : found
+UsersController <-- UsersService : success
+UsersController -> UsersController : issueToken(userId)
+UsersController <-- UsersController : Jason Web Token (JWT)
+User <-- UsersController : 200 OK JWT Token
+UsersService <-- UsersDAO : error or not found
+UsersController <-- UsersService : error or SecurityException
+User <-- UsersController : 401 UNAUTHORIZED
+@enduml

@@ -1,0 +1,183 @@
+@startuml
+
+class Blog <<Entity>> {
+ -long blogId <<@Id>>
+ -String authorId <<ForiegnKey>>
+ -String blogText
+ -String category
+ -ArrayList<Comment> comments
+ -Date lastUpdatedOn
+ -String title
+}
+
+class User <<Entity>> {
+ -String userId <<@Id>>
+ -String password
+ -String lastName
+ -String firstName
+ -String emailId
+}
+
+class Comment <<Entity>> {
+ -long commentId <<@Id>>
+ -String commentText
+ -Date lastUpdatedOn
+ -String addedBy <<ForiegnKey>>;
+ -long blogId <<ForiegnKey>>;
+}
+
+Interface Users {
+ +create(User)
+ +read(String)
+ +update(User)
+ +delete(String)
+ +authenticate(String, String)
+}
+
+Interface Blogs {
+ +create(Blog)
+ +read(long)
+ +readByCategory(String)
+ +readByUserId(String)
+ +update(Blog)
+ +delete(long)
+}
+
+Interface Comments {
+ +create(Comment)
+ +read(long)
+ +readByBlogId(long)
+ +update(Comment)
+ +delete(long)
+}
+
+Class UsersService implements Users {
+}
+
+Class BlogsService implements Blogs {
+}
+
+Class CommentsService implements Comments {
+}
+
+Interface BlogsDAO {
+ +create(Blog)
+ +read(long)
+ +readByCategory(String)
+ +readByUserId(String)
+ +update(Blog)
+ +delete(long)
+}
+
+Interface CommentsDAO {
+ +create(Comment)
+ +read(long)
+ +update(Comment)
+ +delete(long)
+}
+
+
+Interface UsersDAO {
+ +create(User)
+ +read(String)
+ +readAll()
+ +readByUserIdAndPassword(String, String)
+ +update(User)
+ +delete(String)
+}
+
+Class JPAUsersDAO implements UsersDAO {
+}
+
+Class JPABlogsDAO implements BlogsDAO {
+}
+
+Class JPACommentsDAO implements CommentsDAO {
+}
+
+User "1" o-- "many" Blog : owns >
+Blog "1" *-- "many" Comment : have >
+
+UsersService --> "1" JPAUsersDAO
+BlogsService --> "1" JPABlogsDAO
+CommentsService --> "1" JPACommentsDAO
+
+Class BlogsApplication extends ResourceConfig {
+}
+
+Class BlogsController <<Path>> {
+ +create(Blog) <<@POST>>
+ +read(long) <<@GET>>
+ +read(UriInfo) <<@GET>>
+ +update(Blog) <<@PUT>>
+ +delete(long) <<@DELETE>>
+}
+
+BlogsController --> "1" BlogsService
+BlogsController --> Blog
+
+Class CommentsController <<Path>> {
+ +create(Comment) <<@POST>>
+ +read(long) <<@GET>>
+ +readAllComments(long) <<@GET>>
+ +update(Blog) <<@PUT>>
+ +delete(long) <<@DELETE>>
+}
+
+CommentsController --> "1" CommentsService
+CommentsController --> Comment
+
+Class UsersController <<Path>> {
+ +create(User) <<@POST>>
+ +read(long) <<@GET>>
+ +update(User) <<@PUT>>
+ +delete(long) <<@DELETE>>
+ +authenticateUser(String, String) <<@POST>>
+}
+
+UsersController --> "1" UsersService
+UsersController --> User
+
+' ERROR HANDLING
+
+Class EntityException <<Exception>> extends RuntimeException {
+}
+
+Class DataNotFoundException <<Exception>> extends EntityException {
+}
+
+Class DuplicateEntityException <<Exception>> extends EntityException {
+}
+
+Class InvalidEntityException <<Exception>> extends EntityException {
+}
+
+Class SecurityException <<Exception>> extends RuntimeException {
+}
+
+' AUTHENTICATION 
+
+Interface JwtTokenExpected <<@Interface>>{
+}
+
+Class JwtTokenFilter implements ContainerRequestFilter {
+ -KeyGenerator keyGenerator
+ +filter(ContainerRequestContext)
+}
+
+Interface KeyGenerator{
+ +generateKey()
+}
+
+Class SecretKeyGenerator implements KeyGenerator{
+}
+
+Class PasswordUtils {
+ +static String encryptPassword(String)
+}
+
+JwtTokenFilter --> "1" KeyGenerator
+JPAUsersDAO --> PasswordUtils
+UsersController --> SecretKeyGenerator
+
+@enduml
