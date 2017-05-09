@@ -32,6 +32,7 @@ $(document).ready(function() {
         console.log(getBaseUrl());
         console.log("createBlog");
         var signedInUser = getSignedInUser();
+        console.log(signedInUser);
         var title = $("#nblogTitle").val();
         var category = $("#nblogCategory").val();
         var blogText = $("#nblogText").val();
@@ -189,6 +190,7 @@ $(document).ready(function() {
         console.log(getBaseUrl());
         console.log("updateBlog");
         var signedInUser = getSignedInUser();
+        console.log(signedInUser);
         var title = $("#eblogTitle").val();
         var category = $("#eblogCategory").val();
         var blogText = $("#eblogText").val();
@@ -252,29 +254,28 @@ $(document).ready(function() {
         console.log("### loadForm");
         console.log(blogId);
         if (blogId) {
-            if (form == "viewBlogForm") {
+            if (form === "viewBlogForm") {
                 readBlog(blogId);
                 $("#homeForm").hide();
                 $("#viewBlogForm").trigger('reset');
                 $("#viewBlogForm").show();
                 $("#editBlogForm").hide();
                 $("#newBlogForm").hide();
-            } else if (form == "editBlogForm") {
+            } else if (form === "editBlogForm") {
                 readBlog(blogId);
                 $("#homeForm").hide();
                 $("#viewBlogForm").hide();
                 $("#newBlogForm").hide();
                 $("#editBlogForm").trigger('reset');
                 $("#editBlogForm").show();
-            } else if (form == "newBlogForm") {
+            } else if (form === "newBlogForm") {
                 readBlog(blogId);
                 $("#homeForm").hide();
                 $("#viewBlogForm").hide();
                 $("#newBlogForm").trigger('reset');
                 $("#newBlogForm").show();
                 $("#editBlogForm").hide();
-            }
-            {
+            } else {
                 loadHomePage();
             }
         } else {

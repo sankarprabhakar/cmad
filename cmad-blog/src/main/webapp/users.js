@@ -34,7 +34,7 @@ $(document).ready(function() {
 
     $("#signOffLink").click(function(e) {
         var res = confirm("Really want to Sign off?");
-        if (res == true) {
+        if (res === true) {
             console.log("sign off");
             var userId = $("#puUserId").val();
             deleteUser(userId);

@@ -23,7 +23,7 @@ function getQueryStringParams(paramName) {
     var urlVariables = pageURL.split('&');
     for (var i = 0; i < urlVariables.length; i++) {
         var parameterName = urlVariables[i].split('=');
-        if (parameterName[0] == paramName) {
+        if (parameterName[0] === paramName) {
             return parameterName[1];
         }
     }
