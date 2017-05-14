@@ -1,5 +1,6 @@
 package com.cisco.cmad.blogs.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -20,10 +21,9 @@ import com.cisco.cmad.blogs.api.Blog;
 import com.cisco.cmad.blogs.api.Blogs;
 import com.cisco.cmad.blogs.api.Comment;
 import com.cisco.cmad.blogs.api.Comments;
-import com.cisco.cmad.blogs.api.Users;
+import com.cisco.cmad.blogs.api.DataNotFoundException;
 import com.cisco.cmad.blogs.service.BlogsService;
 import com.cisco.cmad.blogs.service.CommentsService;
-import com.cisco.cmad.blogs.service.UsersService;
 
 @Path("/blogs")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +31,7 @@ import com.cisco.cmad.blogs.service.UsersService;
 public class BlogsController {
     private Blogs blogsService = BlogsService.getInstance();
     private Comments commentsService = CommentsService.getInstance();
-    private Users usersService = UsersService.getInstance();
+    // private Users usersService = UsersService.getInstance();
 
     @POST
     @Path("/")
@@ -55,7 +55,62 @@ public class BlogsController {
         List<Blog> matched;
         GenericEntity<List<Blog>> entities;
         String category = info.getQueryParameters().getFirst("category");
-        matched = blogsService.readByCategory(category);
+        String startStr = info.getQueryParameters().getFirst("start");
+        String countStr = info.getQueryParameters().getFirst("count");
+        if (category == null || category == "") {
+            System.out.println("BlogsController: readAllBlogs");
+            matched = blogsService.readAllBlogs();
+        } else {
+            System.out.println("BlogsController: readByCategory : " + category);
+            matched = blogsService.readByCategory(category);
+        }
+
+        matched = getResultPage(matched, startStr, countStr);
+
+        entities = new GenericEntity<List<Blog>>(matched) {
+        };
+        return Response.ok().entity(entities).build();
+    }
+
+    private List<Blog> getResultPage(List<Blog> result, String startStr, String countStr) {
+        int start;
+        int count;
+        try {
+            System.out.println(startStr);
+            System.out.println(countStr);
+            start = Integer.parseInt(startStr);
+            count = Integer.parseInt(countStr);
+        } catch (Exception e) {
+            System.out.println("pagination info not there in request");
+            start = 0;
+            count = result.size();
+        }
+
+        int total = result.size();
+        int end = start + count;
+        List<Blog> pageResult = new ArrayList<Blog>();
+        if (start < total) {
+            if (end < total) {
+                pageResult = result.subList(start, end);
+            } else if (end == total) {
+                pageResult = result.subList(start, end - 1);
+            } else {
+                end = total - 1;
+                pageResult = result.subList(start, end);
+            }
+        } else {
+            throw new DataNotFoundException();
+        }
+        return pageResult;
+    }
+
+    @GET
+    @Path("/users/{userId}")
+    public Response read(@PathParam("userId") String userId) {
+        List<Blog> matched;
+        GenericEntity<List<Blog>> entities;
+        System.out.println("BlogsController: readByUserId : " + userId);
+        matched = blogsService.readByUserId(userId);
         entities = new GenericEntity<List<Blog>>(matched) {
         };
         return Response.ok().entity(entities).build();

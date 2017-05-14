@@ -1,33 +1,129 @@
 var selectedBlogId;
+var maxBlogsPerPage = 5;
+var selectedBlogCategory;
+var initDone = false;
+// var currContext;
+
+// function getPageContext() {
+//     return currContext;
+// }
+
+// function setPageContext(ctx) {
+//     currContext = ctx;
+// }
 
 $(document).ready(function() {
-    initializeMenu();
+    console.log("document.ready()");
+
+    if(!initDone) {
+        loadHomePage();
+        initializeMenu();
+        initDone = true;
+    }
+
+    $("#addBlog").click(function(e) {
+        console.log("addBlog");
+        loadForm("newBlogForm");
+    })
+
+    $("#addBlogMenu").click(function(e) {
+        console.log("addBlog");
+        loadForm("newBlogForm");
+    })
+
+    $("#searchBlogsButton").click(function(e) {
+        //e.preventDefault();
+        console.log("searchBlogsButton");
+        console.log("searchForm");
+        var category = $("#searchByCategory").val();
+        selectedBlogCategory = category;
+        readBlogsByCategory(category, false);
+    });
+
+    $("#newBlogForm").submit(function(e) {
+        console.log("newBlogForm");
+        e.preventDefault();
+        createBlog();
+    })
+
+    $("#cancelBlogView").click(function(e) {
+        console.log("cancelBlogView");
+        setSelectedBlogId(undefined);
+        loadForm(); // load home page
+    })
+    $("#cancelBlogEdit").click(function(e) {
+        console.log("cancelBlogEdit");
+        setSelectedBlogId(undefined);
+        loadForm(); // load home page
+    })
+
+    $("#cancelBlogAdd").click(function(e) {
+        console.log("cancelBlogAdd");
+        setSelectedBlogId(undefined);
+        loadForm(); // load home page
+    })
+
+    $("#editBlogForm").submit(function(e) {
+        console.log("editBlogForm");
+        console.log("esaveBlog");
+        e.preventDefault();
+        var blogId = $("#eblogId").val();
+        updateBlog(blogId);
+    })
+
+    $("#cancelBlogView").click(function(e) {
+        console.log("viewBlogForm");
+        console.log("cancelBlogView");
+        loadForm(); // load home page
+    })
+
+    $("#homeMenu").click(function(e) {
+        console.log("viewBlogForm");
+        console.log("cancelBlogView");
+        loadForm(); // load home page
+    })
+
+    $("#veditBlog").click(function(e) {
+        console.log(veditBlog);
+        var blog = "#vblogId";
+        var blogId = $(blog).val();
+        setSelectedBlogId(blogId);
+        loadForm("editBlogForm", blogId);
+    })
+
+    $("#vdeleteBlog").click(function(e) {
+        console.log(vdeleteBlog);
+        var blog = "#vblogId";
+        var blogId = $(blog).val();
+        setSelectedBlogId(blogId);
+        deleteBlog(blogId);
+    })
 
     function initializeMenu() {
-        var userId = getSignedInUser();
-        if (userId) {
+        console.log("initializeMenu");
+        var signedInUserId = getSignedInUser();
+        console.log(signedInUserId);
+        if (signedInUserId) {
             $("#profileMenu").show();
-            $("#signInMenu").hide();
-            $("#signOutMenu").show();
-            if (userId === "admin") {
+            $("#signinMenu").hide();
+            $("#signupMenu").hide();
+            $("#signoutMenu").show();
+            if (signedInUserId === "admin") {
                 $("#adminMenu").show();
             } else {
                 $("#adminMenu").hide();
             }
         } else {
             $("#profileMenu").hide();
-            $("#signInMenu").show();
-            $("#signOutMenu").hide();
+            $("#signinMenu").show();
+            $("#singUpMenu").show();
+            $("#signoutMenu").hide();
             $("#adminMenu").hide();
         }
     }
 
-    $("#newBlogForm").submit(function(e) {
-        e.preventDefault();
-        createBlog();
-    })
-
     function createBlog() {
+        console.log("createBlog");
         console.log(window.location.href.match(/^.*\//)[0]);
         console.log(getBaseUrl());
         console.log("createBlog");
@@ -57,9 +153,10 @@ $(document).ready(function() {
                 console.log("New blog created: ");
                 console.log(blog);
                 setSelectedBlogId(blog.blogId);
-                $("#newBlogForm").hide();
-                $("#viewBlogForm").trigger('reset');
-                $("#viewBlogForm").show();
+// $("#newBlogForm").hide();
+// $("#viewBlogForm").trigger('reset');
+// $("#viewBlogForm").show();
+                loadForm("homeForm");
             },
             error : function(xhr, status, err) {
                 setSelectedBlogId(undefined);
@@ -71,26 +168,8 @@ $(document).ready(function() {
         })
     }
 
-    $("#cancelBlogView").click(function(e) {
-        setSelectedBlogId(undefined);
-        loadForm();
-    })
-    $("#cancelBlogEdit").click(function(e) {
-        setSelectedBlogId(undefined);
-        loadForm();
-    })
-    $("#cancelBlogAdd").click(function(e) {
-        setSelectedBlogId(undefined);
-        loadForm();
-    })
-
-    $("#editBlogForm").submit(function(e) {
-        e.preventDefault();
-        var blogId = $("#eblogId").val();
-        updateBlog(blogId);
-    })
-
-    function readBlog(blogId) {
+    function readBlog(blogId, callback) {
+        console.log("readBlog");
         var reqUrl = "" + getBaseUrl() + "tecblog/blogs/"
                 + blogId;
         $.ajax({
@@ -100,89 +179,197 @@ $(document).ready(function() {
             success : function(blog, status, xhr) {
                 console.log("Read blog success: ");
                 console.log(blog);
-                fillViewBlogForm(blog);
-                fillViewBlogForm(blog);
+                callback(null, blog);
+                //fillViewBlogForm(blog);
+                //fillEditBlogForm(blog);
             },
             error : function(xhr, status, err) {
                 setSelectedBlogId(undefined);
                 console.log("Read blog failed : ");
                 console.log(err);
                 console.log(status);
-                loadForm();
+                callback(status)
+                //loadForm();
             }
         })
     }
 
     function fillViewBlogForm(blog) {
+        console.log("fillViewBlogForm");
+        console.log(blog);
         $("#vblogId").val(blog.blogId);
         $("#vblogTitle").val(blog.title);
         $("#vblogText").val(blog.blogText);
-        $("#vcategory").val(blog.category);
+        $("#vblogCategory").val(blog.category);
         $("#vblogAuthorId").val(blog.author.userId);
-        $("#vblogAuthorName").val(
+        $("#vblogAuthName").val(
                 blog.author.firstName + " "
                         + blog.author.lastName);
     }
 
     function fillEditBlogForm(blog) {
+        console.log("fillEditBlogForm");
+        console.log(blog);
         $("#eblogId").val(blog.blogId);
         $("#eblogTitle").val(blog.title);
         $("#eblogText").val(blog.blogText);
-        $("#ecategory").val(blog.category);
+        $("#eblogCategory").val(blog.category);
         $("#eblogAuthorId").val(blog.author.userId);
-        $("#eblogAuthorName").val(
+        $("#eblogAuthName").val(
                 blog.author.firstName + " "
                         + blog.author.lastName);
     }
-    function getBlogHtml(blog) {
-        return "<div style=\"padding-left:16px\"><br/><div><input id=\"vblogId\" placeholder=" + blog.blogId + " style=\"display:none\" readonly>"
-                + "<b id=\"vblogTitle\">" + blog.title + "</b><input type=\"text\" name=\"blogCategory\" id=\"vblogCategory\" placeholder=" + blog.category + " readonly>"
-                + "</div><br/><input id=\"vblogAuthorId\" placeholder=" + blog.author.userId + " style=\"display:none\" readonly>by <input id=\"vblogAuthName\" placeholder=" + blog.author.firstName + " " + blog.author.lastName + " readonly>"
-                + "<div><input id=\"vblogText\" maxlength=\"255\" placeholder=" + blog.blogText + " readonly></div><br/><div><input id=\"commentsCount\" placeholder=\"0 \" readonly></div></div>";
+
+    function getBlogHtml(blogs, index) {
+        console.log("getBlogHtml");
+        var blog = blogs[index];
+        return "<div><br/><div><input id=\"lblogId" + index + "\" value="
+        + blog.blogId
+        + " style=\"display:none\" readonly>"
+        + "<b id=\"lblogTitle\">"
+        + blog.title
+        + " </b></div><button class=\"btn btn-info glyphicon glyphicon-pencil\" id=\"leditBlog" + index + "\"></button><button "
+        + "id=\"lviewBlog" + index + "\" class=\"btn btn-success glyphicon glyphicon-eye-open\"></button><button "
+        + " class=\"btn btn-danger glyphicon glyphicon-trash\" id=\"ldeleteBlog" + index + "\"></button>"
+        + "</br><input type=\"text\" id=\"lblogCategory\" placeholder="
+        + blog.category
+        + " readonly>"
+        + "<br/><input id=\"lblogAuthorId\" placeholder="
+        + blog.author.userId
+        + " style=\"display:none\" readonly>by <input id=\"lblogAuthName\" placeholder="
+        + blog.author.firstName
+        + " "
+        + blog.author.lastName
+        + " readonly>"
+        + "<div><textarea id=\"lblogText\" class=\"form-control\" rows=\"5\" readonly required>" + blog.blogText + "</textarea>"
+        + "</div><br/></div>";
     }
 
-    function setInnerHtml(index, htmlFrag) {
+    function setBlogsInnerHtml(index, htmlFrag) {
+        console.log("setBlogsInnerHtml");
         var identifier = "#blogItem" + index;
         $(identifier).html(htmlFrag);
     }
 
-    function fillHomeBlogForm(blogs) {
-        $("#blogsList li").each(function() {
-            console.log("blog item")
-            var liElement = $(this);
-            liElement.html(getBlogHtml(blogs[0]));
-            // var productid = $(".productId", product).val();
-            // var productPrice = $(".productPrice",
-            // product).val();
-            // var productMSRP = $(".productMSRP",
-            // product).val();
+    function registerForEVDEvents(i) {
+        console.log("registerForEVDEvents " + i);
+        var editbtn = "#leditBlog" + i;
+        $(editbtn).click(function(e) {
+            console.log(editbtn);
+            var blog = "#lblogId" + i;
+            var blogId = $(blog).val();
+            setSelectedBlogId(blogId);
+            loadForm("editBlogForm", blogId);
+        })
 
-            // the rest remains unchanged
+        var viewbtn = "#lviewBlog" + i;
+        $(viewbtn).click(function(e) {
+            console.log(viewbtn);
+            var blog = "#lblogId" + i;
+            var blogId = $(blog).val();
+            setSelectedBlogId(blogId);
+            loadForm("viewBlogForm", blogId);
+        })
+
+        var delbtn = "#ldeleteBlog" + i;
+        $(delbtn).click(function(e) {
+            console.log(delbtn);
+            var blog = "#lblogId" + i;
+            var blogId = $(blog).val();
+            setSelectedBlogId(blogId);
+            deleteBlog(blogId);
+        })
+    }
+
+    function clearHomeBlogForm() {
+        console.log("clearHomeBlogForm");
+        var i = 0;
+        $("#blogsList li").each(function() {
+            var liElement = $(this);
+            liElement.html("");
+        })
+    }
+
+    function fillHomeBlogForm(blogs) {
+        console.log("fillHomeBlogForm");
+        clearHomeBlogForm();
+        var i = 0;
+        $("#blogsList li").each(function() {
+            console.log("blog item");
+            if(blogs && i < blogs.length) {
+                var liElement = $(this);
+                liElement.html(getBlogHtml(blogs,i));
+                console.log(getBlogHtml(blogs,i));
+                registerForEVDEvents(i);
+            } else {
+                return;
+            }
+            i++;
         });
     }
-    $("#refreshBlogs").click(function(e) {
-        readBlogs();
-    })
 
-    function readBlogs(start, size) {
-        var reqUrl = "" + getBaseUrl()
-                + "tecblog/blogs?category=WEB";
-
+    function getBlogs(reqUrl) {
+        console.log("getBlogs");
         $.ajax({
             url : reqUrl,
             type : "GET",
             dataType : "json",
             success : function(blogs, status, xhr) {
-                console.log("Read all blogs success: ");
+                console.log(reqUrl + " success");
                 console.log(blogs);
                 fillHomeBlogForm(blogs);
             },
             error : function(xhr, status, err) {
-                console.log("Read all users failed : ");
+                console.log(reqUrl + " failure");
                 console.log(err);
                 console.log(status);
+                fillHomeBlogForm([]);
             }
         })
+    }
+
+    function readBlogs(start, size) {
+        start = (start) ? start : 0;
+        size = (size) ? size : 5;
+        // var reqUrl = "" + getBaseUrl() + "tecblog/blogs?category=WEB";
+        var reqUrl = "" + getBaseUrl() + "tecblog/blogs";
+        console.log("Read all blogs: ");
+        getBlogs(reqUrl);
+    }
+
+    function readBlogsByCategory(category, filterByUser, start, size) {
+        var signedInUser = getSignedInUser();
+        if(!category || category == "" ) {
+            if(filterByUser && signedInUser){
+                console.log("Read blogs of user");
+                return readBlogsByUserId(signedInUser, start, size);
+            }
+            console.log("Read all blogs");
+            return readBlogs(start, size);
+        }
+        start = (start) ? start : 0;
+        size = (size) ? size : maxBlogsPerPage;
+        var reqUrl = getBaseUrl() + "tecblog/blogs";
+        if(filterByUser && signedInUser) {
+            reqUrl += "/users/" + userId +  "?category=" + category;
+            console.log("Read all my blogs for a category: ");
+        } else {
+            reqUrl += "?category=" +  category;
+            console.log("Read all blogs by category: ");
+        }
+
+        return getBlogs(reqUrl);
+    }
+
+
+    function readBlogsByUserId(userId, start, size) {
+        if(!userId) return;
+        start = (start) ? start : 0;
+        size = (size) ? size : maxBlogsPerPage;
+        // var reqUrl = "" + getBaseUrl() + "tecblog/blogs?category=WEB";
+        var reqUrl = "" + getBaseUrl() + "tecblog/blogs/users/" + userId;
+        console.log("Read blogs by userId: " + userId);
+        getBlogs(reqUrl);
     }
 
     function updateBlog(blogId) {
@@ -213,7 +400,7 @@ $(document).ready(function() {
                 console.log("blog updated: ");
                 console.log(blog);
                 setSelectedBlogId(blog.blogId);
-                loadForm("viewBlogForm");
+                loadForm();
             },
             error : function(xhr, status, err) {
                 setSelectedBlogId(undefined);
@@ -247,57 +434,93 @@ $(document).ready(function() {
         })
     }
 
-    function loadForm(form) {
+    function loadForm(form, blogId) {
         // var hash = getLocationHash();
         console.log(form);
-        var blogId = getSelectedBlogId();
+        blogId = (blogId) ? blogId : getSelectedBlogId();
         console.log("### loadForm");
         console.log(blogId);
+
+        if (form === "newBlogForm") {
+            $("#homeForm").hide();
+            $("#viewBlogForm").hide();
+            $("#newBlogForm").trigger('reset');
+            $("#newBlogForm").show();
+            $("#editBlogForm").hide();
+            return;
+        }
+
         if (blogId) {
             if (form === "viewBlogForm") {
-                readBlog(blogId);
-                $("#homeForm").hide();
-                $("#viewBlogForm").trigger('reset');
-                $("#viewBlogForm").show();
-                $("#editBlogForm").hide();
-                $("#newBlogForm").hide();
+                readBlog(blogId, function(err, blog) {
+                    if(!err) {
+                        $("#homeForm").hide();
+                        $("#viewBlogForm").trigger('reset');
+                        fillViewBlogForm(blog);
+                        $("#viewBlogForm").show();
+                        $("#editBlogForm").hide();
+                        $("#newBlogForm").hide();
+                    } else {
+                        loadHomePage();
+                    }
+                });
+
             } else if (form === "editBlogForm") {
-                readBlog(blogId);
-                $("#homeForm").hide();
-                $("#viewBlogForm").hide();
-                $("#newBlogForm").hide();
-                $("#editBlogForm").trigger('reset');
-                $("#editBlogForm").show();
-            } else if (form === "newBlogForm") {
-                readBlog(blogId);
-                $("#homeForm").hide();
-                $("#viewBlogForm").hide();
-                $("#newBlogForm").trigger('reset');
-                $("#newBlogForm").show();
-                $("#editBlogForm").hide();
+                readBlog(blogId, function(err, blog) {
+                    if(!err) {
+                        $("#homeForm").hide();
+                        $("#viewBlogForm").hide();
+                        $("#newBlogForm").hide();
+                        $("#editBlogForm").trigger('reset');
+                        $("#editBlogForm").show();
+                        fillEditBlogForm(blog);
+                    } else {
+                        loadHomePage();
+                    }
+                });
             } else {
                 loadHomePage();
             }
         } else {
-
+            loadHomePage();
         }
     }
 
     function loadHomePage() {
         console.log("load home form");
-        readBlogs();
-        $("#homeForm").trigger('reset');
+        var category = getSelectedCategory();
+        if(!category || category === "") {
+            setSelectedCategory("");
+            readBlogs();
+        } else {
+            readBlogsByCategory(category, false);
+        }
+
+        hideAllBlogForms();
+        hideAllUserForms();
+        //$("#homeForm").trigger('reset');
         $("#homeForm").show();
-        $("#viewBlogForm").hide();
-        $("#editBlogForm").hide();
-        $("#newBlogForm").hide();
+//        $("#viewBlogForm").hide();
+//        $("#editBlogForm").hide();
+//        $("#newBlogForm").hide();
     }
 
-    function setSelectedBlogId(blogId) {
-        selectedBlogId = blogId;
-    }
-
-    function getSelectedBlogId() {
-        return selectedBlogId;
+    function setSelectedCategory(category) {
+        $("#searchByCategory").val(category);
+        selectedBlogCategory = (category) ? category : "";
     }
 });
+
+
+function getSelectedCategory() {
+    selectedBlogCategory = (selectedBlogCategory) ? selectedBlogCategory : "";
+    return selectedBlogCategory;
+}
+
+function setSelectedBlogId(blogId) {
+    selectedBlogId = blogId;
+}
+
+function getSelectedBlogId() {
+    return selectedBlogId;
+}

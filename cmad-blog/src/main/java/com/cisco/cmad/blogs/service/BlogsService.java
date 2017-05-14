@@ -51,6 +51,21 @@ public class BlogsService implements Blogs {
     }
 
     @Override
+    public List<Blog> readAllBlogs() throws DataNotFoundException, EntityException {
+        List<Blog> blogs = new ArrayList<Blog>();
+        try {
+            blogs = dao.readAllBlogs();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new EntityException();
+        }
+
+        if (blogs == null || blogs.isEmpty())
+            throw new DataNotFoundException();
+        return blogs;
+    }
+
+    @Override
     public Blog read(long blogId) throws DataNotFoundException, EntityException {
         Blog blog = null;
         try {

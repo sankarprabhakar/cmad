@@ -27,7 +27,20 @@ public class JPABlogsDAO implements BlogsDAO {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Blog> tquery = em.createQuery("FROM Blog b WHERE b.category = :category", Blog.class);
-        List<Blog> blogs = tquery.setParameter("category", category).getResultList();
+        tquery.setParameter("category", category);
+        List<Blog> blogs = tquery.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return blogs;
+    }
+
+    @Override
+    // Read all blogs
+    public List<Blog> readAllBlogs() {
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        TypedQuery<Blog> tquery = em.createNamedQuery(Blog.FIND_ALL, Blog.class);
+        List<Blog> blogs = tquery.getResultList();
         em.getTransaction().commit();
         em.close();
         return blogs;

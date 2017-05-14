@@ -1,38 +1,65 @@
 $(document).ready(function() {
-    loadForm();
+    //loadUserForm();
 
     $("#signinForm").submit(function(e) {
+        console.log("signinForm");
         e.preventDefault();
         authenticateUser();
     });
     $("#cancelSignin").click(function(e) {
+        console.log("cancelSignin");
         // $('#signin').load('index.html');
         $(location).attr('href', 'index.html');
     });
     $("#signupForm").submit(function(e) {
+        console.log("signupForm");
         e.preventDefault();
         createUser();
     });
     $("#cancelSignup").click(function(e) {
+        console.log("cancelSignup");
         // $('#signin').load('index.html');
         $(location).attr('href', 'index.html');
     });
-    $("#signupLink").click(function(e) {
+    $("#signupMenu").click(function(e) {
+        console.log("signupMenu");
         $("#signupForm").trigger('reset');
+        hideAllBlogForms();
+        hideAllUserForms();
         $("#signupForm").show();
-        $("#signinForm").hide();
+    });
+
+    $("#profileMenu").click(function(e) {
+        console.log("profileMenu");
+        $("#profileMenu").trigger('reset');
+        hideAllBlogForms();
+        hideAllUserForms();
+        loadUserForm("profileForm");
+        //$("#profileForm").show();
+    });
+
+    $("#adminMenu").click(function(e) {
+        console.log("adminMenu");
+        $("#adminMenu").trigger('reset');
+        hideAllBlogForms();
+        hideAllUserForms();
+        readAllUsers();
+        $("#adminForm").show();
     });
 
     $("#profileForm").submit(function(e) {
+        console.log("profileForm");
         e.preventDefault();
         updateUser();
     });
 
     $("#cancelProfile").click(function(e) {
+        console.log("cancelProfile");
         $(location).attr('href', 'index.html');
     });
 
     $("#signOffLink").click(function(e) {
+        console.log("signOffLink");
         var res = confirm("Really want to Sign off?");
         if (res === true) {
             console.log("sign off");
@@ -46,14 +73,26 @@ $(document).ready(function() {
     });
 
     $("#cancelAdmin").click(function(e) {
+        console.log("cancelAdmin");
         $(location).attr('href', 'index.html');
     });
 
     $("#userListAdmin").click(function(e) {
+        console.log("userListAdmin");
         readAllUsers();
     });
 
+    $("#signinMenu").click(function(e) {
+        console.log("signinMenu");
+        $("#signinMenu").trigger('reset');
+        hideAllBlogForms();
+        hideAllUserForms();
+        $("#signinForm").show();
+        //loadUserForm();
+    })
+
     function createUser() {
+        console.log("createUser");
         console.log(window.location.href.match(/^.*\//)[0]);
         console.log(getBaseUrl());
         console.log("createUser")
@@ -94,6 +133,7 @@ $(document).ready(function() {
     }
 
     function readUser(userId) {
+        console.log("readUser");
         var reqUrl = "" + getBaseUrl() + "tecblog/users/" + userId;
         $.ajax({
             url : reqUrl,
@@ -113,12 +153,13 @@ $(document).ready(function() {
                 console.log(err);
                 console.log(status);
                 clearAuthCookies();
-                loadForm();
+                loadUserForm();
             }
         })
     }
 
     function readAllUsers() {
+        console.log("readAllUsers");
         var reqUrl = "" + getBaseUrl() + "tecblog/users";
 
         var rows = "";
@@ -149,13 +190,13 @@ $(document).ready(function() {
                 console.log(err);
                 console.log(status);
                 // clearAuthCookies();
-                // loadForm();
+                // loadUserForm();
             }
         })
     }
 
     function authenticateUser() {
-        console.log("authenticate user");
+        console.log("authenticateUser");
         console.log(window.location.href.match(/^.*\//)[0]);
         console.log(getBaseUrl());
         var userId = $("#siUserId").val();
@@ -182,6 +223,7 @@ $(document).ready(function() {
                 addToBrowserCookie("userId", userId);
                 $(location).attr('href', 'index.html');
                 $("#signinForm").hide();
+                initializeMenu();
             },
             error : function(xhr, status, err) {
                 alert("Invalid user or password");
@@ -195,6 +237,7 @@ $(document).ready(function() {
     }
 
     function updateUser() {
+        console.log("updateUser");
         console.log(window.location.href.match(/^.*\//)[0]);
         console.log(getBaseUrl());
         console.log("updateUser")
@@ -222,20 +265,21 @@ $(document).ready(function() {
                 console.log("Profile update success: ");
                 console.log(data);
                 clearAuthCookies();
-                loadForm();
+                loadUserForm();
             },
             error : function(xhr, status, err) {
                 console.log("Profile update failed : ");
                 console.log(err);
                 console.log(status);
                 clearAuthCookies();
-                loadForm();
+                loadUserForm();
             },
             data : JSON.stringify(user)
         })
     }
 
     function deleteUser(userId) {
+        console.log("deleteUser");
         var reqUrl = "" + getBaseUrl() + "tecblog/users/" + userId;
         $.ajax({
             url : reqUrl,
@@ -249,30 +293,34 @@ $(document).ready(function() {
                 console.log(err);
                 console.log(status);
                 // clearAuthCookies();
-                // loadForm();
+                // loadUserForm();
             }
         })
     }
 
-    $("#signOutMenu").click(function(e) {
-        console.log("sign out");
+    $("#signoutMenu").click(function(e) {
+        console.log("signoutMenu");
         signOut();
     });
 
     function signOut() {
+        console.log("signOut");
         clearAuthCookies();
         location.reload(true);
     }
 
     function clearAuthCookies() {
+        console.log("clearAuthCookies");
         removeBrowserCookie("Authorization");
         removeBrowserCookie("userId");
     }
 
-    function loadForm() {
+    function loadUserForm(form) {
+        console.log("loadUserForm");
         var formParam = getQueryStringParams("form");
         var userId = getSignedInUser();
-        console.log("### loadForm");
+        console.log("### loadUserForm");
+        console.log(formParam);
         console.log(userId);
         if (userId) {
             $("#signinForm").hide();
@@ -295,4 +343,6 @@ $(document).ready(function() {
             $("#profileForm").hide();
         }
     }
+
 });
+

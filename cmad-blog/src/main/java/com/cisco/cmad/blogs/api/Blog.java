@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -15,7 +17,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "Blog")
+@NamedQueries({ @NamedQuery(name = Blog.FIND_ALL, query = "SELECT u FROM Blog u ORDER BY u.lastUpdatedOn DESC"),
+        @NamedQuery(name = Blog.COUNT_ALL, query = "SELECT COUNT(u) FROM Blog u") })
+
 public class Blog {
+    public static final String FIND_ALL = "Blog.findAll";
+    public static final String COUNT_ALL = "Blog.countAll";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long blogId;

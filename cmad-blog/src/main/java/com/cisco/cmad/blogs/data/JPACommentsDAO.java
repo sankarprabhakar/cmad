@@ -58,7 +58,8 @@ public class JPACommentsDAO implements CommentsDAO {
         em.getTransaction().begin();
         // TypedQuery<Comment> tquery = em.createQuery("FROM Comment c WHERE
         // c.blog.blogId = :blogId", Comment.class);
-        TypedQuery<Comment> tquery = em.createQuery("FROM Comment c WHERE c.blog.blogId = :blogId", Comment.class);
+        TypedQuery<Comment> tquery = em.createQuery(
+                "FROM Comment c WHERE c.blog.blogId = :blogId ORDER BY c.lastUpdatedOn DESC", Comment.class);
         List<Comment> comments = tquery.setParameter("blogId", blogId).getResultList();
         em.getTransaction().commit();
         em.close();

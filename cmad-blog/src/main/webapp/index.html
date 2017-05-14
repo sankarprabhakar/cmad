@@ -1,157 +1,294 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="jquery-2.1.3.js"></script>
+        <!--  <link href="base.css" rel="stylesheet" /> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="jquery.cookie.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="base.css" rel="stylesheet" />
+        <script src="utils.js"></script>
+        <script src="comments.js"></script>
         <script src="blogs.js"></script>
         <script src="users.js"></script>
-        <script src="utils.js"></script>
-        <script src="jquery.cookie.js"></script>
-        <script src="comments.js"></script>
-        <script src="jquery.cookie.js"></script>
-        <link href="base.css" rel="stylesheet" />
+
     </head>
     <body>
-        <div class="topnav">
-            <!--
-            <a id="blogMenu" href="#blog">
-                <img src="images/blog-menux.png" alt="blogs" class="blogs-menu">
-            </a>
-            <a href="users.html?form=signin" id="signInMenu">
-                <img src="images/signin-menux.png" alt="Signin" class="signin-menu">
-            </a>
-            <a href="users.html?form=profile" style="display:none;" id="profileMenu">
-                <img src="images/profile-menux.png" alt="profile" class="profile-menu">
-            </a>
-            <a href="#signout" style="display:none;" id="signOutMenu">
-                <img src="images/signout-menux.png" alt="signout" class="signout-menu">
-            </a>
-            <a href="users.html?form=admin" style="display:none;" id="adminMenu">
-                <img src="images/admin-menux.png" alt="admin" class="admin-menu">
-            </a>-->
-            <a id="homeMenu" href="#home">HOME
-            </a>
-            <a id="blogMenu" href="#blogs">BLOGS
-            </a>
-            <a href="users.html?form=signin" id="signInMenu">SIGN IN
-            </a>
-            <a href="users.html?form=profile" style="display:none;" id="profileMenu">PROFILE
-            </a>
-            <a href="#signout" style="display:none;" id="signOutMenu">SIGN OUT
-            </a>
-            <a href="users.html?form=admin" style="display:none;" id="adminMenu">USERS
-            </a>
-            <a href="users.html?form=admin" style="display:none;" id="adminMenu">SEARCH
-            </a>
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education"></span> tecBLOGS</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#home" id="homeMenu" >HOME</a></li>
+                    <li><a href="#addBlog" id="addBlogMenu" >BLOG <span class="glyphicon glyphicon-plus"></span></a></li>
+                </ul>
+                <div id="searchForm" class="navbar-form navbar-left">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="category" id="searchByCategory">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit" id="searchBlogsButton">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#profile" style="display:none;" id="profileMenu">PROFILE</a></li>
+                    <li><a href="#admin" style="display:none;" id="adminMenu">USERS</a></li>
+                    <li><a href="#signup" id="signupMenu" ><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+                    <li><a href="#signin" id="signinMenu"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                    <li><a href="#signout" id="signoutMenu" style="display:none;" ><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+
+    <form id="homeForm" class="text-left"> <!-- style="display:none"  -->
+        <div style="padding-left:16px">
+            <br/>
+            <img src="images/linesep-short.png"  class="seperators">
+            <div><b>The Technical BLOGS</b></div>
+            <ul id="blogsList" style="list-style-type:none">
+                <li id="blogItem1"></li>
+                <li id="blogItem2"></li>
+                <li id="blogItem3"></li>
+                <li id="blogItem4"></li>
+                <li id="blogItem5"></li>
+            </ul>
+            <a href="#" id="blogFirstPage">home</a>  |  <a href="#" id="blogNextPage">next</a>  |  <a href="#" id="blogPrevPage">prev</a>  |  <a href="#" id="blogLastPage">last</a>
         </div>
-        <form name="homeForm" id="homeForm" > <!-- style="display:none"  -->
-            <div style="padding-left:16px">
-                <br/>
+    </form>
+
+    <form id="viewBlogForm" style="display:none" class="text-left">
+        <h2 class="text-center">Viewing Blog...</h2>
+        <div class="container  col-lg-4 col-lg-offset-4">
+            <br/>
+            <img src="images/linesep-short.png"  class="seperators">
+            <div>
+                <input id="vblogId" style="display:none" readonly>
+                <input id="vblogTitle" readonly>
+                <input type="text" id="vblogCategory" placeholder="Category" readonly>
+            </div>
+            <br/>
+            <input id="vblogAuthorId" style="display:none" readonly>
+            by <input id="vblogAuthName" placeholder="Author" readonly>
+            <textarea id="vblogText" class="form-control" rows="10" placeholder="blog text ..." readonly></textarea>
+            <br/>
+            <div>
+                <div>
+                    <input class="no-border" id="commentsCount" placeholder="0 " readonly> COMMENTS
+                </div>
                 <img src="images/linesep-short.png"  class="seperators">
-                <div><b>The Technical BLOGS</b></div>
-                <ul id="blogsList" style="list-style-type:none">
-                    <li id="blogItem1"></li>
-                    <li id="blogItem2"></li>
-                    <li id="blogItem3"></li>
-                    <li id="blogItem4"></li>
-                    <li id="blogItem5"></li>
+                <ul id="commentsList" style="list-style-type:none">
+                    <li id="commentItem1"></li>
+                    <li id="commentItem2"></li>
+                    <li id="commentItem1"></li>
                 </ul>
-                <a href="#" id="blogFirstPage">home</a>  |  <a href="#" id="blogNextPage">next</a>  |  <a href="#" id="blogPrevPage">home</a>  |  <a href="#" id="blogLastPage">last</a>
-                <button type="button" class="cancelbtn" id="refreshBlogs">Refresh</button>
-            </div>
-        </form>
-        <form name="viewBlogForm" id="viewBlogForm">
-            <h2>Viewing Blog...</h2>
-            <div style="padding-left:16px">
-                <br/>
-                <img src="images/linesep-short.png"  class="seperators">
-                <div>
-                    <input id="vblogId" style="display:none" readonly>
-                    <b id="vblogTitle">blog title</b>
-                    <input type="text" name="blogCategory" id="vblogCategory" placeholder="Category" readonly>
-                    <button id="veditBlog">Edit</button>
-                    <button id="vdeleteBlog">Delete</button>
+                <div id="blogCommentForm"  style="display:none" class="text-left">
+                    <div>
+                        <input id="bcfText" placeholder="comment text ... ">
+                        <button id="bcfSave" class="btn btn-success glyphicon glyphicon-save"> </button>
+                        <button id="bcfCancel" class="btn btn-warning glyphicon glyphicon-remove"> </button>
+                    </div>
+                    <br/>
                 </div>
-                <br/>
-                <input id="vblogAuthorId" style="display:none" readonly>
-                by <input id="vblogAuthName" placeholder="Author" readonly>
-                <input id="vblogText" placeholder="blog text ...">
-                <br/>
-                <div><input id="commentsCount" placeholder="0 " readonly> COMMENTS</div>
-                <img src="images/linesep-short.png"  class="seperators">
-                <ul style="list-style-type:none">
-                    <li id="commentItem1">
-                        <div>
-                            <i id="commentText">Comment1</i>
-                            <button id="editBlog">edit?</button>
-                            <button id="updateBlog">save?</button>
-                            <button id="deleteBlog">delete?</button>
-                        </div>
-                        <br/>
-                    </li>
-                    <li id="commentItem2">
-                        <div>
-                            <i id="commentText">Comment2</i>
-                            <button id="editBlog">edit?</button>
-                            <button id="updateBlog">save?</button>
-                            <button id="deleteBlog">delete?</button>
-                        </div>
-                        <br/>
-                    </li>
-                    <li id="commentItem1">
-                        <div>
-                            <i id="commentText">Comment3</i>
-                            <button id="editBlog">edit?</button>
-                            <button id="updateBlog">save?</button>
-                            <button id="deleteBlog">delete?</button>
-                        </div>
-                        <br/>
-                    </li>
-                </ul>
-                <a href="#" id="commentNextPage">more comments</a>
+                <button class = "btn btn-link" id="commentsFirstPage"> first </button>
+                <button class = "btn btn-link" id="commentsNextPage"> next </button>
+                <button class = "btn btn-link" id="commentsPrevPage"> prev </button>
+                <button class = "btn btn-link" id="commentsLastPage"> last </button>
+                <button class = "btn btn-primary glyphicon glyphicon-plus" id="addCommentBtn"> </button>
             </div>
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn" id="cancelBlogView">Cancel</button>
+            </br>
+            <div class="input-group">
+                <button id="cancelBlogView" class="btn btn-warning glyphicon glyphicon-remove"> </button>
+                <button id="veditBlog" class="btn btn-success glyphicon glyphicon-pencil"> </button>
+                <button id="vdeleteBlog" class="btn btn-danger glyphicon glyphicon-trash"> </button>
             </div>
-        </form>
-        <form name="newBlogForm" id="newBlogForm">
-            <h2>New Blog.</h2>
-            <div style="padding-left:16px">
-                <br/>
-                <img src="images/linesep-short.png"  class="seperators">
-                <div>
-                    <input id="nblogTitle" placeholder="New blog title ">
-                    <input type="text" name="blogCategory" id="nblogCategory" placeholder="Category">
-                    <button type="submit" id="ncreateBlog">Save</button>
-                </div>
-                <br/>
-                <input id="nblogText" placeholder="blog text ...">
-                <br/>
-                <img src="images/linesep-short.png"  class="seperators">
+        </div>
+    </form>
+    <form id="newBlogForm" style="display:none" class="text-left">
+        <h2 class="text-center">New Blog. </h2>
+        <div class="container  col-lg-4 col-lg-offset-4">
+            <br/>
+            <img src="images/linesep-short.png"  class="seperators">
+            <div>
+                <input id="nblogTitle" placeholder="New blog title ">
+                <input type="text" name="blogCategory" id="nblogCategory" placeholder="Category">
             </div>
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn" id="cancelBlogAdd">Cancel</button>
+            <br/>
+            <textarea id="nblogText" class="form-control" rows="10" placeholder="blog text ..." required></textarea>
+            <br/>
+            <img src="images/linesep-short.png"  class="seperators">
+            <div class="input-group">
+                <button class="btn btn-warning glyphicon glyphicon-remove" type="button" class="cancelbtn" id="cancelBlogAdd"> </button>
+                <button class="btn btn-success glyphicon glyphicon-save" type="submit" id="ncreateBlog"> </button>
             </div>
-        </form>
-        <form name="editBlogForm" id="editBlogForm">
-            <h2>Editing Blog ...</h2>
-            <div style="padding-left:16px">
-                <br/>
-                <img src="images/linesep-short.png"  class="seperators">
-                <div>
-                    <input id="eblogId" style="display:none" readonly>
-                    <input id="eblogTitle" placeholder="edit blog title ">
-                    <input type="text" name="blogCategory" id="eblogCategory" placeholder="Category">
-                    <button type="submit" id="esaveBlog">Save</button>
-                    <button type="submit" id="edeleteBlog">Delete</button>
-                </div>
-                <br/>
-                <input id="blogText" placeholder="blog text ...">
-                <br/>
-                <img src="images/linesep-short.png"  class="seperators">
+        </div>
+    </form>
+    <form id="editBlogForm" style="display:none" class="text-left">
+        <h2 class="text-center">Editing Blog ...</h2>
+        <div class="container  col-lg-4 col-lg-offset-4">
+            <br/>
+            <img src="images/linesep-short.png"  class="seperators">
+            <div>
+                <input id="eblogId" style="display:none" readonly>
+                <input id="eblogTitle" placeholder="edit blog title ">
+                <input type="text" id="eblogCategory" placeholder="Category">
+                <input id="eblogAuthorId" style="display:none" readonly>
+                by <input class="no-border" id="eblogAuthName" placeholder="Author" readonly>
+                <textarea id="eblogText" class="form-control" rows="10" placeholder="blog text ..." required></textarea>
             </div>
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn" id="cancelBlogEdit">Cancel</button>
+            <br/>
+            <img src="images/linesep-short.png"  class="seperators">
+            <div class="input-group">
+                <button class="btn btn-warning glyphicon glyphicon-remove" type="button" class="cancelbtn" id="cancelBlogEdit"> </button>
+                <button class="btn btn-success glyphicon glyphicon-save" type="submit" id="esaveBlog"> </button>
+                <button class="btn btn-danger glyphicon glyphicon-trash" type="submit" id="edeleteBlog"> </button>
             </div>
-        </form>
+        </div>
+    </form>
+    <form id="signinForm" style="display:none" class="text-center">
+      <h2>Sign in</h2>
+      <div class="imgcontainer">
+        <img src="images/signin.png" alt="Signin" class="signin">
+      </div>
+
+      <div class="container  col-lg-4 col-lg-offset-4">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input class="form-control" type="text" placeholder="Enter User ID" name="siUserId" id="siUserId" required>
+        </div>
+        </br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" placeholder="Enter Password" name="siPassword" id="siPassword" required>
+        </div>
+        </br>
+       <div class="input-group">
+            <button class="btn btn-warning glyphicon glyphicon-remove" type="button" class="cancelbtn" id="cancelSignin"> </button>
+            <button class="btn btn-success glyphicon glyphicon-log-in" type="submit" id="signin"> </button>
+       </div>
+      </div>
+    </form>
+
+    <form id="signupForm" style="display:none" class="text-center" >
+      <h2>Sign up</h2>
+      <div class="imgcontainer">
+        <img src="images/signin.png" alt="Signin" class="signin">
+      </div>
+
+      <div class="container col-lg-4 col-lg-offset-4">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input class="form-control" type="text" placeholder="Enter User ID" name="suUserId" id="suUserId" required>
+        </div>
+        </br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" placeholder="Enter Password" name="suPassword" id="suPassword" required>
+        </div>
+        </br>
+        <!--  <label><b>Re-enter Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required> -->
+        <div class="input-group">
+            <span class="input-group-addon">First Name</span>
+            <input class="form-control" type="text" placeholder="Enter First Name" name="suFirstName" id="suFirstName" required>
+        </div>
+        </br>
+        <div class="input-group">
+            <span class="input-group-addon">Last Name</span>
+            <input class="form-control" type="text" placeholder="Enter Last Name" name="suLastName" id="suLastName" >
+        </div>
+        </br>
+        <div class="input-group">
+            <span class="input-group-addon">Email</span>
+            <input class="form-control" type="email" placeholder="Enter Email Id" name="suEmailId" id="suEmailId" >
+        </div>
+        </br>
+       <div class="input-group">
+        <button class="btn btn-warning glyphicon glyphicon-remove" type="button" id="cancelSignup"> </button>
+        <button class="btn btn-success glyphicon glyphicon-save" type="submit" id="signup"> </button>
+       </div>
+      </div>
+    </form>
+
+    <form id="profileForm" style="display:none" class="text-center">
+        <h2>Profile Update</h2>
+        <div class="imgcontainer">
+            <img src="images/signin.png" alt="Signin" class="signin">
+        </div>
+
+        <div class="container col-lg-4 col-lg-offset-4">
+            <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input class="form-control" type="text" placeholder="Enter User ID" name="puUserId" id="puUserId" required readonly>
+            </div>
+            </br>
+            <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" placeholder="Enter Password" name="puPassword" id="puPassword" required>
+            </div>
+            </br>
+            <!--  <label><b>Re-enter Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required> -->
+            <div class="input-group">
+            <span class="input-group-addon">First Name</span>
+            <input class="form-control" type="text" placeholder="Enter First Name" name="puFirstName" id="puFirstName" required>
+            </div>
+            </br>
+            <div class="input-group">
+            <span class="input-group-addon">Last Name</span>
+            <input class="form-control" type="text" placeholder="Enter Last Name" name="puLastName" id="puLastName" >
+            </div>
+            </br>
+            <div class="input-group">
+            <span class="input-group-addon">Email</span>
+            <input class="form-control" type="email" placeholder="Enter Email Id" name="puEmailId" id="puEmailId" >
+            </div>
+            </br>
+           <div class="input-group">
+                <button class="btn btn-warning glyphicon glyphicon-remove" type="button" id="cancelProfile"> </button>
+                <button class="btn btn-success glyphicon glyphicon-save" type="submit" id="profile"> </button>
+           </div>
+        </div>
+
+        <div class="container col-lg-4 col-lg-offset-4" style="background-color:#f1f1f1" >
+            <span class="psw">Want to delete the account:  <a href="#" id="signOffLink">Sign off ?</a></span>
+        </div>
+    </form>
+    <form id="adminForm" style="display:none" class="text-center">
+        <h2>List of Users</h2>
+        <div class="imgcontainer">
+            <img src="images/signin.png" alt="Signin" class="signin">
+        </div>
+        </br>
+        <div class="container col-lg-4 col-lg-offset-4" id="userListTable">
+            <div class="input-group">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody id="userRows">
+                </tbody>
+            </table>
+            </div>
+           <div class="input-group">
+            <button class="btn btn-warning glyphicon glyphicon-remove" type="button" id="cancelAdmin"> </button>
+            <button class="btn btn-success glyphicon glyphicon-refresh" type="submit" id="userListAdmin"> </button>
+           </div>
+        </div>
+    </form>
     </body>
 </html>

@@ -11,6 +11,8 @@ public interface Blogs {
 
     public List<Blog> readByCategory(String category) throws DataNotFoundException, EntityException;
 
+    public List<Blog> readAllBlogs() throws DataNotFoundException, EntityException;
+
     public Blog read(long blogId) throws DataNotFoundException, EntityException;
 
     public List<Blog> readByUserId(String userId) throws DataNotFoundException, EntityException;
