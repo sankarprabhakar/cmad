@@ -69,6 +69,9 @@ public class BlogCommentTest {
 	        blogService.create(blogOne);
 	        // Read blog post
 	        Blog blogread = blogService.read(blogOne.getBlogId());
+	        assert (blogread.getBlogId() == 2);
+	        assert (blogread.getCategory() == "Training");
+	        assert (blogread.getBlogText() == "This is some text yet to be updated.");
 	        
         } catch (InvalidEntityException ibe){
         	fail();
