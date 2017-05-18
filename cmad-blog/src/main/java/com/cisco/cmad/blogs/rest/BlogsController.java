@@ -65,7 +65,7 @@ public class BlogsController {
             matched = blogsService.readByCategory(category);
         }
 
-        matched = getResultPage(matched, startStr, countStr);
+        // matched = getResultPage(matched, startStr, countStr);
 
         entities = new GenericEntity<List<Blog>>(matched) {
         };
