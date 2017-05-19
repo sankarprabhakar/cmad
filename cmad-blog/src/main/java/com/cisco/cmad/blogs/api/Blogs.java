@@ -9,12 +9,12 @@ public interface Blogs {
 
     public void delete(long id) throws DataNotFoundException, EntityException;
 
-    public List<Blog> readByCategory(String category) throws DataNotFoundException, EntityException;
+    public List<Blog> readByCategory(String category, int pageNum) throws DataNotFoundException, EntityException;
 
-    public List<Blog> readAllBlogs() throws DataNotFoundException, EntityException;
+    public List<Blog> readAllBlogs(int pageNum) throws DataNotFoundException, EntityException;
 
     public Blog read(long blogId) throws DataNotFoundException, EntityException;
 
-    public List<Blog> readByUserId(String userId) throws DataNotFoundException, EntityException;
+    public List<Blog> readByUserId(String userId, int pageNum) throws DataNotFoundException, EntityException;
 
 }

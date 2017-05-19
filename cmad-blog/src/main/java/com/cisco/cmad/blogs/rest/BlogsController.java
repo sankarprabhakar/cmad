@@ -1,7 +1,7 @@
 package com.cisco.cmad.blogs.rest;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +21,6 @@ import com.cisco.cmad.blogs.api.Blog;
 import com.cisco.cmad.blogs.api.Blogs;
 import com.cisco.cmad.blogs.api.Comment;
 import com.cisco.cmad.blogs.api.Comments;
-import com.cisco.cmad.blogs.api.DataNotFoundException;
 import com.cisco.cmad.blogs.service.BlogsService;
 import com.cisco.cmad.blogs.service.CommentsService;
 
@@ -31,7 +30,7 @@ import com.cisco.cmad.blogs.service.CommentsService;
 public class BlogsController {
     private Blogs blogsService = BlogsService.getInstance();
     private Comments commentsService = CommentsService.getInstance();
-    // private Users usersService = UsersService.getInstance();
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     @POST
     @Path("/")
@@ -55,62 +54,30 @@ public class BlogsController {
         List<Blog> matched;
         GenericEntity<List<Blog>> entities;
         String category = info.getQueryParameters().getFirst("category");
-        String startStr = info.getQueryParameters().getFirst("start");
-        String countStr = info.getQueryParameters().getFirst("count");
+        String pageStr = info.getQueryParameters().getFirst("page");
+        int pageNum = (pageStr == null || pageStr.isEmpty()) ? 0 : Integer.parseInt(pageStr);
         if (category == null || category == "") {
-            System.out.println("BlogsController: readAllBlogs");
-            matched = blogsService.readAllBlogs();
+            logger.info("BlogsController: readAllBlogs");
+            matched = blogsService.readAllBlogs(pageNum);
         } else {
-            System.out.println("BlogsController: readByCategory : " + category);
-            matched = blogsService.readByCategory(category);
+            logger.info("BlogsController: readByCategory : " + category);
+            matched = blogsService.readByCategory(category, pageNum);
         }
-
-        //matched = getResultPage(matched, startStr, countStr);
-
         entities = new GenericEntity<List<Blog>>(matched) {
         };
         return Response.ok().entity(entities).build();
     }
 
-    private List<Blog> getResultPage(List<Blog> result, String startStr, String countStr) {
-        int start;
-        int count;
-        try {
-            System.out.println(startStr);
-            System.out.println(countStr);
-            start = Integer.parseInt(startStr);
-            count = Integer.parseInt(countStr);
-        } catch (Exception e) {
-            System.out.println("pagination info not there in request");
-            start = 0;
-            count = result.size();
-        }
-
-        int total = result.size();
-        int end = start + count;
-        List<Blog> pageResult = new ArrayList<Blog>();
-        if (start < total) {
-            if (end < total) {
-                pageResult = result.subList(start, end);
-            } else if (end == total) {
-                pageResult = result.subList(start, end - 1);
-            } else {
-                end = total - 1;
-                pageResult = result.subList(start, end);
-            }
-        } else {
-            throw new DataNotFoundException();
-        }
-        return pageResult;
-    }
-
     @GET
     @Path("/users/{userId}")
-    public Response read(@PathParam("userId") String userId) {
+    public Response readByUserId(@Context UriInfo info) {
         List<Blog> matched;
         GenericEntity<List<Blog>> entities;
-        System.out.println("BlogsController: readByUserId : " + userId);
-        matched = blogsService.readByUserId(userId);
+        String userId = info.getPathParameters().getFirst("userId");
+        String pageStr = info.getQueryParameters().getFirst("page");
+        int pageNum = (pageStr == null || pageStr.isEmpty()) ? 0 : Integer.parseInt(pageStr);
+        logger.info("BlogsController: readByUserId : " + userId);
+        matched = blogsService.readByUserId(userId, pageNum);
         entities = new GenericEntity<List<Blog>>(matched) {
         };
         return Response.ok().entity(entities).build();
@@ -122,17 +89,6 @@ public class BlogsController {
         List<Comment> comments;
         GenericEntity<List<Comment>> entities;
         comments = commentsService.readAllByBlogId(blogId);
-        // Blog blog = blogsService.read(blogId);
-        // User user = usersService.read(blog.getAuthor().getUserId());
-        // for (int i = 0; i < comments.size(); i++) {
-        // Comment comment = comments.get(i);
-        // // User user = usersService.read(comment.getAddedBy().getUserId());
-        // comment.setAddedBy(user);
-        // // Blog blog = blogsService.read(comment.getBlog().getBlogId());
-        // blog.setAuthor(user);
-        // comment.setBlog(blog);
-        // comments.set(i, comment);
-        // }
         entities = new GenericEntity<List<Comment>>(comments) {
         };
         return Response.ok().entity(entities).build();
@@ -154,11 +110,4 @@ public class BlogsController {
         blogsService.delete(blogId);
         return Response.noContent().build();
     }
-
-    // @HEAD
-    // @Path("/{blogId}")
-    // public Response find(@PathParam("blogId") long blogId) {
-    // blogsService.read(blogId);
-    // return Response.ok().build();
-    // }
 }

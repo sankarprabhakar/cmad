@@ -1,5 +1,6 @@
 var selectedBlogId;
 var maxBlogsPerPage = 5;
+var currPageNum = 0;
 var selectedBlogCategory;
 var initDone = false;
 // var currContext;
@@ -37,7 +38,8 @@ $(document).ready(function() {
         console.log("searchForm");
         var category = $("#searchByCategory").val();
         selectedBlogCategory = category;
-        readBlogsByCategory(category, false);
+        currPageNum = 0;
+        readBlogsByCategory(category, false, currPageNum);
     });
 
     $("#newBlogForm").submit(function(e) {
@@ -78,6 +80,7 @@ $(document).ready(function() {
     })
 
     $("#homeMenu").click(function(e) {
+        currPageNum = 0;
         console.log("viewBlogForm");
         console.log("cancelBlogView");
         loadForm(); // load home page
@@ -323,38 +326,42 @@ $(document).ready(function() {
                 console.log(reqUrl + " failure");
                 console.log(err);
                 console.log(status);
-                fillHomeBlogForm([]);
+                if(currPageNum > 0) {
+                    currPageNum--;
+                } else {
+                    fillHomeBlogForm([]);
+                }
             }
         })
     }
 
-    function readBlogs(start, size) {
-        start = (start) ? start : 0;
-        size = (size) ? size : 5;
+    function readBlogs(pageNum, size) {
+        pageNum = (pageNum) ? pageNum : 0;
+        size = (size) ? size : maxBlogsPerPage;
         // var reqUrl = "" + getBaseUrl() + "tecblog/blogs?category=WEB";
-        var reqUrl = "" + getBaseUrl() + "tecblog/blogs";
+        var reqUrl = "" + getBaseUrl() + "tecblog/blogs?page=" + pageNum;
         console.log("Read all blogs: ");
         getBlogs(reqUrl);
     }
 
-    function readBlogsByCategory(category, filterByUser, start, size) {
+    function readBlogsByCategory(category, filterByUser, pageNum, size) {
         var signedInUser = getSignedInUser();
         if(!category || category == "" ) {
             if(filterByUser && signedInUser){
                 console.log("Read blogs of user");
-                return readBlogsByUserId(signedInUser, start, size);
+                return readBlogsByUserId(signedInUser, pageNum, size);
             }
             console.log("Read all blogs");
-            return readBlogs(start, size);
+            return readBlogs(pageNum, size);
         }
-        start = (start) ? start : 0;
+        pageNum = (pageNum) ? pageNum : 0;
         size = (size) ? size : maxBlogsPerPage;
         var reqUrl = getBaseUrl() + "tecblog/blogs";
         if(filterByUser && signedInUser) {
-            reqUrl += "/users/" + userId +  "?category=" + category;
+            reqUrl += "/users/" + userId +  "?category=" + category + "&page=" + pageNum;
             console.log("Read all my blogs for a category: ");
         } else {
-            reqUrl += "?category=" +  category;
+            reqUrl += "?category=" +  category + "&page=" + pageNum;
             console.log("Read all blogs by category: ");
         }
 
@@ -362,9 +369,9 @@ $(document).ready(function() {
     }
 
 
-    function readBlogsByUserId(userId, start, size) {
+    function readBlogsByUserId(userId, pageNum, size) {
         if(!userId) return;
-        start = (start) ? start : 0;
+        pageNum = (pageNum) ? pageNum : 0;
         size = (size) ? size : maxBlogsPerPage;
         // var reqUrl = "" + getBaseUrl() + "tecblog/blogs?category=WEB";
         var reqUrl = "" + getBaseUrl() + "tecblog/blogs/users/" + userId;
@@ -491,9 +498,9 @@ $(document).ready(function() {
         var category = getSelectedCategory();
         if(!category || category === "") {
             setSelectedCategory("");
-            readBlogs();
+            readBlogs(currPageNum);
         } else {
-            readBlogsByCategory(category, false);
+            readBlogsByCategory(category, false, currPageNum);
         }
 
         hideAllBlogForms();
@@ -509,6 +516,25 @@ $(document).ready(function() {
         $("#searchByCategory").val(category);
         selectedBlogCategory = (category) ? category : "";
     }
+
+    // Pagination
+    $("#blogFirstPage").click(function(e) {
+        currPageNum = 0;
+        console.log("blogFirstPage");
+        loadForm(); // load home page
+    });
+
+    $("#blogNextPage").click(function(e) {
+        currPageNum++;
+        console.log("blogLastPage");
+        loadForm(); // load home page
+    });
+
+    $("#blogPrevPage").click(function(e) {
+        currPageNum = (currPageNum > 0) ?  --currPageNum : 0;
+        console.log("blogPrevPage");
+        loadForm(); // load home page
+    });
 });
 
 

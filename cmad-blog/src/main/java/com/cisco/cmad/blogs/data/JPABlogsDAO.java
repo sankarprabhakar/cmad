@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.Blog;
+import com.cisco.cmad.blogs.api.PaginationUtils;
 
 public class JPABlogsDAO implements BlogsDAO {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory("com.cisco.blogs");
@@ -24,11 +25,13 @@ public class JPABlogsDAO implements BlogsDAO {
 
     @Override
     // Search blogs by category
-    public List<Blog> readByCategory(String category) {
+    // @pageNum - 0 based page index
+    public List<Blog> readByCategory(String category, int pageNum) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Blog> tquery = em.createNamedQuery(Blog.FIND_BY_CATEGORY, Blog.class);
         tquery.setParameter("category", category);
+        setPageParams(tquery, pageNum);
         List<Blog> blogs = tquery.getResultList();
         em.getTransaction().commit();
         em.close();
@@ -37,10 +40,12 @@ public class JPABlogsDAO implements BlogsDAO {
 
     @Override
     // Read all blogs
-    public List<Blog> readAllBlogs() {
+    // @pageNum - 0 based page index
+    public List<Blog> readAllBlogs(int pageNum) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Blog> tquery = em.createNamedQuery(Blog.FIND_ALL, Blog.class);
+        setPageParams(tquery, pageNum);
         List<Blog> blogs = tquery.getResultList();
         em.getTransaction().commit();
         em.close();
@@ -89,13 +94,20 @@ public class JPABlogsDAO implements BlogsDAO {
     }
 
     @Override
-    public List<Blog> readByUserId(String userId) {
+    public List<Blog> readByUserId(String userId, int pageNum) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
         TypedQuery<Blog> tquery = em.createQuery("FROM Blog b WHERE b.userId = :userId", Blog.class);
+        setPageParams(tquery, pageNum);
         List<Blog> blogs = tquery.setParameter("userId", userId).getResultList();
         em.getTransaction().commit();
         em.close();
         return blogs;
+    }
+
+    private void setPageParams(TypedQuery<Blog> tquery, int pageNum) {
+        tquery.setMaxResults(PaginationUtils.MAX_PAGE_SIZE);
+        int index = pageNum * PaginationUtils.MAX_PAGE_SIZE;
+        tquery.setFirstResult(index);
     }
 }

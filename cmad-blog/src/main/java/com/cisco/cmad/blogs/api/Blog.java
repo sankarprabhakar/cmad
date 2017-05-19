@@ -41,7 +41,6 @@ public class Blog {
 
     private String category;
 
-    // @NotNull
     // Specifies the Blog table does not contain an author column, but
     // an userId column with a foreign key. And creates a join to
     // fetch the userId
@@ -65,8 +64,6 @@ public class Blog {
     // should contain one to many media files
     // todo:
 
-    // todo: add support for storing blog html
-
     public Blog() {
     }
 
@@ -87,20 +84,6 @@ public class Blog {
         this.blogId = id;
         return this;
     }
-
-    // public List<Comment> getComments() {
-    // return comments;
-    // }
-    //
-    // public void setComments(List<Comment> comments) {
-    // this.comments = comments;
-    // }
-    //
-    // public void addComment(Comment comment) {
-    // if (comments != null) {
-    // comments.add(comment);
-    // }
-    // }
 
     public String getTitle() {
         return title;

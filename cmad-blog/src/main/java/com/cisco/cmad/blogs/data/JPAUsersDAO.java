@@ -21,7 +21,6 @@ public class JPAUsersDAO implements UsersDAO {
     public void create(User user) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
-        // todo : encrypt at UI side only
         user.setPassword(PasswordUtils.encryptPassword(user.getPassword()));
         em.persist(user);
         em.getTransaction().commit();

@@ -82,6 +82,7 @@ public class UsersController {
     @DELETE
     @Path("/{userId}")
     public Response delete(@PathParam("userId") String userId) {
+        logger.info("deleUser " + userId);
         users.delete(userId);
         return Response.noContent().build();
     }
@@ -110,7 +111,7 @@ public class UsersController {
         Key key = keyGenerator.generateKey();
         // todo: add timeout config
         String jwtToken = Jwts.builder().setSubject(userId).setIssuer(uriInfo.getAbsolutePath().toString())
-                .setIssuedAt(new Date()).setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                .setIssuedAt(new Date()).setExpiration(toDate(LocalDateTime.now().plusMinutes(20L)))
                 .signWith(SignatureAlgorithm.HS512, key).compact();
         logger.info("#### generating token for a key : " + jwtToken + " - " + key);
         return jwtToken;

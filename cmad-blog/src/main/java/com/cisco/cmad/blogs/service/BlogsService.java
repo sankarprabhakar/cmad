@@ -36,10 +36,10 @@ public class BlogsService implements Blogs {
     }
 
     @Override
-    public List<Blog> readByCategory(String category) throws DataNotFoundException, EntityException {
+    public List<Blog> readByCategory(String category, int pageNum) throws DataNotFoundException, EntityException {
         List<Blog> blogs = new ArrayList<Blog>();
         try {
-            blogs = dao.readByCategory(category);
+            blogs = dao.readByCategory(category, pageNum);
         } catch (Exception e) {
             e.printStackTrace();
             throw new EntityException();
@@ -51,10 +51,10 @@ public class BlogsService implements Blogs {
     }
 
     @Override
-    public List<Blog> readAllBlogs() throws DataNotFoundException, EntityException {
+    public List<Blog> readAllBlogs(int pageNum) throws DataNotFoundException, EntityException {
         List<Blog> blogs = new ArrayList<Blog>();
         try {
-            blogs = dao.readAllBlogs();
+            blogs = dao.readAllBlogs(pageNum);
         } catch (Exception e) {
             e.printStackTrace();
             throw new EntityException();
@@ -106,10 +106,10 @@ public class BlogsService implements Blogs {
     }
 
     @Override
-    public List<Blog> readByUserId(String userId) throws DataNotFoundException, EntityException {
+    public List<Blog> readByUserId(String userId, int pageNum) throws DataNotFoundException, EntityException {
         List<Blog> blogs = new ArrayList<Blog>();
         try {
-            blogs = dao.readByUserId(userId);
+            blogs = dao.readByUserId(userId, pageNum);
         } catch (Exception e) {
             e.printStackTrace();
             throw new EntityException();

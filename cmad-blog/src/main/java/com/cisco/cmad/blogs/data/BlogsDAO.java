@@ -9,11 +9,11 @@ public interface BlogsDAO {
 
     public Blog read(long id);
 
-    public List<Blog> readByCategory(String category);
+    public List<Blog> readByCategory(String category, int pageNum);
 
-    public List<Blog> readAllBlogs();
+    public List<Blog> readAllBlogs(int pageNum);
 
-    public List<Blog> readByUserId(String userId);
+    public List<Blog> readByUserId(String userId, int pageNum);
 
     public void update(Blog blog);
 
