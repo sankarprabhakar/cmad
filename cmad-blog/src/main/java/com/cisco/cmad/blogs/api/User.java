@@ -45,49 +45,45 @@ public class User {
         super();
     }
 
-    public User(String userId, String password, String firstName, String lastName, String emailId) {
-        super();
-        this.userId = userId;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailId = emailId;
-    }
-
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public User setUserId(String userId) {
         this.userId = userId;
+        return this;
     }
 
-    public void setId(String userId) {
+    public User setId(String userId) {
         this.userId = userId;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getFullName() {
@@ -98,16 +94,18 @@ public class User {
         return emailId;
     }
 
-    public void setEmailId(String emailId) {
+    public User setEmailId(String emailId) {
         this.emailId = emailId;
+        return this;
     }
 
     // public List<Blog> getBlogs() {
     // return blogs;
     // }
     //
-    // public void setBlogs(List<Blog> blogs) {
+    // public User setBlogs(List<Blog> blogs) {
     // this.blogs = blogs;
+    // return this;
     // }
     //
     // public void addBlog(Blog blog) {
@@ -118,7 +116,8 @@ public class User {
     // return comments;
     // }
     //
-    // public void setComments(List<Comment> comments) {
+    // public User setComments(List<Comment> comments) {
     // this.comments = comments;
+    // return this;
     // }
 }

@@ -81,8 +81,9 @@ public class Blog {
         return blogId;
     }
 
-    public void setBlogId(long id) {
+    public Blog setBlogId(long id) {
         this.blogId = id;
+        return this;
     }
 
     // public List<Comment> getComments() {
@@ -103,41 +104,46 @@ public class Blog {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Blog setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public Date getLastUpdatedOn() {
         return lastUpdatedOn;
     }
 
-    public void setLastUpdatedOn(Date lastUpdatedOn) {
+    public Blog setLastUpdatedOn(Date lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
+        return this;
     }
 
     public String getBlogText() {
         return blogText;
     }
 
-    public void setBlogText(String text) {
+    public Blog setBlogText(String text) {
         this.blogText = text;
+        return this;
     }
 
     public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public Blog setAuthor(User author) {
         this.author = author;
         // author.addBlog(this);
+        return this;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public Blog setCategory(String category) {
         this.category = category;
+        return this;
     }
 
 }
