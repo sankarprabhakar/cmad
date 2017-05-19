@@ -16,8 +16,8 @@ import com.cisco.cmad.blogs.api.DataNotFoundException;
 import com.cisco.cmad.blogs.api.DuplicateEntityException;
 import com.cisco.cmad.blogs.api.EntityException;
 import com.cisco.cmad.blogs.api.InvalidEntityException;
-import com.cisco.cmad.blogs.api.PaginationUtils;
 import com.cisco.cmad.blogs.api.User;
+import com.cisco.cmad.blogs.common.config.AppConfig;
 
 public class BlogsControllerTest {
     private BlogsService blogService;
@@ -281,13 +281,13 @@ public class BlogsControllerTest {
     private int navigateForwardByCategory(int totalBlogs) throws DataNotFoundException, EntityException {
         int page = 0;
         // Forward pagination
-        for (page = 0; page < totalBlogs / PaginationUtils.MAX_PAGE_SIZE; page++) {
+        for (page = 0; page < totalBlogs / AppConfig.MAX_PAGE_SIZE; page++) {
             logger.info("PAGE FORWARD" + page);
             int blogsCount = blogService.readByCategory("WEB", page).size();
             logger.info("BLOGS COUNT = " + blogsCount);
-            assert (blogsCount == PaginationUtils.MAX_PAGE_SIZE);
+            assert (blogsCount == AppConfig.MAX_PAGE_SIZE);
         }
-        int lastPageCount = totalBlogs % PaginationUtils.MAX_PAGE_SIZE;
+        int lastPageCount = totalBlogs % AppConfig.MAX_PAGE_SIZE;
         if (lastPageCount > 0) {
             assert (blogService.readByCategory("WEB", page++).size() == lastPageCount);
             logger.info("PAGE FORWARD LASTPAGE " + page);
@@ -304,8 +304,8 @@ public class BlogsControllerTest {
     }
 
     private int navigateBackwardsByCategory(int totalBlogs) throws DataNotFoundException, EntityException {
-        int totalPages = totalBlogs / PaginationUtils.MAX_PAGE_SIZE;
-        int lastPageCount = totalBlogs % PaginationUtils.MAX_PAGE_SIZE;
+        int totalPages = totalBlogs / AppConfig.MAX_PAGE_SIZE;
+        int lastPageCount = totalBlogs % AppConfig.MAX_PAGE_SIZE;
         if (lastPageCount > 0) {
             totalPages++;
         }
@@ -320,7 +320,7 @@ public class BlogsControllerTest {
             logger.info("PAGE BACKWARD" + page);
             blogsCount = blogService.readAllBlogs(page).size();
             logger.info("BLOGS COUNT = " + blogsCount);
-            assert (blogsCount == PaginationUtils.MAX_PAGE_SIZE);
+            assert (blogsCount == AppConfig.MAX_PAGE_SIZE);
 
         }
 
@@ -337,13 +337,13 @@ public class BlogsControllerTest {
     private int navigateForward(int totalBlogs) throws DataNotFoundException, EntityException {
         int page = 0;
         // Forward pagination
-        for (page = 0; page < totalBlogs / PaginationUtils.MAX_PAGE_SIZE; page++) {
+        for (page = 0; page < totalBlogs / AppConfig.MAX_PAGE_SIZE; page++) {
             logger.info("PAGE FORWARD" + page);
             int blogsCount = blogService.readAllBlogs(page).size();
             logger.info("BLOGS COUNT = " + blogsCount);
-            assert (blogsCount == PaginationUtils.MAX_PAGE_SIZE);
+            assert (blogsCount == AppConfig.MAX_PAGE_SIZE);
         }
-        int lastPageCount = totalBlogs % PaginationUtils.MAX_PAGE_SIZE;
+        int lastPageCount = totalBlogs % AppConfig.MAX_PAGE_SIZE;
         if (lastPageCount > 0) {
             assert (blogService.readAllBlogs(page++).size() == lastPageCount);
             logger.info("PAGE FORWARD LASTPAGE" + page);
@@ -360,8 +360,8 @@ public class BlogsControllerTest {
     }
 
     private int navigateBackwards(int totalBlogs) throws DataNotFoundException, EntityException {
-        int totalPages = totalBlogs / PaginationUtils.MAX_PAGE_SIZE;
-        int lastPageCount = totalBlogs % PaginationUtils.MAX_PAGE_SIZE;
+        int totalPages = totalBlogs / AppConfig.MAX_PAGE_SIZE;
+        int lastPageCount = totalBlogs % AppConfig.MAX_PAGE_SIZE;
         if (lastPageCount > 0) {
             totalPages++;
         }
@@ -376,7 +376,7 @@ public class BlogsControllerTest {
             logger.info("PAGE BACKWARD" + page);
             blogsCount = blogService.readAllBlogs(page).size();
             logger.info("BLOGS COUNT = " + blogsCount);
-            assert (blogsCount == PaginationUtils.MAX_PAGE_SIZE);
+            assert (blogsCount == AppConfig.MAX_PAGE_SIZE);
 
         }
 
@@ -392,13 +392,13 @@ public class BlogsControllerTest {
 
     private void deleteSampleBlogs(int totalBlogs) throws DataNotFoundException, EntityException {
         int page = 0;
-        int totalPages = totalBlogs / PaginationUtils.MAX_PAGE_SIZE;
+        int totalPages = totalBlogs / AppConfig.MAX_PAGE_SIZE;
 
         for (page = totalPages - 1; page >= 0; page--) {
             List<Blog> blogs = blogService.readAllBlogs(page);
             deleteBlogs(blogs);
         }
-        int lastPageCount = totalBlogs % PaginationUtils.MAX_PAGE_SIZE;
+        int lastPageCount = totalBlogs % AppConfig.MAX_PAGE_SIZE;
         if (lastPageCount > 0) {
             List<Blog> blogs = blogService.readAllBlogs(0);
             deleteBlogs(blogs);

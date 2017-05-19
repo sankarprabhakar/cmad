@@ -9,10 +9,10 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.Blog;
-import com.cisco.cmad.blogs.api.PaginationUtils;
+import com.cisco.cmad.blogs.common.config.AppConfig;
 
 public class JPABlogsDAO implements BlogsDAO {
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("com.cisco.blogs");
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(AppConfig.PERSISTENCE_UNIT_NAME);
 
     @Override
     public void create(Blog blog) {
@@ -87,8 +87,7 @@ public class JPABlogsDAO implements BlogsDAO {
     }
 
     private void deleteCommentsByBlogId(long blogId, EntityManager em) {
-        String queryStr = "DELETE FROM Comment c WHERE c.blog.blogId = :blogId";
-        Query query = em.createQuery(queryStr);
+        Query query = em.createNamedQuery(Blog.DELETE_BLOG_COMMENTS);
         query.setParameter("blogId", blogId);
         query.executeUpdate();
     }
@@ -97,7 +96,7 @@ public class JPABlogsDAO implements BlogsDAO {
     public List<Blog> readByUserId(String userId, int pageNum) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
-        TypedQuery<Blog> tquery = em.createQuery("FROM Blog b WHERE b.userId = :userId", Blog.class);
+        TypedQuery<Blog> tquery = em.createNamedQuery(Blog.FIND_USER_BLOGS, Blog.class);
         setPageParams(tquery, pageNum);
         List<Blog> blogs = tquery.setParameter("userId", userId).getResultList();
         em.getTransaction().commit();
@@ -106,8 +105,8 @@ public class JPABlogsDAO implements BlogsDAO {
     }
 
     private void setPageParams(TypedQuery<Blog> tquery, int pageNum) {
-        tquery.setMaxResults(PaginationUtils.MAX_PAGE_SIZE);
-        int index = pageNum * PaginationUtils.MAX_PAGE_SIZE;
+        tquery.setMaxResults(AppConfig.MAX_PAGE_SIZE);
+        int index = pageNum * AppConfig.MAX_PAGE_SIZE;
         tquery.setFirstResult(index);
     }
 }

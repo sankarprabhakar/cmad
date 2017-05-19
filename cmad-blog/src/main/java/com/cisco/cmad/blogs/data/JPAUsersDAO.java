@@ -10,10 +10,11 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.User;
+import com.cisco.cmad.blogs.common.config.AppConfig;
 import com.cisco.cmad.jwt.utils.PasswordUtils;
 
 public class JPAUsersDAO implements UsersDAO {
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("com.cisco.blogs");
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(AppConfig.PERSISTENCE_UNIT_NAME);
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
@@ -85,15 +86,13 @@ public class JPAUsersDAO implements UsersDAO {
     }
 
     private void deleteBlogsByUserId(String userId, EntityManager em) {
-        String queryStr = "DELETE FROM Blog b WHERE b.author.userId = :userId";
-        Query query = em.createQuery(queryStr);
+        Query query = em.createNamedQuery(User.DELETE_BLOGS_BY_USER_ID);
         query.setParameter("userId", userId);
         query.executeUpdate();
     }
 
     private void deleteCommentsByUserId(String userId, EntityManager em) {
-        String queryStr = "DELETE FROM Comment c WHERE c.addedBy.userId = :userId";
-        Query query = em.createQuery(queryStr);
+        Query query = em.createNamedQuery(User.DELETE_COMMENTS_BY_USER_ID);
         query.setParameter("userId", userId);
         query.executeUpdate();
     }

@@ -26,6 +26,7 @@ import javax.ws.rs.core.UriInfo;
 
 import com.cisco.cmad.blogs.api.User;
 import com.cisco.cmad.blogs.api.Users;
+import com.cisco.cmad.blogs.common.config.AppConfig;
 import com.cisco.cmad.blogs.service.UsersService;
 import com.cisco.cmad.jwt.utils.KeyGenerator;
 import com.cisco.cmad.jwt.utils.SecretKeyGenerator;
@@ -111,7 +112,7 @@ public class UsersController {
         Key key = keyGenerator.generateKey();
         // todo: add timeout config
         String jwtToken = Jwts.builder().setSubject(userId).setIssuer(uriInfo.getAbsolutePath().toString())
-                .setIssuedAt(new Date()).setExpiration(toDate(LocalDateTime.now().plusMinutes(20L)))
+                .setIssuedAt(new Date()).setExpiration(toDate(LocalDateTime.now().plusMinutes(AppConfig.JWT_TIMEOUT)))
                 .signWith(SignatureAlgorithm.HS512, key).compact();
         logger.info("#### generating token for a key : " + jwtToken + " - " + key);
         return jwtToken;

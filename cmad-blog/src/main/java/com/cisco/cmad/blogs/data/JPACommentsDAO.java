@@ -8,10 +8,11 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.Comment;
+import com.cisco.cmad.blogs.common.config.AppConfig;
 
 public class JPACommentsDAO implements CommentsDAO {
 
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("com.cisco.blogs");
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(AppConfig.PERSISTENCE_UNIT_NAME);
 
     @Override
     public void create(Comment comment) {
