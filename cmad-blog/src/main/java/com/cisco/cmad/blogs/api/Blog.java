@@ -17,12 +17,14 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "Blog")
-@NamedQueries({ @NamedQuery(name = Blog.FIND_ALL, query = "SELECT u FROM Blog u ORDER BY u.lastUpdatedOn DESC"),
-        @NamedQuery(name = Blog.COUNT_ALL, query = "SELECT COUNT(u) FROM Blog u") })
+@NamedQueries({ @NamedQuery(name = Blog.FIND_ALL, query = "SELECT b FROM Blog b ORDER BY b.lastUpdatedOn DESC"),
+        @NamedQuery(name = Blog.COUNT_ALL, query = "SELECT COUNT(b) FROM Blog b"),
+        @NamedQuery(name = Blog.FIND_BY_CATEGORY, query = "SELECT b FROM Blog b WHERE b.category = :category ORDER BY b.lastUpdatedOn DESC") })
 
 public class Blog {
     public static final String FIND_ALL = "Blog.findAll";
     public static final String COUNT_ALL = "Blog.countAll";
+    public static final String FIND_BY_CATEGORY = "Blog.findByCategory";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long blogId;

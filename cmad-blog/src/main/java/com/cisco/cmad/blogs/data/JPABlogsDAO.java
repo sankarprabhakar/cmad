@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.Blog;
@@ -26,7 +27,7 @@ public class JPABlogsDAO implements BlogsDAO {
     public List<Blog> readByCategory(String category) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
-        TypedQuery<Blog> tquery = em.createQuery("FROM Blog b WHERE b.category = :category", Blog.class);
+        TypedQuery<Blog> tquery = em.createNamedQuery(Blog.FIND_BY_CATEGORY, Blog.class);
         tquery.setParameter("category", category);
         List<Blog> blogs = tquery.getResultList();
         em.getTransaction().commit();
@@ -75,8 +76,16 @@ public class JPABlogsDAO implements BlogsDAO {
         em.getTransaction().begin();
         Blog blog = em.find(Blog.class, blogId);
         em.remove(blog);
+        deleteCommentsByBlogId(blog.getBlogId(), em);
         em.getTransaction().commit();
         em.close();
+    }
+
+    private void deleteCommentsByBlogId(long blogId, EntityManager em) {
+        String queryStr = "DELETE FROM Comment c WHERE c.blog.blogId = :blogId";
+        Query query = em.createQuery(queryStr);
+        query.setParameter("blogId", blogId);
+        query.executeUpdate();
     }
 
     @Override

@@ -79,7 +79,8 @@ $(document).ready(function() {
             var signedInUser = getSignedInUser();
             console.log(signedInUser);
             var blogId = getSelectedBlogId();
-            var commentText = $("#bcfText").val();
+            var commentTextId = "#commentText" + i;
+            var commentText = $(commentTextId).val();
             var updatedComment = {
                 "addedBy" : {
                     "userId" : signedInUser

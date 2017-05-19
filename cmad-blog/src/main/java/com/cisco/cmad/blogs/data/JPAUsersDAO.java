@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.User;
@@ -78,8 +79,24 @@ public class JPAUsersDAO implements UsersDAO {
         em.getTransaction().begin();
         User user = em.find(User.class, userId);
         em.remove(user);
+        deleteBlogsByUserId(userId, em);
+        deleteCommentsByUserId(userId, em);
         em.getTransaction().commit();
         em.close();
+    }
+
+    private void deleteBlogsByUserId(String userId, EntityManager em) {
+        String queryStr = "DELETE FROM Blog b WHERE b.author.userId = :userId";
+        Query query = em.createQuery(queryStr);
+        query.setParameter("userId", userId);
+        query.executeUpdate();
+    }
+
+    private void deleteCommentsByUserId(String userId, EntityManager em) {
+        String queryStr = "DELETE FROM Comment c WHERE c.addedBy.userId = :userId";
+        Query query = em.createQuery(queryStr);
+        query.setParameter("userId", userId);
+        query.executeUpdate();
     }
 
 }
