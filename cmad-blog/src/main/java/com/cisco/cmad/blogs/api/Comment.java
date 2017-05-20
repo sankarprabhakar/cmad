@@ -35,22 +35,10 @@ public class Comment {
     @NotNull
     private Date lastUpdatedOn;
 
-    // (cascade = CascadeType.ALL, mappedBy = "blog", orphanRemoval =
-    // true)
-    // @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    // @ManyToOne // (optional = false)
     @ManyToOne(cascade = { CascadeType.REFRESH })
-    // @JoinColumn(name = "userId")
     private User addedBy;
 
-    // Specifies the Comment table does not contain an blog column, but
-    // a blogId column with a foreign key. And creates a join to
-    // fetch the blog
-    // @ManyToOne(/* cascade = CascadeType.ALL, */fetch = FetchType.EAGER)
-    // @JoinColumn(name = "blogId")
-    // @ManyToOne // (optional = false)
     @ManyToOne(cascade = { CascadeType.REFRESH })
-    // @ManyToOne
     private Blog blog;
 
     public Comment() {

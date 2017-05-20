@@ -277,7 +277,7 @@ $(document).ready(function() {
     function refreshComments(comments, totalCount) {
         console.log("refreshComments");
         totalCount = (totalCount) ? +totalCount : comments.length;
-        $("#commentsCount").val(comments.length);
+        $("#commentsCount").val(totalCount);
         if(currCommentsPageNum > 0 && comments.length == 0) {
             currCommentsPageNum--;
             console.log("adjust current page : CP = " +  currCommentsPageNum);
@@ -306,7 +306,8 @@ $(document).ready(function() {
         $("#blogCommentForm").hide();
     }
 
-    // Pagination
+    //////////////////// Pagination ///////////////////////
+    ///////////////////////////////////////////////////////
     $("#commentsFirstPage").click(function(e) {
         currCommentsPageNum = 0;
         console.log("blogFirstPage");

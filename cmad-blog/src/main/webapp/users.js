@@ -233,7 +233,7 @@ $(document).ready(function() {
                 addToBrowserCookie("userId", userId);
                 $(location).attr('href', 'index.html');
                 $("#signinForm").hide();
-                initializeMenu();
+                //initializeMenu();
             },
             error : function(xhr, status, err) {
                 alert("Invalid user or password");
@@ -334,6 +334,7 @@ $(document).ready(function() {
         var formParam = getQueryStringParams("form");
         var userId = getSignedInUser();
         console.log("### loadUserForm");
+        clearPageContext();
         console.log(formParam);
         console.log(userId);
         if (userId) {

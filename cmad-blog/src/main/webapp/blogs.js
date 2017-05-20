@@ -3,20 +3,18 @@ var maxBlogsPerPage = 5;
 var currPageNum = 0;
 var selectedBlogCategory;
 var initDone = false;
+//var pageContext = "home";
 
 $(document).ready(function() {
     console.log("document.ready()");
-
-    if(!initDone) {
+    console.log("PAGE CONTEXT : " + getPageContext());
+    if(getPageContext() == "#homeForm") {
+        console.log("INIT +++++++++++++++++++")
+        //setPageContext("#homeForm");
         loadHomePage();
         initializeMenu();
-        initDone = true;
+        //initDone = true;
     }
-
-    $("#addBlog").click(function(e) {
-        console.log("addBlog");
-        loadForm("newBlogForm");
-    })
 
     $("#addBlogMenu").click(function(e) {
         console.log("addBlog");
@@ -93,30 +91,6 @@ $(document).ready(function() {
         deleteBlog(blogId);
     })
 
-    function initializeMenu() {
-        console.log("initializeMenu");
-        var signedInUserId = getSignedInUser();
-        console.log(signedInUserId);
-        if (signedInUserId) {
-            $("#profileMenu").show();
-            $("#signinMenu").hide();
-            $("#signupMenu").hide();
-            $("#signoutMenu").show();
-            $("#addBlogMenu").show();
-            if (signedInUserId === "admin") {
-                $("#adminMenu").show();
-            } else {
-                $("#adminMenu").hide();
-            }
-        } else {
-            $("#profileMenu").hide();
-            $("#signinMenu").show();
-            $("#singUpMenu").show();
-            $("#signoutMenu").hide();
-            $("#adminMenu").hide();
-            $("#addBlogMenu").hide();
-        }
-    }
 
     // #AJAX POST
     function createBlog() {
@@ -203,6 +177,9 @@ $(document).ready(function() {
         $("#vblogAuthName").val(
                 blog.author.firstName + " "
                         + blog.author.lastName);
+        // setTimeout(function() {
+        //     $('#commentsFirstPage').trigger('click');
+        // }, 10);
     }
 
     function fillEditBlogForm(blog) {
@@ -457,6 +434,7 @@ $(document).ready(function() {
             $("#viewBlogForm").hide();
             $("#newBlogForm").trigger('reset');
             $("#newBlogForm").show();
+            setPageContext("#newBlogForm");
             $("#editBlogForm").hide();
             return;
         }
@@ -467,8 +445,9 @@ $(document).ready(function() {
                     if(!err) {
                         $("#homeForm").hide();
                         $("#viewBlogForm").trigger('reset');
-                        fillViewBlogForm(blog);
                         $("#viewBlogForm").show();
+                        setPageContext("#viewBlogForm");
+                        fillViewBlogForm(blog);
                         $("#editBlogForm").hide();
                         $("#newBlogForm").hide();
                     } else {
@@ -484,6 +463,7 @@ $(document).ready(function() {
                         $("#newBlogForm").hide();
                         $("#editBlogForm").trigger('reset');
                         $("#editBlogForm").show();
+                        setPageContext("#editBlogForm");
                         fillEditBlogForm(blog);
                     } else {
                         loadHomePage();
@@ -499,6 +479,7 @@ $(document).ready(function() {
 
     function loadHomePage() {
         console.log("load home form");
+        setPageContext("#homeForm");
         var category = getSelectedCategory();
         if(!category || category === "") {
             setSelectedCategory("");

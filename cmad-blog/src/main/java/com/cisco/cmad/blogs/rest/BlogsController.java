@@ -88,9 +88,9 @@ public class BlogsController {
     public Response readAllComments(@Context UriInfo info) {
         List<Comment> comments;
         GenericEntity<List<Comment>> entities;
-        String userIdStr = info.getPathParameters().getFirst("blogId");
+        String blogIdStr = info.getPathParameters().getFirst("blogId");
         String pageStr = info.getQueryParameters().getFirst("page");
-        long blogId = Long.parseLong(userIdStr);
+        long blogId = Long.parseLong(blogIdStr);
 
         long count = commentsService.readCountByBlogId(blogId);
         int pageNum = (pageStr == null || pageStr.isEmpty()) ? 0 : Integer.parseInt(pageStr);

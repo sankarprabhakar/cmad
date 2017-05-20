@@ -45,28 +45,8 @@ public class Blog {
 
     private String category;
 
-    // Specifies the Blog table does not contain an author column, but
-    // an userId column with a foreign key. And creates a join to
-    // fetch the userId
-    // @ManyToOne(cascade = CascadeType.MERGE REFRESH, fetch = FetchType.LAZY)
-    // @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @ManyToOne(cascade = { CascadeType.REFRESH })
-    // @JoinColumn(name = "userId")
     private User author;
-
-    // should contain one to many comments
-    // The 'mappedBy = "blog"' attribute specifies that
-    // the 'private Blog blog;' field in Comment owns the
-    // relationship (i.e. contains the foreign key for the query to
-    // find all comments for the blog.)
-    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // private List<Comment> comments;
-    // @JsonManagedReference
-    // @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER,
-    // mappedBy = "blog", orphanRemoval = true)
-    // private List<Comment> comments = new ArrayList<>();
-    // should contain one to many media files
-    // todo:
 
     public Blog() {
     }
