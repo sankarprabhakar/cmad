@@ -23,7 +23,6 @@ import com.cisco.cmad.blogs.api.Comment;
 import com.cisco.cmad.blogs.api.Comments;
 import com.cisco.cmad.blogs.service.BlogsService;
 import com.cisco.cmad.blogs.service.CommentsService;
-import com.cisco.cmad.jwt.filter.JwtTokenExpected;
 
 @Path("/blogs")
 @Produces(MediaType.APPLICATION_JSON)

@@ -28,7 +28,6 @@ import com.cisco.cmad.blogs.api.User;
 import com.cisco.cmad.blogs.api.Users;
 import com.cisco.cmad.blogs.common.config.AppConfig;
 import com.cisco.cmad.blogs.service.UsersService;
-import com.cisco.cmad.jwt.filter.JwtTokenExpected;
 import com.cisco.cmad.jwt.utils.KeyGenerator;
 import com.cisco.cmad.jwt.utils.SecretKeyGenerator;
 

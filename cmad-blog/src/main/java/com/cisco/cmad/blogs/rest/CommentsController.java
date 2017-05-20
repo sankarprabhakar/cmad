@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import com.cisco.cmad.blogs.api.Comment;
 import com.cisco.cmad.blogs.api.Comments;
 import com.cisco.cmad.blogs.service.CommentsService;
-import com.cisco.cmad.jwt.filter.JwtTokenExpected;
 
 @Path("/comments")
 @Consumes(MediaType.APPLICATION_JSON)

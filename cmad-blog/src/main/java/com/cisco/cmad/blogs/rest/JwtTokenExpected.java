@@ -1,4 +1,4 @@
-package com.cisco.cmad.jwt.filter;
+package com.cisco.cmad.blogs.rest;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;

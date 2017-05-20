@@ -1,6 +1,7 @@
 package com.cisco.cmad.blogs.rest;
 
 import javax.persistence.NoResultException;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -19,6 +20,8 @@ public class ResponseExceptionMapper implements ExceptionMapper<Throwable> {
             return Response.status(Response.Status.NO_CONTENT).build(); // HTTP204
         } else if (t instanceof IllegalArgumentException || t instanceof NumberFormatException) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        } else if (t instanceof NotAuthorizedException) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         } else {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

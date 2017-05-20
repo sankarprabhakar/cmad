@@ -9,5 +9,5 @@ public final class AppConfig {
 
     public final static String PERSISTENCE_UNIT_NAME = "com.cisco.blogs";
 
-    public final static boolean JWT_AUTH_ENABLED = false;
+    public final static boolean JWT_AUTH_ENABLED = true;
 }

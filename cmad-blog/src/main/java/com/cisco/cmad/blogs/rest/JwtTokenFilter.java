@@ -1,4 +1,4 @@
-package com.cisco.cmad.jwt.filter;
+package com.cisco.cmad.blogs.rest;
 
 import java.io.IOException;
 import java.security.Key;

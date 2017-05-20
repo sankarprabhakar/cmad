@@ -74,12 +74,6 @@
             <artifactId>jjwt</artifactId>
             <version>${version.jjwt}</version>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.192</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
