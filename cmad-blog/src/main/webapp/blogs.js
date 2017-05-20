@@ -127,10 +127,12 @@ $(document).ready(function() {
                 loadForm("homeForm");
             },
             error : function(xhr, status, err) {
-                setSelectedBlogId(undefined);
-                console.log("Create blog failed : ");
-                console.log(err);
-                console.log(status);
+                if(!err) {
+                    setSelectedBlogId(undefined);
+                    console.log("Create blog failed : ");
+                    console.log(err);
+                    console.log(status);
+                }
             },
             data : JSON.stringify(newBlog),
             headers: {
@@ -156,12 +158,14 @@ $(document).ready(function() {
                 //fillEditBlogForm(blog);
             },
             error : function(xhr, status, err) {
-                setSelectedBlogId(undefined);
-                console.log("Read blog failed : ");
-                console.log(err);
-                console.log(status);
-                callback(status)
-                //loadForm();
+                if(!err && err != "") {
+                    console.log("Read blog failed : ");
+                    console.log(err);
+                    console.log(status);
+                    setSelectedBlogId(undefined);
+                    callback(status)
+                    //loadForm();
+                }
             }
         })
     }
@@ -169,14 +173,18 @@ $(document).ready(function() {
     function fillViewBlogForm(blog) {
         console.log("fillViewBlogForm");
         console.log(blog);
-        $("#vblogId").val(blog.blogId);
-        $("#vblogTitle").val(blog.title);
-        $("#vblogText").val(blog.blogText);
-        $("#vblogCategory").val(blog.category);
-        $("#vblogAuthorId").val(blog.author.userId);
-        $("#vblogAuthName").val(
-                blog.author.firstName + " "
-                        + blog.author.lastName);
+
+        setTimeout(function() {
+            $("#vblogId").val(blog.blogId);
+            $("#vblogTitle").val(blog.title);
+            $("#vblogText").val(blog.blogText);
+            $("#vblogCategory").val(blog.category);
+            $("#vblogAuthorId").val(blog.author.userId);
+            $("#vblogAuthName").val(
+                    blog.author.firstName + " "
+                            + blog.author.lastName);
+            $('#commentsFirstPage').trigger('click');
+        }, 500);
         // setTimeout(function() {
         //     $('#commentsFirstPage').trigger('click');
         // }, 10);
@@ -185,14 +193,17 @@ $(document).ready(function() {
     function fillEditBlogForm(blog) {
         console.log("fillEditBlogForm");
         console.log(blog);
-        $("#eblogId").val(blog.blogId);
-        $("#eblogTitle").val(blog.title);
-        $("#eblogText").val(blog.blogText);
-        $("#eblogCategory").val(blog.category);
-        $("#eblogAuthorId").val(blog.author.userId);
-        $("#eblogAuthName").val(
-                blog.author.firstName + " "
-                        + blog.author.lastName);
+
+        setTimeout(function() {
+            $("#eblogId").val(blog.blogId);
+            $("#eblogTitle").val(blog.title);
+            $("#eblogText").val(blog.blogText);
+            $("#eblogCategory").val(blog.category);
+            $("#eblogAuthorId").val(blog.author.userId);
+            $("#eblogAuthName").val(
+                    blog.author.firstName + " "
+                            + blog.author.lastName);
+        }, 500);
     }
 
     function getBlogHtml(blogs, index) {
@@ -201,22 +212,22 @@ $(document).ready(function() {
         return "<div><br/><div><input id=\"lblogId" + index + "\" value="
         + blog.blogId
         + " style=\"display:none\" readonly>"
-        + "<b id=\"lblogTitle\">"
+        + "<b id=\"lblogTitle" + index + "\">"
         + blog.title
         + " </b></div><button class=\"btn btn-info glyphicon glyphicon-pencil\" id=\"leditBlog" + index + "\"></button><button "
         + "id=\"lviewBlog" + index + "\" class=\"btn btn-success glyphicon glyphicon-eye-open\"></button><button "
         + " class=\"btn btn-danger glyphicon glyphicon-trash\" id=\"ldeleteBlog" + index + "\"></button>"
-        + "</br><input type=\"text\" id=\"lblogCategory\" placeholder="
-        + blog.category
+        + "</br><input type=\"text\" id=\"lblogCategory" + index + "\" value=\""
+        + blog.category + "\""
         + " readonly>"
-        + "<br/><input id=\"lblogAuthorId\" placeholder="
-        + blog.author.userId
-        + " style=\"display:none\" readonly>by <input id=\"lblogAuthName\" placeholder="
+        + "<br/><input id=\"lblogAuthorId" + index + "\"  value=\""
+        + blog.author.userId + "\""
+        + " style=\"display:none\" readonly>by <input id=\"lblogAuthName" + index + "\"  value=\""
         + blog.author.firstName
         + " "
-        + blog.author.lastName
+        + blog.author.lastName + "\""
         + " readonly>"
-        + "<div><textarea id=\"lblogText\" class=\"form-control\" rows=\"5\" readonly required>" + blog.blogText + "</textarea>"
+        + "<div><textarea id=\"lblogText" + index + "\"  class=\"form-control\" rows=\"5\" readonly required>" + blog.blogText + "</textarea>"
         + "</div><br/></div>";
     }
 
@@ -226,14 +237,37 @@ $(document).ready(function() {
         $(identifier).html(htmlFrag);
     }
 
+    function showOrHideEditControls(i) {
+        console.log("showOrHideEditControls " + i);
+        var signedInUser = getSignedInUser();
+        console.log(signedInUser);
+        var buserId = "#lblogAuthorId" + i;
+        var blogOwner = $(buserId).val();
+        console.log(blogOwner);
+
+        var editbtn = "#leditBlog" + i;
+        var deletebtn = "#ldeleteBlog" + i;
+        var viewbtn = "#lviewBlog" + i;
+        $(viewbtn).show();
+        if(signedInUser == blogOwner) {
+            $(editbtn).show();
+            $(deletebtn).show();
+        } else {
+            $(editbtn).hide();
+            $(deletebtn).hide();
+        }
+    }
+
     function registerForEVDEvents(i) {
         console.log("registerForEVDEvents " + i);
+        showOrHideEditControls(i);
         var editbtn = "#leditBlog" + i;
         $(editbtn).click(function(e) {
             console.log(editbtn);
             var blog = "#lblogId" + i;
             var blogId = $(blog).val();
             setSelectedBlogId(blogId);
+            setPageContext("#editBlogForm");
             loadForm("editBlogForm", blogId);
         })
 
@@ -243,6 +277,7 @@ $(document).ready(function() {
             var blog = "#lblogId" + i;
             var blogId = $(blog).val();
             setSelectedBlogId(blogId);
+            setPageContext("#viewBlogForm");
             loadForm("viewBlogForm", blogId);
         })
 
@@ -384,11 +419,13 @@ $(document).ready(function() {
                 loadForm();
             },
             error : function(xhr, status, err) {
-                setSelectedBlogId(undefined);
-                console.log("update blog failed : ");
-                console.log(err);
-                console.log(status);
-                loadForm();
+                if(!err) {
+                    setSelectedBlogId(undefined);
+                    console.log("update blog failed : ");
+                    console.log(err);
+                    console.log(status);
+                    loadForm();
+                }
             },
             data : JSON.stringify(newBlog),
             headers: {
@@ -410,11 +447,13 @@ $(document).ready(function() {
                 loadForm();
             },
             error : function(xhr, status, err) {
-                console.log("Delete blog failed : " + blogId);
-                console.log(err);
-                console.log(status);
-                setSelectedBlogId(undefined);
-                loadForm();
+                if(!err) {
+                    console.log("Delete blog failed : " + blogId);
+                    console.log(err);
+                    console.log(status);
+                    setSelectedBlogId(undefined);
+                    loadForm();
+                }
             },
             headers: {
                     "Authorization": getFromBrowserCookie("Authorization")

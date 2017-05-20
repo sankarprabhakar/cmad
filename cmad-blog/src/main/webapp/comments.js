@@ -10,12 +10,11 @@ $(document).ready(function() {
         console.log(comment);
 
         return  "<div><input id=\"commentText" + index + "\" value=\"" + comment.commentText + "\">"
-        //+ "   <button id=\"editComment" + index + "\" class=\"btn btn-success glyphicon glyphicon-pencil\"> </button>"
+        + "<input id=\"cuserId" + index + "\" value=" + comment.addedBy.userId + " readonly>"
         + "   <button id=\"saveComment" + index + "\" class=\"btn btn-success glyphicon glyphicon-save\"> </button>"
         + "<button id=\"deleteComment" + index + "\" class=\"btn btn-danger glyphicon glyphicon-trash\"> </button>"
         + "<input id=\"commentId" + index + "\" value=" + comment.commentId + " style=\"display:none\">"
-        + "<input id=\"cblogId" + index + "\" value=" + comment.blog.blogId + " style=\"display:none\">"
-        + "<input id=\"cuserId" + index + "\" value=" + comment.addedBy.userId + " style=\"display:none\">"
+        + "<input id=\"cblogId" + index + "\" value=" + comment.blog.blogId + " style=\"display:none\" readonly>"
         + "</div><br/>"
     }
 
@@ -66,12 +65,15 @@ $(document).ready(function() {
 
         var editbtn = "#editComment" + i;
         var savebtn = "#saveComment" + i;
+        var deletebtn = "#deleteComment" + i;
         if(signedInUser === commentOwner) {
             $(editbtn).show();
             $(savebtn).show();
-        }else {
+            $(deletebtn).show();
+        } else {
             $(editbtn).hide();
             $(savebtn).hide();
+            $(deletebtn).hide();
         }
     }
 

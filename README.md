@@ -6,7 +6,7 @@
 4. Plant UML for design documentation
 5. Java Persistence API (2.x)
 6. Jersey Servlet Container (2.x)
-7. Moxy - JSON processor (supports both JSON & XML)  => JACKSON
+7. Moxy - JSON processor (supports both JSON & XML)  => Alternative JACKSON
 8. JSON Web Token (JWT) for authentication & API protection
 
 
@@ -16,27 +16,27 @@
 2. Sign off (Profile delete)
 3. Sign in
 4. Sign out
-5. Profile update (Protected by JWT - TODO)
-6. Admin view (List Users) (Protected by JWT - TODO)
-7. Profile delete (Sign off) also deletes all the user blogs, the related comments & user comments (Protected by JWT - TODO)
+5. Profile update (Protected by JWT)
+6. Admin view (List Users) (Protected by JWT)
+7. Profile delete (Sign off) also deletes all the user blogs, the related comments & user comments (Protected by JWT)
 
 # Blog Features
-1. Post a new blog (Protected by JWT - TODO)
-2. Update your existing blog (Protected by JWT - TODO)
+1. Post a new blog (Protected by JWT)
+2. Update your existing blog (Protected by JWT)
 3. Search blogs by category 
 4. Show all blogs 
-5. Delete your blog (Protected by JWT - TODO)
+5. Delete your blog (Protected by JWT)
 6. View/Read blog
 7. Listing recently added/updated blogs first
 8. Deleting a blog will also delete the related comments
-9. Pagination support (TODO)
+9. Pagination support
 
 
 # User-Comments on Blogs : Features
 1. Add a comment (Protected by JWT - TODO)
-2. Delete your comment (owner check ???) (Protected by JWT - TODO)
-3. Update your comment (owner check ???) (Protected by JWT - TODO)
-4. Pagination support (TODO)
+2. Delete your comment (owner check supported) (Protected by JWT)
+3. Update your comment (owner check supported) (Protected by JWT)
+4. Pagination support
 
 # Common Features
 1. Protection of APIs using JWT
