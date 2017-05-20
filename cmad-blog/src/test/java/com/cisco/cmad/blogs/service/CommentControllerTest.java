@@ -110,7 +110,7 @@ public class CommentControllerTest {
     // delete blog
     void deleteBlog(long blogId) {
         blogService.delete(blogId);
-        blog = null;
+
     }
 
     // create comment
@@ -139,7 +139,7 @@ public class CommentControllerTest {
 
     // create multiple comment
  	void createMultipleCommentToBlog(User blogger, Blog blogPost, String commentBase, int numOfComment){
- 		for (int i = 1; i <= numOfComment; i++){
+ 		for (int i = 0; i < numOfComment; i++){
  			try{
  				// build comment message
  				String commentMsg = commentBase + ". message counter : " + i;
@@ -177,7 +177,7 @@ public class CommentControllerTest {
 
 	// update multiple comment
 	void updateMultipleComment(List<Comment> updateCommentList, String baseMessage, int numOfComments){
-		for (int i = 1; i <= numOfComments; i++){
+		for (int i = 0; i < numOfComments; i++){
 			try{
 				// make update message string
 				String updateMsg = baseMessage + ". Comment update: " + i;
@@ -211,7 +211,7 @@ public class CommentControllerTest {
 
     // validate multiple comment
  	void validateMultipleCommentToBlog(List<Comment> commentList, Blog blogPost, String commentBase, int numOfComment){
- 		for (int i = 1; i <= numOfComment; i++){
+ 		for (int i = 0; i < numOfComment; i++){
  			try{
  				// build comment message
  				String commentMsg = commentBase + ". message counter : " + i;
@@ -233,7 +233,7 @@ public class CommentControllerTest {
  	
 	// validate multiple updated comment
 	void validateMultipleUpdatedComment(List<Comment> commentList, Blog blogPost, String commentBase, int numOfComments){
-		for (int i = 1; i <= numOfComments; i++){
+		for (int i = 0; i < numOfComments; i++){
 			try{
 				// make update message string
 				String updateMsg = commentBase + ". Comment update: " + i;
@@ -379,39 +379,6 @@ public class CommentControllerTest {
         // once user deleted entity mapping records will be deleted automatic.
     }
 
-	// Test multiple comment creation
-	@Test
-	public void multipleCreateComment(){
-		try {
-			// user created by setup
-			// create a new blog
-			createBlog(userService.read("admin"), "Cohart Training", "CMAD Blog", "Cisco organise the CMAD training of Advance development program.");
-			// read created blog
-			Blog createdBlog = blogService.readAllBlogs(0).get(0);
-			// add a comment ot the blog
-			// createCommentToBlog(userService.read("admin"), createdBlog, "CMAD is a very good traing program");
-			// create pultiple comment
-			createMultipleCommentToBlog(admin, createdBlog, "This a test comment sequence", 3);
-			// read the comment
-			List<Comment> createdComment = commentService.readAllByBlogId(createdBlog.getBlogId(),0);
-			// validate the comment
-			validateMultipleCommentToBlog(createdComment, createdBlog, "This a test comment sequence", 3);
-			// delete blog
-			deleteBlog(createdBlog.getBlogId());
-			
-		} catch (InvalidEntityException iee) {
-            fail();
-        } catch (DuplicateEntityException dee) {
-            fail();
-        } catch (EntityException le) {
-            fail();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        } 
-		// user will be deleted by teardown.
-		// once user deleted entity mapping records will be deleted automatic.
-	}
 	
     // Test comment update
     @Test
@@ -444,45 +411,6 @@ public class CommentControllerTest {
         // once user deleted entity mapping records will be deleted automatic.
     }
 
-	// Test update multiple comment 
-	@Test
-	public void updateMultipleComment(){
-		try {
-			// user created by setup
-			// create a new blog
-			createBlog(userService.read("admin"), "Cohart Training", "CMAD Blog", "Cisco organise the CMAD training of Advance development program.");
-			// read created blog
-			Blog createdBlog = blogService.readAllBlogs(0).get(0);
-			// add a comment ot the blog
-			// createCommentToBlog(userService.read("admin"), createdBlog, "CMAD is a very good traing program");
-			// create pultiple comment
-			createMultipleCommentToBlog(admin, createdBlog, "This a test comment sequence", 3);
-			// read the comment
-			List<Comment> createdComment = commentService.readAllByBlogId(createdBlog.getBlogId(),0);
-			// validate the comment
-			validateMultipleCommentToBlog(createdComment, createdBlog, "This a test comment sequence", 3);
-			// update multiple comments
-			updateMultipleComment(createdComment, "This a test comment sequence", 3);
-			// get list of comments
-			createdComment = commentService.readAllByBlogId(createdBlog.getBlogId(),0);
-			// validate updated somments
-			validateMultipleUpdatedComment(createdComment, createdBlog, "This a test comment sequence", 3);
-			// delete blog
-			deleteBlog(createdBlog.getBlogId());
-			
-		} catch (InvalidEntityException iee) {
-            fail();
-        } catch (DuplicateEntityException dee) {
-            fail();
-        } catch (EntityException le) {
-            fail();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        } 
-		// user will be deleted by teardown.
-		// once user deleted entity mapping records will be deleted automatic.
-	}
 
     // Test comment delete
     @Test
@@ -518,66 +446,19 @@ public class CommentControllerTest {
         // once user deleted entity mapping records will be deleted automatic.
     }
 
-	// Test delete multiple comment
-	@Test
-	public void deleteMultipleComment(){
-		try {
-			// user created by setup
-			// create a new blog
-			createBlog(userService.read("admin"), "Cohart Training", "CMAD Blog", "Cisco organise the CMAD training of Advance development program.");
-			// read created blog
-			Blog createdBlog = blogService.readAllBlogs(0).get(0);
-			// add a comment ot the blog
-			// createCommentToBlog(userService.read("admin"), createdBlog, "CMAD is a very good traing program");
-			// create pultiple comment
-			createMultipleCommentToBlog(admin, createdBlog, "This a test comment sequence", 3);
-			// read the comment
-			List<Comment> createdComment = commentService.readAllByBlogId(createdBlog.getBlogId(),0);
-			// validate the comment
-			validateMultipleCommentToBlog(createdComment, createdBlog, "This a test comment sequence", 3);
-			// delete multipe comments
-			for (int i = 1; i <=3; i++){
-				deleteAComment(createdComment.get(i).getCommentId());
-			}
-			// get the list of comments
-			createdComment = commentService.readAllByBlogId(createdBlog.getBlogId(),0);
-			// validate remaining comment list should be 2, after deleting 3 comments.
-			assert (createdComment.size() == 2);
-			
-			// delete blog
-			deleteBlog(createdBlog.getBlogId());
-			
-		} catch (InvalidEntityException iee) {
-            fail();
-        } catch (DuplicateEntityException dee) {
-            fail();
-        } catch (EntityException le) {
-            fail();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        } 
-		// user will be deleted by teardown.
-		// once user deleted entity mapping records will be deleted automatic.
-	}
 
     @Test
     public void readCommentPages() {
         try {
-        	// create a blog
-            createBlog(admin, "WEB", "Web Episode", "HarryPorter series, give comment on epsode wise.");
-            // read the blog
-            Blog createdBlog = blogService.readAllBlogs(0).get(0);
             // initialize number of comment to be created
             int TOTAL_COMMENTS = 11;
             // create the desired amount of comments
-            createMultipleCommentToBlog(admin, createdBlog, "HarryPorter comment series: ", TOTAL_COMMENTS);
+            createMultipleCommentToBlog(admin, blog, "HarryPorter comment series: ", TOTAL_COMMENTS);
             // validate forward traverse of comment pages
-            navigateForwardByBlog( createdBlog.getBlogId(), TOTAL_COMMENTS);
+            navigateForwardByBlog( blog.getBlogId(), TOTAL_COMMENTS);
             // validate backward traverse of comment pages
-            navigateBackwardsByBolg(createdBlog.getBlogId(), TOTAL_COMMENTS);
-            // finally delete the blod
-            deleteBlog(createdBlog.getBlogId());
+            navigateBackwardsByBolg(blog.getBlogId(), TOTAL_COMMENTS);
+
         } catch (InvalidEntityException ibe) {
             fail();
         } catch (DuplicateEntityException dbe) {
