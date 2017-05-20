@@ -18,6 +18,7 @@ import com.cisco.cmad.blogs.api.DuplicateEntityException;
 import com.cisco.cmad.blogs.api.EntityException;
 import com.cisco.cmad.blogs.api.InvalidEntityException;
 import com.cisco.cmad.blogs.api.User;
+import com.cisco.cmad.blogs.common.config.AppConfig;
 
 public class CommentControllerTest {
 
@@ -252,6 +253,81 @@ public class CommentControllerTest {
 		}
 	}
 	
+	// validate forward pagination
+    private int navigateForwardByBlog(long blogId, int totalComment) throws DataNotFoundException, EntityException {
+    	// initialize page count
+        int page = 0;
+        // traverse total number of page based on total comment and MAX_COMMENTS_PAGE_SIZE
+        // Forward pagination
+        for (page = 0; page < totalComment / AppConfig.MAX_COMMENTS_PAGE_SIZE; page++) {
+            logger.info("PAGE FORWARD" + page);
+            // get number of comment available in a page 
+            int commentCount = commentService.readAllByBlogId(blogId, page).size();
+            logger.info("COMMENT COUNT = " + commentCount);
+            // validate number of comment should not increase MAX_COMMENTS_PAGE_SIZE
+            assert (commentCount == AppConfig.MAX_COMMENTS_PAGE_SIZE);
+        }
+        // get comments on last page
+        int lastPageCount = totalComment % AppConfig.MAX_COMMENTS_PAGE_SIZE;
+        if (lastPageCount > 0) {
+        	// validate last page comments as expected
+            assert (commentService.readAllByBlogId(blogId, page).size() == lastPageCount);
+            logger.info("PAGE FORWARD LASTPAGE " + page);
+        }
+
+        try {
+        	// conform you there is no more forward page movement.
+        	commentService.readAllByBlogId(blogId, page++);
+        } catch (Exception e) {
+        	// finalize the page value to last page count
+            page--;
+            assert (true);
+        }
+
+        return page;
+    }
+
+    // validate backward pagination
+    private int navigateBackwardsByBolg(long blogId, int totalComment) throws DataNotFoundException, EntityException {
+        // Calculate total number of pages available
+    	int totalPages = totalComment / AppConfig.MAX_COMMENTS_PAGE_SIZE;
+    	// fetch last page comments count
+        int lastPageCount = totalComment % AppConfig.MAX_COMMENTS_PAGE_SIZE;
+        // Set the value for last page count
+        if (lastPageCount > 0) {
+            totalPages++;
+        }
+        int page = totalPages - 1;
+        logger.info("PAGE BACKWARD LAST PAGE " + page);
+        // read number of comment in last page
+        int commentCount = commentService.readAllByBlogId(blogId, page--).size();
+        logger.info("COMMENT COUNT = " + commentCount);
+        // validate last page comments as expected
+        assert (commentCount == lastPageCount);
+
+        // Backward page traverse
+        for (; page >= 0; page--) {
+            logger.info("PAGE BACKWARD" + page);
+            // read number of comments per page
+            commentCount = commentService.readAllByBlogId(blogId, page--).size();
+            logger.info("COMMENT COUNT = " + commentCount);
+            // validate number of comments per page should not exceed MAX_COMMENTS_PAGE_SIZE
+            assert (commentCount == AppConfig.MAX_COMMENTS_PAGE_SIZE);
+
+        }
+
+        try {
+        	// verify it has reached the 1st page
+        	commentService.readAllByBlogId(blogId, page--);
+        } catch (Exception e) {
+        	// reset page value to 1st page
+            page++;
+            assert (true);
+        }
+
+        return page;
+    }
+    
     // Test comment creation
     @Test
     public void createComment() {
@@ -277,6 +353,7 @@ public class CommentControllerTest {
         // once user deleted entity mapping records will be deleted automatic.
     }
 
+    // Test comment read
     @Test
     public void readComment() {
         try {
@@ -336,6 +413,7 @@ public class CommentControllerTest {
 		// once user deleted entity mapping records will be deleted automatic.
 	}
 	
+    // Test comment update
     @Test
     public void updateComment() {
         try {
@@ -405,7 +483,8 @@ public class CommentControllerTest {
 		// user will be deleted by teardown.
 		// once user deleted entity mapping records will be deleted automatic.
 	}
-		
+
+    // Test comment delete
     @Test
     public void deleteComment() {
         try {
@@ -481,4 +560,34 @@ public class CommentControllerTest {
 		// user will be deleted by teardown.
 		// once user deleted entity mapping records will be deleted automatic.
 	}
+
+    @Test
+    public void readCommentPages() {
+        try {
+        	// create a blog
+            createBlog(admin, "WEB", "Web Episode", "HarryPorter series, give comment on epsode wise.");
+            // read the blog
+            Blog createdBlog = blogService.readAllBlogs(0).get(0);
+            // initialize number of comment to be created
+            int TOTAL_COMMENTS = 11;
+            // create the desired amount of comments
+            createMultipleCommentToBlog(admin, createdBlog, "HarryPorter comment series: ", TOTAL_COMMENTS);
+            // validate forward traverse of comment pages
+            navigateForwardByBlog( createdBlog.getBlogId(), TOTAL_COMMENTS);
+            // validate backward traverse of comment pages
+            navigateBackwardsByBolg(createdBlog.getBlogId(), TOTAL_COMMENTS);
+            // finally delete the blod
+            deleteBlog(createdBlog.getBlogId());
+        } catch (InvalidEntityException ibe) {
+            fail();
+        } catch (DuplicateEntityException dbe) {
+            fail();
+        } catch (EntityException le) {
+            fail();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+	
 }
