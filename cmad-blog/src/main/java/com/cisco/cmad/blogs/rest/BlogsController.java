@@ -23,6 +23,7 @@ import com.cisco.cmad.blogs.api.Comment;
 import com.cisco.cmad.blogs.api.Comments;
 import com.cisco.cmad.blogs.service.BlogsService;
 import com.cisco.cmad.blogs.service.CommentsService;
+import com.cisco.cmad.jwt.filter.JwtTokenExpected;
 
 @Path("/blogs")
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +35,7 @@ public class BlogsController {
 
     @POST
     @Path("/")
-    // @JwtTokenExpected
+    @JwtTokenExpected
     public Response create(Blog blog) {
         blogsService.create(blog);
         return Response.ok().entity(blog).build();
@@ -85,10 +86,14 @@ public class BlogsController {
 
     @GET
     @Path("/{blogId}/comments")
-    public Response readAllComments(@PathParam("blogId") long blogId) {
+    public Response readAllComments(@Context UriInfo info) {
         List<Comment> comments;
         GenericEntity<List<Comment>> entities;
-        comments = commentsService.readAllByBlogId(blogId);
+        String userIdStr = info.getPathParameters().getFirst("blogId");
+        String pageStr = info.getQueryParameters().getFirst("page");
+        long blogId = Long.parseLong(userIdStr);
+        int pageNum = (pageStr == null || pageStr.isEmpty()) ? 0 : Integer.parseInt(pageStr);
+        comments = commentsService.readAllByBlogId(blogId, pageNum);
         entities = new GenericEntity<List<Comment>>(comments) {
         };
         return Response.ok().entity(entities).build();
@@ -96,7 +101,7 @@ public class BlogsController {
 
     @PUT
     @Path("/")
-    // @JwtTokenExpected
+    @JwtTokenExpected
     public Response update(Blog blog) {
         blogsService.update(blog);
         blog = blogsService.read(blog.getBlogId());
@@ -105,7 +110,7 @@ public class BlogsController {
 
     @DELETE
     @Path("/{blogId}")
-    // @JwtTokenExpected
+    @JwtTokenExpected
     public Response delete(@PathParam("blogId") long blogId) {
         blogsService.delete(blogId);
         return Response.noContent().build();

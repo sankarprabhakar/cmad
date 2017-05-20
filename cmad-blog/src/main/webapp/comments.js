@@ -1,4 +1,5 @@
 var maxCommentsPerPage = 3;
+var currCommentsPageNum = 0;
 
 $(document).ready(function() {
     console.log("comments.js");
@@ -221,6 +222,7 @@ $(document).ready(function() {
 
     function getComments(reqUrl) {
         console.log("getComments");
+        console.log(reqUrl);
         $.ajax({
             url : reqUrl,
             type : "GET",
@@ -234,20 +236,22 @@ $(document).ready(function() {
                 console.log(reqUrl + " failure");
                 console.log(err);
                 console.log(status);
-                fillComments([]);
+                if(currPageNum > 0) {
+                    currCommentsPageNum--;
+                } else {
+                    fillComments([]);
+                }
             }
         })
     }
 
-    function readComments(blogId, start, size) {
-        start = (start) ? start : 0;
-        size = (size) ? size : 3;
-        // var reqUrl = "" + getBaseUrl() + "tecblog/blogs?category=WEB";
-        var reqUrl = "" + getBaseUrl() + "tecblog/blogs/" + blogId + "/comments";
+    function readComments(blogId, pageNum, size) {
+        pageNum = (pageNum) ? pageNum : 0;
+        size = (size) ? size : maxCommentsPerPage;
+        var reqUrl = "" + getBaseUrl() + "tecblog/blogs/" + blogId + "/comments?page=" + pageNum;
         console.log("Read all comments of a blog: ");
         getComments(reqUrl);
     }
-
 
     function loadCommentForm(form) {
         console.log("loadCommentForm");
@@ -260,5 +264,30 @@ $(document).ready(function() {
         $("#bcfText").val("");
         $("#blogCommentForm").hide();
     }
+
+    // Pagination
+    $("#commentsFirstPage").click(function(e) {
+        currCommentsPageNum = 0;
+        console.log("blogFirstPage");
+
+        var blogId = getSelectedBlogId();
+        readComments(blogId, currCommentsPageNum);
+    });
+
+    $("#commentsNextPage").click(function(e) {
+        currCommentsPageNum++;
+        console.log("blogLastPage");
+
+        var blogId = getSelectedBlogId();
+        readComments(blogId, ++currCommentsPageNum);
+    });
+
+    $("#commentsPrevPage").click(function(e) {
+        currCommentsPageNum = (currCommentsPageNum > 0) ?  --currCommentsPageNum : 0;
+        console.log("blogPrevPage");
+
+        var blogId = getSelectedBlogId();
+        readComments(blogId, currCommentsPageNum);
+    });
 
 });

@@ -69,8 +69,8 @@ public class CommentsService implements Comments {
     }
 
     @Override
-    public List<Comment> readAllByBlogId(long blogId) throws DataNotFoundException, EntityException {
-        List<Comment> comments = dao.readAllByBlogId(blogId);
+    public List<Comment> readAllByBlogId(long blogId, int pageNum) throws DataNotFoundException, EntityException {
+        List<Comment> comments = dao.readAllByBlogId(blogId, pageNum);
         if (comments == null)
             throw new DataNotFoundException();
         return comments;

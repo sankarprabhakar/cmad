@@ -13,6 +13,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import com.cisco.cmad.blogs.common.config.AppConfig;
 import com.cisco.cmad.jwt.utils.KeyGenerator;
 import com.cisco.cmad.jwt.utils.SecretKeyGenerator;
 
@@ -30,6 +31,8 @@ public class JwtTokenFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
+        if (!AppConfig.JWT_AUTH_ENABLED)
+            return;
 
         // Get the HTTP Authorization header from the request
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);

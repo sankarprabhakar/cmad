@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -15,7 +17,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "Comment")
+@NamedQueries(@NamedQuery(name = Comment.FIND_BLOG_COMMENTS, query = "SELECT c FROM Comment c WHERE c.blog.blogId = :blogId ORDER BY c.lastUpdatedOn DESC"))
 public class Comment {
+    public static final String FIND_BLOG_COMMENTS = "Blog.findBlogComments";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long commentId;
@@ -49,53 +54,48 @@ public class Comment {
         super();
     }
 
-    public Comment(long commentId, String text, Date lastUpdatedOn) {
-        super();
-        this.commentId = commentId;
-        this.commentText = text;
-        this.lastUpdatedOn = lastUpdatedOn;
-        // this.blog = blog;
-        // this.addedBy = addedBy;
-    }
-
     public long getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(long id) {
+    public Comment setCommentId(long id) {
         this.commentId = id;
+        return this;
     }
 
     public String getCommentText() {
         return commentText;
     }
 
-    public void setCommentText(String text) {
+    public Comment setCommentText(String text) {
         this.commentText = text;
+        return this;
     }
 
     public Date getLastUpdatedOn() {
         return lastUpdatedOn;
     }
 
-    public void setLastUpdatedOn(Date lastUpdatedOn) {
+    public Comment setLastUpdatedOn(Date lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
+        return this;
     }
 
     public Blog getBlog() {
         return blog;
     }
 
-    public void setBlog(Blog blog) {
+    public Comment setBlog(Blog blog) {
         this.blog = blog;
-        // blog.addComment(this);
+        return this;
     }
 
     public User getAddedBy() {
         return addedBy;
     }
 
-    public void setAddedBy(User addedBy) {
+    public Comment setAddedBy(User addedBy) {
         this.addedBy = addedBy;
+        return this;
     }
 }

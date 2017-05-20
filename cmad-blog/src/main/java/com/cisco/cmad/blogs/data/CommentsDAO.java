@@ -9,7 +9,7 @@ public interface CommentsDAO {
 
     public Comment read(long commentId);
 
-    public List<Comment> readAllByBlogId(long blogId);
+    public List<Comment> readAllByBlogId(long blogId, int pageNum);
 
     public void update(Comment comment);
 

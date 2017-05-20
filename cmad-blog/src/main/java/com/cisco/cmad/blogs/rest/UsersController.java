@@ -28,6 +28,7 @@ import com.cisco.cmad.blogs.api.User;
 import com.cisco.cmad.blogs.api.Users;
 import com.cisco.cmad.blogs.common.config.AppConfig;
 import com.cisco.cmad.blogs.service.UsersService;
+import com.cisco.cmad.jwt.filter.JwtTokenExpected;
 import com.cisco.cmad.jwt.utils.KeyGenerator;
 import com.cisco.cmad.jwt.utils.SecretKeyGenerator;
 
@@ -57,6 +58,7 @@ public class UsersController {
 
     @GET
     @Path("/{userId}")
+    @JwtTokenExpected
     public Response read(@PathParam("userId") String userId) {
         User user = users.read(userId);
         return Response.ok().entity(user).build();
@@ -64,6 +66,7 @@ public class UsersController {
 
     @GET
     @Path("/")
+    @JwtTokenExpected
     public Response readAllUsers() {
         List<User> matched;
         GenericEntity<List<User>> entities;
@@ -75,6 +78,7 @@ public class UsersController {
 
     @PUT
     @Path("/")
+    @JwtTokenExpected
     public Response update(User user) {
         users.update(user);
         return Response.ok().entity(user).build();
@@ -82,6 +86,7 @@ public class UsersController {
 
     @DELETE
     @Path("/{userId}")
+    @JwtTokenExpected
     public Response delete(@PathParam("userId") String userId) {
         logger.info("deleUser " + userId);
         users.delete(userId);
@@ -90,7 +95,6 @@ public class UsersController {
 
     @POST
     @Path("/{userId}") // used for authenticating user
-    // @Path("/user")
     public Response authenticateUser(User user) {
         try {
             logger.info("#### login/password : " + user.getUserId() + "/" + user.getPassword());
@@ -110,7 +114,6 @@ public class UsersController {
 
     private String issueToken(String userId) {
         Key key = keyGenerator.generateKey();
-        // todo: add timeout config
         String jwtToken = Jwts.builder().setSubject(userId).setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date()).setExpiration(toDate(LocalDateTime.now().plusMinutes(AppConfig.JWT_TIMEOUT)))
                 .signWith(SignatureAlgorithm.HS512, key).compact();

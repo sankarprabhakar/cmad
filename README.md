@@ -1,13 +1,13 @@
 # Simple Blogging Site
 # Technologies used
-# 1. Java 1.8
-# 2. Java API for RESTful Web Services (JAX-RS) (2.x)
-# 3. Maven build system (3.x)
-# 4. Plant UML for design documentation
-# 5. Java Persistence API (2.x)
-# 6. Jersey Servlet Container (2.x)
-# 7. Moxy - JSON processor (supports both JSON & XML)  => JACKSON
-# 8. JSON Web Token (JWT) for authentication & API protection
+1. Java 1.8
+2. Java API for RESTful Web Services (JAX-RS) (2.x)
+3. Maven build system (3.x)
+4. Plant UML for design documentation
+5. Java Persistence API (2.x)
+6. Jersey Servlet Container (2.x)
+7. Moxy - JSON processor (supports both JSON & XML)  => JACKSON
+8. JSON Web Token (JWT) for authentication & API protection
 
 
 # Features Supported

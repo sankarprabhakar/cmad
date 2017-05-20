@@ -7,7 +7,7 @@ public interface Comments {
 
     public Comment read(long commentId) throws DataNotFoundException, EntityException;
 
-    public List<Comment> readAllByBlogId(long blogId) throws DataNotFoundException, EntityException;
+    public List<Comment> readAllByBlogId(long blogId, int pageNum) throws DataNotFoundException, EntityException;
 
     public Comment update(Comment comment) throws DataNotFoundException, EntityException;
 

@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import com.cisco.cmad.blogs.api.Comment;
 import com.cisco.cmad.blogs.api.Comments;
 import com.cisco.cmad.blogs.service.CommentsService;
+import com.cisco.cmad.jwt.filter.JwtTokenExpected;
 
 @Path("/comments")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -23,6 +24,7 @@ public class CommentsController {
 
     @POST
     @Path("/")
+    @JwtTokenExpected
     public Response create(Comment comment) {
         comments.create(comment);
         return Response.ok().entity(comment).build();
@@ -37,6 +39,7 @@ public class CommentsController {
 
     @PUT
     @Path("/")
+    @JwtTokenExpected
     public Response update(Comment comment) {
         comments.update(comment);
         return Response.ok().entity(comment).build();
@@ -44,6 +47,7 @@ public class CommentsController {
 
     @DELETE
     @Path("/{commentId}")
+    @JwtTokenExpected
     public Response delete(@PathParam("commentId") long blogId) {
         comments.delete(blogId);
         return Response.noContent().build();

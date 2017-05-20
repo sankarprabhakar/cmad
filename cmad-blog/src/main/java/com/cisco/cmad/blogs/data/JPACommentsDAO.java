@@ -54,17 +54,21 @@ public class JPACommentsDAO implements CommentsDAO {
     }
 
     @Override
-    public List<Comment> readAllByBlogId(long blogId) {
+    public List<Comment> readAllByBlogId(long blogId, int pageNum) {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
-        // TypedQuery<Comment> tquery = em.createQuery("FROM Comment c WHERE
-        // c.blog.blogId = :blogId", Comment.class);
-        TypedQuery<Comment> tquery = em.createQuery(
-                "FROM Comment c WHERE c.blog.blogId = :blogId ORDER BY c.lastUpdatedOn DESC", Comment.class);
+        TypedQuery<Comment> tquery = em.createNamedQuery(Comment.FIND_BLOG_COMMENTS, Comment.class);
+        setPageParams(tquery, pageNum);
         List<Comment> comments = tquery.setParameter("blogId", blogId).getResultList();
         em.getTransaction().commit();
         em.close();
         return comments;
+    }
+
+    private void setPageParams(TypedQuery<Comment> tquery, int pageNum) {
+        tquery.setMaxResults(AppConfig.MAX_COMMENTS_PAGE_SIZE);
+        int index = pageNum * AppConfig.MAX_COMMENTS_PAGE_SIZE;
+        tquery.setFirstResult(index);
     }
 
 }
