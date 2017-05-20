@@ -3,15 +3,6 @@ var maxBlogsPerPage = 5;
 var currPageNum = 0;
 var selectedBlogCategory;
 var initDone = false;
-// var currContext;
-
-// function getPageContext() {
-//     return currContext;
-// }
-
-// function setPageContext(ctx) {
-//     currContext = ctx;
-// }
 
 $(document).ready(function() {
     console.log("document.ready()");
@@ -111,6 +102,7 @@ $(document).ready(function() {
             $("#signinMenu").hide();
             $("#signupMenu").hide();
             $("#signoutMenu").show();
+            $("#addBlogMenu").show();
             if (signedInUserId === "admin") {
                 $("#adminMenu").show();
             } else {
@@ -122,9 +114,11 @@ $(document).ready(function() {
             $("#singUpMenu").show();
             $("#signoutMenu").hide();
             $("#adminMenu").hide();
+            $("#addBlogMenu").hide();
         }
     }
 
+    // #AJAX POST
     function createBlog() {
         console.log("createBlog");
         console.log(window.location.href.match(/^.*\//)[0]);
@@ -156,9 +150,6 @@ $(document).ready(function() {
                 console.log("New blog created: ");
                 console.log(blog);
                 setSelectedBlogId(blog.blogId);
-// $("#newBlogForm").hide();
-// $("#viewBlogForm").trigger('reset');
-// $("#viewBlogForm").show();
                 loadForm("homeForm");
             },
             error : function(xhr, status, err) {
@@ -167,10 +158,14 @@ $(document).ready(function() {
                 console.log(err);
                 console.log(status);
             },
-            data : JSON.stringify(newBlog)
+            data : JSON.stringify(newBlog),
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
+            }
         })
     }
 
+    // #AJAX GET
     function readBlog(blogId, callback) {
         console.log("readBlog");
         var reqUrl = "" + getBaseUrl() + "tecblog/blogs/"
@@ -311,6 +306,7 @@ $(document).ready(function() {
         });
     }
 
+    // #AJAX GET all blogs
     function getBlogs(reqUrl) {
         console.log("getBlogs");
         $.ajax({
@@ -379,6 +375,7 @@ $(document).ready(function() {
         getBlogs(reqUrl);
     }
 
+    // #AJAX PUT
     function updateBlog(blogId) {
         console.log(window.location.href.match(/^.*\//)[0]);
         console.log(getBaseUrl());
@@ -416,10 +413,14 @@ $(document).ready(function() {
                 console.log(status);
                 loadForm();
             },
-            data : JSON.stringify(newBlog)
+            data : JSON.stringify(newBlog),
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
+            }
         })
     }
 
+    // #AJAX DELETE
     function deleteBlog(blogId) {
         var reqUrl = "" + getBaseUrl() + "tecblog/blogs/"
                 + blogId;
@@ -437,6 +438,9 @@ $(document).ready(function() {
                 console.log(status);
                 setSelectedBlogId(undefined);
                 loadForm();
+            },
+            headers: {
+                    "Authorization": getFromBrowserCookie("Authorization")
             }
         })
     }

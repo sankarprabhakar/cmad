@@ -91,6 +91,7 @@ $(document).ready(function() {
         //loadUserForm();
     })
 
+    // #AJAX POST
     function createUser() {
         console.log("createUser");
         console.log(window.location.href.match(/^.*\//)[0]);
@@ -132,6 +133,7 @@ $(document).ready(function() {
         })
     }
 
+    // #AJAX GET user
     function readUser(userId) {
         console.log("readUser");
         var reqUrl = "" + getBaseUrl() + "tecblog/users/" + userId;
@@ -154,10 +156,14 @@ $(document).ready(function() {
                 console.log(status);
                 clearAuthCookies();
                 loadUserForm();
-            }
+            },
+            headers: {
+                    "Authorization": getFromBrowserCookie("Authorization")
+                }
         })
     }
 
+    // #AJAX GET all users
     function readAllUsers() {
         console.log("readAllUsers");
         var reqUrl = "" + getBaseUrl() + "tecblog/users";
@@ -191,10 +197,14 @@ $(document).ready(function() {
                 console.log(status);
                 // clearAuthCookies();
                 // loadUserForm();
+            },
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
             }
         })
     }
 
+    // #AJAX POST signin
     function authenticateUser() {
         console.log("authenticateUser");
         console.log(window.location.href.match(/^.*\//)[0]);
@@ -231,11 +241,15 @@ $(document).ready(function() {
                 console.log(status);
                 console.log("authenticateUser failed");
             },
-            data : JSON.stringify(user)
+            data : JSON.stringify(user),
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
+            }
         })
         console.log("authenticate user end");
     }
 
+    // #AJAX PUT profile update
     function updateUser() {
         console.log("updateUser");
         console.log(window.location.href.match(/^.*\//)[0]);

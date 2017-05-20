@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cisco.cmad.blogs.api.Comment;
@@ -69,6 +70,18 @@ public class JPACommentsDAO implements CommentsDAO {
         tquery.setMaxResults(AppConfig.MAX_COMMENTS_PAGE_SIZE);
         int index = pageNum * AppConfig.MAX_COMMENTS_PAGE_SIZE;
         tquery.setFirstResult(index);
+    }
+
+    @Override
+    public long readCountByBlogId(long blogId) {
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery(Comment.COUNT_BLOG_COMMENTS);
+        query.setParameter("blogId", blogId);
+        Long count = (Long) query.getSingleResult();
+        em.getTransaction().commit();
+        em.close();
+        return count;
     }
 
 }

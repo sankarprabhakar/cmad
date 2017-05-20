@@ -92,11 +92,13 @@ public class BlogsController {
         String userIdStr = info.getPathParameters().getFirst("blogId");
         String pageStr = info.getQueryParameters().getFirst("page");
         long blogId = Long.parseLong(userIdStr);
+
+        long count = commentsService.readCountByBlogId(blogId);
         int pageNum = (pageStr == null || pageStr.isEmpty()) ? 0 : Integer.parseInt(pageStr);
         comments = commentsService.readAllByBlogId(blogId, pageNum);
         entities = new GenericEntity<List<Comment>>(comments) {
         };
-        return Response.ok().entity(entities).build();
+        return Response.ok().entity(entities).header("count", count).build();
     }
 
     @PUT

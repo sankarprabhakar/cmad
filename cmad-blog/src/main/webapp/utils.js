@@ -29,10 +29,10 @@ function getQueryStringParams(paramName) {
     var pageURL = window.location.search.substring(1);
     var urlVariables = pageURL.split('&');
     for (var i = 0; i < urlVariables.length; i++) {
-    var parameterName = urlVariables[i].split('=');
-    if (parameterName[0] === paramName) {
-    return parameterName[1];
-    }
+        var parameterName = urlVariables[i].split('=');
+        if (parameterName[0] === paramName) {
+            return parameterName[1];
+        }
     }
 }
 

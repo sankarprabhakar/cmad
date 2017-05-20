@@ -17,9 +17,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "Comment")
-@NamedQueries(@NamedQuery(name = Comment.FIND_BLOG_COMMENTS, query = "SELECT c FROM Comment c WHERE c.blog.blogId = :blogId ORDER BY c.lastUpdatedOn DESC"))
+@NamedQueries({
+        @NamedQuery(name = Comment.COUNT_BLOG_COMMENTS, query = "SELECT COUNT(c) FROM Comment c WHERE c.blog.blogId = :blogId"),
+        @NamedQuery(name = Comment.FIND_BLOG_COMMENTS, query = "SELECT c FROM Comment c WHERE c.blog.blogId = :blogId ORDER BY c.lastUpdatedOn DESC") })
 public class Comment {
     public static final String FIND_BLOG_COMMENTS = "Blog.findBlogComments";
+    public static final String COUNT_BLOG_COMMENTS = "Blog.countBlogComments";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

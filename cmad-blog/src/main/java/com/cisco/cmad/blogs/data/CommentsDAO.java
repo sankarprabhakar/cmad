@@ -14,4 +14,6 @@ public interface CommentsDAO {
     public void update(Comment comment);
 
     public void delete(long id);
+
+    public long readCountByBlogId(long blogId);
 }

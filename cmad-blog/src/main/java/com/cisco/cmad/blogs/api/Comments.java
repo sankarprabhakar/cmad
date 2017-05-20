@@ -12,4 +12,6 @@ public interface Comments {
     public Comment update(Comment comment) throws DataNotFoundException, EntityException;
 
     public void delete(long id) throws EntityException;
+
+    public long readCountByBlogId(long blogId) throws DataNotFoundException, EntityException;
 }

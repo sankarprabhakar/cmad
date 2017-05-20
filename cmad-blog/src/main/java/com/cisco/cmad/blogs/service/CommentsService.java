@@ -76,4 +76,10 @@ public class CommentsService implements Comments {
         return comments;
     }
 
+    @Override
+    public long readCountByBlogId(long blogId) throws DataNotFoundException, EntityException {
+        long count = dao.readCountByBlogId(blogId);
+        return count;
+    }
+
 }

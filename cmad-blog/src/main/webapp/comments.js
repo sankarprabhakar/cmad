@@ -58,9 +58,31 @@ $(document).ready(function() {
         hideCommentForm();
     })
 
+    function showOrHideEditControls(i) {
+        console.log("showOrHideEditControls " + i);
+        var signedInUser = getSignedInUser();
+        var cuserId = "#cuserId" + i;
+        var commentOwner = $(cuserId).val();
+
+        var editbtn = "#editComment" + i;
+        var savebtn = "#saveComment" + i;
+        if(signedInUser === commentOwner) {
+            $(editbtn).show();
+            $(savebtn).show();
+        }else {
+            $(editbtn).hide();
+            $(savebtn).hide();
+        }
+    }
+
     function registerForEVDEvents(i) {
         console.log("registerForEVDEvents " + i);
+        showOrHideEditControls(i);
+
+        var signedInUser = getSignedInUser();
         var editbtn = "#editComment" + i;
+        var savebtn = "#saveComment" + i;
+
         $(editbtn).click(function(e) {
             console.log(editbtn);
             var comment = "#commentId" + i;
@@ -70,14 +92,12 @@ $(document).ready(function() {
             //oadForm("editBlogForm", blogId);
         })
 
-        var savebtn = "#saveComment" + i;
         $(savebtn).click(function(e) {
             console.log(savebtn);
             var comment = "#commentId" + i;
             var commentId = $(comment).val();
             console.log(commentId);
 
-            var signedInUser = getSignedInUser();
             console.log(signedInUser);
             var blogId = getSelectedBlogId();
             var commentTextId = "#commentText" + i;
@@ -117,7 +137,6 @@ $(document).ready(function() {
             });
         })
     }
-
     function clearComments() {
         console.log("clearComments");
         var i = 0;
@@ -130,7 +149,7 @@ $(document).ready(function() {
     function fillComments(comments) {
         console.log("fillComments");
         clearComments();
-        $("#commentsCount").val(comments.length);
+        //$("#commentsCount").val(comments.length);
         var i = 0;
         $("#commentsList li").each(function() {
             console.log("comment item");
@@ -146,6 +165,7 @@ $(document).ready(function() {
         });
     }
 
+    // #AJAX POST
     function createComment(newComment, reqUrl, callback) {
         console.log("createComment");
         console.log(newComment);
@@ -167,10 +187,14 @@ $(document).ready(function() {
                 console.log(status);
                 callback(status, {});
             },
-            data : JSON.stringify(newComment)
+            data : JSON.stringify(newComment),
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
+            }
         })
     }
 
+    // #AJAX PUT
     function updateComment(updatedComment, reqUrl, callback) {
         console.log("updateComment");
         console.log(updatedComment);
@@ -192,10 +216,14 @@ $(document).ready(function() {
                 console.log(status);
                 callback(status, {});
             },
-            data : JSON.stringify(updatedComment)
+            data : JSON.stringify(updatedComment),
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
+            }
         })
     }
 
+    // #AJAX DELETE
     function deleteComment(commentId, reqUrl, callback) {
         console.log("deleteComment");
         console.log(commentId);
@@ -216,10 +244,14 @@ $(document).ready(function() {
                 console.log(err);
                 console.log(status);
                 callback(status, {});
+            },
+            headers: {
+                "Authorization": getFromBrowserCookie("Authorization")
             }
         })
     }
 
+    // #AJAX GET blog comments
     function getComments(reqUrl) {
         console.log("getComments");
         console.log(reqUrl);
@@ -230,19 +262,28 @@ $(document).ready(function() {
             success : function(comments, status, xhr) {
                 console.log(reqUrl + " success");
                 console.log(comments);
-                fillComments(comments);
+                var count = xhr.getResponseHeader('count');
+                refreshComments(comments, count);
             },
             error : function(xhr, status, err) {
                 console.log(reqUrl + " failure");
                 console.log(err);
                 console.log(status);
-                if(currPageNum > 0) {
-                    currCommentsPageNum--;
-                } else {
-                    fillComments([]);
-                }
+                refreshComments([], 0);
             }
         })
+    }
+
+    function refreshComments(comments, totalCount) {
+        console.log("refreshComments");
+        totalCount = (totalCount) ? +totalCount : comments.length;
+        $("#commentsCount").val(comments.length);
+        if(currCommentsPageNum > 0 && comments.length == 0) {
+            currCommentsPageNum--;
+            console.log("adjust current page : CP = " +  currCommentsPageNum);
+        } else {
+            fillComments(comments);
+        }
     }
 
     function readComments(blogId, pageNum, size) {
@@ -275,7 +316,6 @@ $(document).ready(function() {
     });
 
     $("#commentsNextPage").click(function(e) {
-        currCommentsPageNum++;
         console.log("blogLastPage");
 
         var blogId = getSelectedBlogId();
