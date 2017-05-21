@@ -146,6 +146,7 @@ $(document).ready(function() {
         console.log("readBlog");
         var reqUrl = "" + getBaseUrl() + "tecblog/blogs/"
                 + blogId;
+        console.log(reqUrl);
         $.ajax({
             url : reqUrl,
             type : "GET",
@@ -163,7 +164,7 @@ $(document).ready(function() {
                     console.log(err);
                     console.log(status);
                     setSelectedBlogId(undefined);
-                    callback(status)
+                    callback("error")
                     //loadForm();
                 }
             }
@@ -483,13 +484,14 @@ $(document).ready(function() {
                 readBlog(blogId, function(err, blog) {
                     if(!err) {
                         $("#homeForm").hide();
+                        $("#editBlogForm").hide();
+                        $("#newBlogForm").hide();
                         $("#viewBlogForm").trigger('reset');
                         $("#viewBlogForm").show();
                         setPageContext("#viewBlogForm");
                         fillViewBlogForm(blog);
-                        $("#editBlogForm").hide();
-                        $("#newBlogForm").hide();
                     } else {
+                        console.log("%% @# LOAD HOME PAGE")
                         loadHomePage();
                     }
                 });
