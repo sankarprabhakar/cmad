@@ -52,4 +52,6 @@
 
 # Class Diagram
 
-# ![Classes](/cmad-blog/src/main/docs/uml/class.png?raw=true "Class Diagram")
+# ![Classes](/ctecblog/cmad/tree/master/cmad-blog/src/main/docs/uml/class.png?raw=true)
+
+ (/ctecblog/cmad/tree/master/cmad-blog/src/main/docs/uml/class.png?raw=true)
