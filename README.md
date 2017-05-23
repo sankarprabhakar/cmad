@@ -52,6 +52,4 @@
 
 # Class Diagram
 
-# ![Classes](/ctecblog/cmad/tree/master/cmad-blog/src/main/docs/uml/class.png?raw=true)
-
- (/ctecblog/cmad/tree/master/cmad-blog/src/main/docs/uml/class.png?raw=true)
+![classes](https://cloud.githubusercontent.com/assets/4160178/26355278/a7853666-3fe5-11e7-9c21-00f5cbcd52cb.png)
