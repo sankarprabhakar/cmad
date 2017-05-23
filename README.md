@@ -1,5 +1,5 @@
 # Simple Blogging Site
-# Technologies used
+## Technologies used
 1. Java 1.8
 2. Java API for RESTful Web Services (JAX-RS) (2.x)
 3. Maven build system (3.x)
@@ -10,8 +10,8 @@
 8. JSON Web Token (JWT) for authentication & API protection
 
 
-# Features Supported
-# Blog-User Features 
+## Features Supported
+### Blog-User Features 
 1. Sign up
 2. Sign off (Profile delete)
 3. Sign in
@@ -20,7 +20,7 @@
 6. Admin view (List Users) (Protected by JWT)
 7. Profile delete (Sign off) also deletes all the user blogs, the related comments & user comments (Protected by JWT)
 
-# Blog Features
+### Blog Features
 1. Post a new blog (Protected by JWT)
 2. Update your existing blog (Protected by JWT)
 3. Search blogs by category 
@@ -32,24 +32,24 @@
 9. Pagination support
 
 
-# User-Comments on Blogs : Features
+### User-Comments on Blogs : Features
 1. Add a comment (Protected by JWT - TODO)
 2. Delete your comment (owner check supported) (Protected by JWT)
 3. Update your comment (owner check supported) (Protected by JWT)
 4. Pagination support
 
-# Common Features
+### Common Features
 1. Protection of APIs using JWT
 2. Logging support
 
-# Other UI Features
+### Other UI Features
 1. Integrated with Bootstrap for styling & Icons
 
-# Architecture
+## Architecture
 
 
-# Backend Design 
+## Backend Design 
 
-# Class Diagram
+### Class Diagram
 
 ![classes](https://cloud.githubusercontent.com/assets/4160178/26356555/0c41e226-3fea-11e7-98cc-b56bc4d953d6.png)
