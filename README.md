@@ -45,3 +45,11 @@
 # Other UI Features
 1. Integrated with Bootstrap for styling & Icons
 
+# Architecture
+
+
+# Backend Design 
+
+# Class Diagram
+
+# ![Classes](/cmad-blog/src/main/docs/uml/class.png?raw=true "Class Diagram")

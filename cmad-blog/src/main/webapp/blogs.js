@@ -144,8 +144,7 @@ $(document).ready(function() {
     // #AJAX GET
     function readBlog(blogId, callback) {
         console.log("readBlog");
-        var reqUrl = "" + getBaseUrl() + "tecblog/blogs/"
-                + blogId;
+        var reqUrl = "" + getBaseUrl() + "tecblog/blogs/" + blogId;
         console.log(reqUrl);
         $.ajax({
             url : reqUrl,
@@ -184,8 +183,9 @@ $(document).ready(function() {
             $("#vblogAuthName").val(
                     blog.author.firstName + " "
                             + blog.author.lastName);
-            $('#commentsFirstPage').trigger('click');
-        }, 500);
+            $("#viewBlogForm").show();
+            $("#commentsFirstPage").trigger("click");
+        }, 100);
         // setTimeout(function() {
         //     $('#commentsFirstPage').trigger('click');
         // }, 10);
@@ -204,7 +204,8 @@ $(document).ready(function() {
             $("#eblogAuthName").val(
                     blog.author.firstName + " "
                             + blog.author.lastName);
-        }, 500);
+            $("#editBlogForm").show();
+        }, 100);
     }
 
     function getBlogHtml(blogs, index) {
@@ -487,7 +488,7 @@ $(document).ready(function() {
                         $("#editBlogForm").hide();
                         $("#newBlogForm").hide();
                         $("#viewBlogForm").trigger('reset');
-                        $("#viewBlogForm").show();
+                        //$("#viewBlogForm").show();
                         setPageContext("#viewBlogForm");
                         fillViewBlogForm(blog);
                     } else {
@@ -503,7 +504,7 @@ $(document).ready(function() {
                         $("#viewBlogForm").hide();
                         $("#newBlogForm").hide();
                         $("#editBlogForm").trigger('reset');
-                        $("#editBlogForm").show();
+                        //$("#editBlogForm").show();
                         setPageContext("#editBlogForm");
                         fillEditBlogForm(blog);
                     } else {
@@ -565,6 +566,7 @@ $(document).ready(function() {
 
 
 function getSelectedCategory() {
+    selectedBlogCategory = $("#searchByCategory").val();
     selectedBlogCategory = (selectedBlogCategory) ? selectedBlogCategory : "";
     return selectedBlogCategory;
 }
