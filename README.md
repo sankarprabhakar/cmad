@@ -48,14 +48,28 @@
 ## Architecture
 
 ## REST API
+### USERS
+#### POST   :  /cmad-blog/tecblogs/users
+#### GET    :  /cmad-blog/tecblogs/users
+#### GET    :  /cmad-blog/tecblogs/users/{userId}
+#### PUT    :  /cmad-blog/tecblogs/users
+#### POST   :  /cmad-blog/tecblogs/users/{userId}
+#### DELETE :  /cmad-blog/tecblogs/users/{userId}
+
 ### BLOGS
-#### POST : /cmad-blog/tecblogs/blogs
-#### GET : /cmad-blog/tecblogs/blogs/{blogId}
-#### GET :  /cmad-blog/tecblogs/blogs/{blogId}/comments?[page=]
-#### GET :  /cmad-blog/tecblogs/blogs?[page=]&[category=]
-#### GET :  /cmad-blog/tecblogs/blogs/users/{userId}?[page=]
-#### PUT :  /cmad-blog/tecblogs/blogs
-#### DELETE : /cmad-blog/tecblogs/blogs/{blogId}
+#### POST   :  /cmad-blog/tecblogs/blogs
+#### GET    :  /cmad-blog/tecblogs/blogs/{blogId}
+#### GET    :  /cmad-blog/tecblogs/blogs/{blogId}/comments?[page=]
+#### GET    :  /cmad-blog/tecblogs/blogs?[page=]&[category=]
+#### GET    :  /cmad-blog/tecblogs/blogs/users/{userId}?[page=]
+#### PUT    :  /cmad-blog/tecblogs/blogs
+#### DELETE :  /cmad-blog/tecblogs/blogs/{blogId}
+
+### COMMENTS
+#### POST   :  /cmad-blog/tecblogs/comments
+#### GET    :  /cmad-blog/tecblogs/comments/{commentId}
+#### PUT    :  /cmad-blog/tecblogs/comments
+#### DELETE :  /cmad-blog/tecblogs/comments/{commentId}
 
 ## Backend Design 
 
