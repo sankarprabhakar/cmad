@@ -49,30 +49,13 @@
 
 ## REST API
 ### BLOGS
-POST   :  /cmad-blog/tecblogs/blogs
-GET    :  /cmad-blog/tecblogs/blogs/{blogId}
-GET    :  /cmad-blog/tecblogs/blogs/{blogId}/comments?[page=]
-GET    :  /cmad-blog/tecblogs/blogs?[page=]&[category=]
-GET    :  /cmad-blog/tecblogs/blogs/users/{userId}?[page=]
-PUT    :  /cmad-blog/tecblogs/blogs
-DELETE :
-
-    @PUT
-    @Path("/")
-    @JwtTokenExpected
-    public Response update(Blog blog) {
-        blogsService.update(blog);
-        blog = blogsService.read(blog.getBlogId());
-        return Response.ok().entity(blog).build();
-    }
-
-    @DELETE
-    @Path("/{blogId}")
-    @JwtTokenExpected
-    public Response delete(@PathParam("blogId") long blogId) {
-        blogsService.delete(blogId);
-        return Response.noContent().build();
-    }
+#### POST : /cmad-blog/tecblogs/blogs
+#### GET : /cmad-blog/tecblogs/blogs/{blogId}
+#### GET :  /cmad-blog/tecblogs/blogs/{blogId}/comments?[page=]
+#### GET :  /cmad-blog/tecblogs/blogs?[page=]&[category=]
+#### GET :  /cmad-blog/tecblogs/blogs/users/{userId}?[page=]
+#### PUT :  /cmad-blog/tecblogs/blogs
+#### DELETE : /cmad-blog/tecblogs/blogs/{blogId}
 
 ## Backend Design 
 
