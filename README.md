@@ -52,4 +52,4 @@
 
 # Class Diagram
 
-![classes](https://cloud.githubusercontent.com/assets/4160178/26355278/a7853666-3fe5-11e7-9c21-00f5cbcd52cb.png)
+![classes](https://cloud.githubusercontent.com/assets/4160178/26356555/0c41e226-3fea-11e7-98cc-b56bc4d953d6.png)
