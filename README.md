@@ -53,3 +53,19 @@
 ### Class Diagram
 
 ![classes](https://cloud.githubusercontent.com/assets/4160178/26356555/0c41e226-3fea-11e7-98cc-b56bc4d953d6.png)
+
+### Signup (Create User) Sequential Diagram
+
+![create-user](https://cloud.githubusercontent.com/assets/4160178/26357678/b20f5442-3fed-11e7-9a72-5cf4bb00aa97.png)
+
+### Signin (Login) - Sequential Diagram
+
+![login](https://cloud.githubusercontent.com/assets/4160178/26357770/fc4bbf78-3fed-11e7-8327-62f2585d44b8.png)
+
+### Create a BLOG - Sequential Diagram
+
+![request-handling](https://cloud.githubusercontent.com/assets/4160178/26357822/2a702114-3fee-11e7-8981-b1446fb39eb7.png)
+
+### Protecting API using JWT / Authorization - Sequential Diagram
+
+![request-validation](https://cloud.githubusercontent.com/assets/4160178/26357933/867da404-3fee-11e7-899d-8f86431225cd.png)
