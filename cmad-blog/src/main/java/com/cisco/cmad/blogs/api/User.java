@@ -30,21 +30,6 @@ public class User {
     @NotNull
     private String emailId;
 
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)mappedBy =
-    // "author",
-    // @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    // // @JoinColumn(name = "blogId")
-    // private List<Blog> blogs;
-    // @JsonBackReference
-    // @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", orphanRemoval
-    // = true)
-    // private List<Blog> blogs = new ArrayList<>();
-
-    // @OneToMany(cascade = CascadeType.ALL, mappedBy = "addedBy", orphanRemoval
-    // = true)
-    // private List<Comment> comments = new ArrayList<>();
-
     public User() {
         super();
     }

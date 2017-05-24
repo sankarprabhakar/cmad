@@ -2,10 +2,9 @@
 
 class Blog <<Entity>> {
  -long blogId <<@Id>>
- -String authorId <<ForiegnKey>>
+ -User author <<ForiegnKey>>
  -String blogText
  -String category
- -ArrayList<Comment> comments
  -Date lastUpdatedOn
  -String title
 }
@@ -22,13 +21,14 @@ class Comment <<Entity>> {
  -long commentId <<@Id>>
  -String commentText
  -Date lastUpdatedOn
- -String addedBy <<ForiegnKey>>;
- -long blogId <<ForiegnKey>>;
+ -User addedBy <<ForiegnKey>>;
+ -Blog blog <<ForiegnKey>>;
 }
 
 Interface Users {
  +create(User)
  +read(String)
+ +readAllUsers()
  +update(User)
  +delete(String)
  +authenticate(String, String)
@@ -37,8 +37,9 @@ Interface Users {
 Interface Blogs {
  +create(Blog)
  +read(long)
- +readByCategory(String)
- +readByUserId(String)
+ +readAllBlogs(int)
+ +readByCategory(String, int)
+ +readByUserId(String, int)
  +update(Blog)
  +delete(long)
 }
@@ -46,7 +47,8 @@ Interface Blogs {
 Interface Comments {
  +create(Comment)
  +read(long)
- +readByBlogId(long)
+ +readAllByBlogId(long, int)
+ +readCountByBlogId(long)
  +update(Comment)
  +delete(long)
 }
@@ -63,6 +65,7 @@ Class CommentsService implements Comments {
 Interface BlogsDAO {
  +create(Blog)
  +read(long)
+ +readAllBlogs(int)
  +readByCategory(String)
  +readByUserId(String)
  +update(Blog)
@@ -72,6 +75,7 @@ Interface BlogsDAO {
 Interface CommentsDAO {
  +create(Comment)
  +read(long)
+ +readAllByBlogId(long, int)
  +update(Comment)
  +delete(long)
 }
@@ -109,6 +113,7 @@ Class BlogsController <<Path>> {
  +create(Blog) <<@POST>>
  +read(long) <<@GET>>
  +read(UriInfo) <<@GET>>
+ +readAllComments(UriInfo) <<@GET>>
  +update(Blog) <<@PUT>>
  +delete(long) <<@DELETE>>
 }
@@ -130,6 +135,7 @@ CommentsController --> Comment
 Class UsersController <<Path>> {
  +create(User) <<@POST>>
  +read(long) <<@GET>>
+ +readAllUser() <<@GET>>
  +update(User) <<@PUT>>
  +delete(long) <<@DELETE>>
  +authenticateUser(String, String) <<@POST>>
@@ -152,7 +158,7 @@ Class DuplicateEntityException <<Exception>> extends EntityException {
 Class InvalidEntityException <<Exception>> extends EntityException {
 }
 
-Class SecurityException <<Exception>> extends RuntimeException {
+Class ResponseExceptionMapper implements ExceptionMapper {
 }
 
 ' AUTHENTICATION 
