@@ -46,6 +46,7 @@
 1. Integrated with Bootstrap for styling & Icons
 
 ## Architecture
+<img width="511" alt="arch_diagram" src="https://cloud.githubusercontent.com/assets/4160178/26417775/c21892b4-40d7-11e7-9a53-522b507e2f82.png">
 
 ## REST API
 ### USERS
