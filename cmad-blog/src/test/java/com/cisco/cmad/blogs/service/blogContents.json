@@ -173,6 +173,41 @@
 				"title":"Political Betting",
 				"content":"Editor Mike Smithson breaks down political news with informed, intelligent analysis backed by polls and stats. As the blog’s name suggests, the former journalist and ex-Liberal Democrat politician is also a betting expert, so this is the blog for the best odds on your next political bet. The quality of content is shown through the fact that Political Betting’s readership is formed largely of readers who visit for its analysis, rather than its odds."
 			}
+		],
+		"comments":[
+			{
+				"msg":"Comprehensive object introspection."
+			},
+			{
+				"msg":"Input history, persistent across sessions."
+			},
+			{
+				"msg":"Caching of output results during a session with automatically generated references."
+			},
+			{
+				"msg":"Extensible tab completion, with support by default for completion of python variables and keywords, filenames and function keywords."
+			},
+			{
+				"msg":"Extensible system of commands for controlling the environment and performing many tasks related to IPython or the operating system."
+			},
+			{
+				"msg":"A rich configuration system with easy switching between different setups (simpler than changing environment variables every time)."
+			},
+			{
+				"msg":"Session logging and reloading."
+			},
+			{
+				"msg":"Extensible syntax processing for special purpose situations."
+			},
+			{
+				"msg":"Access to the system shell with user-extensible alias system."
+			},
+			{
+				"msg":"Easily embeddable in other Python programs and GUIs."
+			},
+			{
+				"msg":"Integrated access to the pdb debugger and the Python profiler."
+			}
 		]
 	}
 ]

@@ -1,5 +1,7 @@
 package com.cisco.cmad.blogs.service;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,20 +21,32 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.cisco.cmad.blogs.api.Blog;
+import com.cisco.cmad.blogs.api.Comment;
+import com.cisco.cmad.blogs.api.DuplicateEntityException;
+import com.cisco.cmad.blogs.api.EntityException;
+import com.cisco.cmad.blogs.api.InvalidEntityException;
 import com.cisco.cmad.blogs.api.User;
 
 public class BlogInjector {
-	
+	// Instantiate UserService, BlogService, CommentService
     private static BlogsService blogService = BlogsService.getInstance();
     private static UsersService userService = UsersService.getInstance();
+    private static CommentsService commentService = CommentsService.getInstance();
+    
+    // Declare array list of objects 
     private List<User> users = new ArrayList<User>();
+    private List<Blog> blogs = new ArrayList<Blog>();
+    private List<Comment> comments = new ArrayList<Comment>();
+    
+    // Set the path for input json file.
 //    final String filePath = "/Users/ssuansia/CISCO_PROJECT/temp/blogContents.json";
     final String filePath = "/Users/ssuansia/SOUMYA_PROJECTS/CMAD-4/github_cmad4/cmad/cmad-blog/src/test/java/com/cisco/cmad/blogs/service/blogContents.json";
-    private List<Blog> blogs = new ArrayList<Blog>();;
     
-
+    
+    // Set logger 
     private Logger logger = Logger.getLogger(getClass().getName());
-
+    
+    // create user [This is helpfull for import]
     static void createUser(String userId, String email, String firstName, String LastName, String passWord){
 
         User user = new User();
@@ -41,10 +55,12 @@ public class BlogInjector {
         userService.create(user);
     }
 
+    // fetch all the user list through service
     static List<User> fetchUser (){
     	return userService.readAllUsers();
     }
     
+    // delete user
     void deleteUser() {
     	for (int i = 0; i < users.size(); i++ ){
     		User user = users.get(i);
@@ -53,6 +69,7 @@ public class BlogInjector {
     	}
     }
 
+    // create a blog
     static void createBlog(User blogger, String category, String title, String content ) {
         try {
             Blog blog = new Blog(); /// setBlogId(1)
@@ -64,10 +81,12 @@ public class BlogInjector {
         }
     }
     
+    // delete a blog
     private void deleteBlog(long blogId) {
         blogService.delete(blogId);
     }
     
+    // read and parse the json file
     private void readJson()  {
         JSONArray blogDetails = null;
         JSONParser parser = new JSONParser();
@@ -106,33 +125,94 @@ public class BlogInjector {
 	    		 tb.setTitle((String) obj.get("title"));
 	    		 tb.setBlogText((String) obj.get("content"));
 	    		 
-	    		 // stack users
+	    		 // stack blogs
 	    		 blogs.add(tb); 
 	    	 }
+	    	 
+	    	 array  = (JSONArray)((JSONObject) blogDetails.get(c)).get("comments");
+	        	System.out.println("***********");
+		    	 for(int c1 = 0; c1 < array.size() ; c1++){
+		    		 JSONObject obj = (JSONObject)array.get(c1);
+		    		 Comment tc = new Comment();
+		    		 
+		    		 tc.setCommentText((String) obj.get("msg"));
+		    		 
+		    		 // stack comments
+		    		 comments.add(tc); 
+		    	 }
         }
     }
     
+    // create comment
+    void createCommentToBlog(User blogger, Blog blogPost, String commentMsg) {
+        try {
+            // create comment object
+            Comment comment = new Comment();
+            // set comment properties
+            comment.setAddedBy(blogger);
+            comment.setBlog(blogPost);
+            comment.setCommentText(commentMsg);
+            // call comment create service
+            commentService.create(comment);
+
+        } catch (InvalidEntityException iee) {
+            fail();
+        } catch (DuplicateEntityException dee) {
+            fail();
+        } catch (EntityException ee) {
+            fail();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    // Main function
 	public static void main(String[] args) {
-		int NUM_OF_USER, NUM_OF_BLOG , USER_NUMBER;
+		int NUM_OF_USER, NUM_OF_BLOG , NUM_OF_COMMENTS ;
 		
 		BlogInjector bobj = new BlogInjector();
 		bobj.readJson();
 
+		// get total count of each element
 		NUM_OF_USER = bobj.users.size();
 		NUM_OF_BLOG = bobj.blogs.size();
+		NUM_OF_COMMENTS = bobj.comments.size();
 		
+		// create multiple users
 		for (int c = 0; c < NUM_OF_USER ; c++){
 			User usr = bobj.users.get(c);
 			bobj.createUser(usr.getUserId(), usr.getEmailId(), usr.getFirstName(), usr.getLastName(), usr.getPassword());
 		}
 		
+		// reall all the users
 		List<User> usersList = bobj.fetchUser();
 		
+		// create multiple blogs
 		for (int c = 0; c < NUM_OF_BLOG; c++){
 			Blog blog = bobj.blogs.get(c);
 			blog.setAuthor(usersList.get(c / NUM_OF_USER));
 			System.out.println(usersList.get(c / NUM_OF_USER).getFirstName());
 			bobj.blogService.create(blog);
+		}
+		
+		// create multiple comments
+		for (int c = 0; c < NUM_OF_BLOG; c++){ 		// loop through blogs
+			Blog blog = bobj.blogs.get(c);
+			// run through comments loop
+			int c1 = 0;
+			while (c1 < (NUM_OF_BLOG % NUM_OF_COMMENTS)){
+				Comment comment = bobj.comments.get(c1);
+				comment.setBlog(blog);
+				
+				// select user index
+				comment.setAddedBy(usersList.get(c1 % NUM_OF_USER));	
+				
+				// post a comment
+				bobj.commentService.create(comment);
+				// increment counter for comment
+				c1++;
+			}
 		}
 	}
 
