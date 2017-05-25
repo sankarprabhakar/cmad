@@ -3,6 +3,7 @@ package com.cisco.cmad.blogs.api;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +42,7 @@ public class Blog {
     @NotNull
     private Date lastUpdatedOn;
 
+    @Column(length = 2048)
     private String blogText;
 
     private String category;
