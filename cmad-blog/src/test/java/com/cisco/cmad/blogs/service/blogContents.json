@@ -1,213 +1,213 @@
 [
-	{
-		"bloggers":[
-			{
-				"userId":"sachin",
-				"email":"sachin.tendulkar@techblog.com",
-				"firstName":"Sachin",
-				"lastName":"Tendulkar",
-				"passwd":"abc123"
-			},
-			{
-				"userId":"mahi",
-				"email":"mahendersingh.dhoni@techblog.com",
-				"firstName":"Mahender",
-				"lastName":"Dhoni",
-				"passwd":"abc123"
-			},
-			{
-				"userId":"vk",
-				"email":"viratkholi@techblog.com",
-				"firstName":"Virat",
-				"lastName":"Kholi",
-				"passwd":"abc123"
-			},
-			{
-				"userId":"sirjadeja",
-				"email":"rabindra.jadeja@techblog.com",
-				"firstName":"Rabindra",
-				"lastName":"Jadeja",
-				"passwd":"abc123"
-			},
-			{
-				"userId":"ashwini",
-				"email":"rashwini@techblog.com",
-				"firstName":"Ashwini",
-				"lastName":"R",
-				"passwd":"abc123"
-			}
-		],
-		"blogs":[
-			{
-				"category": "food",
-				"title":"Naturally Ella",
-				"content":"After her father had a heart attack, Erin Alderson (whose initials are ELLA) broke up with fast food and all processed meat. Her blog features seasonal vegetarian recipes that are pantry-inspired. Despite ditching Big Macs, Alderson doesn't believe in being obsessive or counting calories (her philosophy is simply to exercise and eat well). Given the results—beautifully photographed whole foods we want to gobble up immediately (curried vegetarian meatballs, we're looking at you!)—it's easy to see why her approach works."
-			},
-			{
-				"category": "food",
-				"title":"Minimalist Baker",
-				"content":"Few things are more disappointing than finding what seems like the perfect recipe only to click and learn that it has more than 20 ingredients, several of which you've never heard of. True to its name, Minimalist Baker keeps things simple by sticking to 10 ingredients or less and limiting cook time to 30 minutes tops. Bonus: The recipes are anything but boring! From General Tso's tofu stir fry (pictured) to spicy buffalo chickpea wraps to toasted coconut pancakes, the culinary duo (John and Kate) really know how to pack tons of flavor into simple and oh-so-delicious dishes."
-			},
-			{
-				"category": "food",
-				"title":"Food Heaven Made Easy",
-				"content":"Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled. The blog is actually a compilation of recipes, cooking videos, and nutrition tips. Adorable and extremely well-dressed dietitians Wendy Lopez and Jessica Jones appear in every video, teaching home cooks (no matter how strapped for time or inexperienced in the kitchen) that making healthy recipes from scratch is possible."
-			},
-			{
-				"category": "food",
-				"title":"101 Cookbooks",
-				"content":"Back in 2003, Heidi Swanson launched 101 Cookbooks with the goal of cooking through her monstrous collection of recipe books. More than 10 years later, the blog (which we want to live in, it's so gorgeous) focuses on natural, whole foods and Heidi's travels. Naturally it has won multiple awards, been featured in countless publications, and even turned into two bestselling cookbooks. Her latest, Near & Far: Recipes Inspired by Home and Travel, came out in late 2015."
-			},
-			{
-				"category": "food",
-				"title":"Green Kitchen Stories",
-				"content":"The globe-trotting family behind Green Kitchen Stories is hardly stuck on one type of cuisine. David and Luise met while studying in Rome before moving to Stockholm to start a family. They document their vegetarian cooking experiments on the blog, and they believe variety is the most important thing in a diet. Don't forget to follow them both on Instagram; David's and Luise's accounts will inspire you to live and eat better every day."
-			},
-			{
-				"category": "food",
-				"title":"My New Roots",
-				"content":"A self-taught cook, Sarah Britton started blogging in 2007 to share her knowledge of holistic nutrition. (She attended the Institute of Holistic Nutrition in Toronto.) She's passionate about whole and vegan food—and creates mouthwatering recipes that prove it. You'll find everything from chunky chocolate buckwheat granola to sweet potato noodle soup (pictured). We love that you can also pick recipes by season."
-			},
-			{
-				"category": "food",
-				"title":"Golubka Kitchen",
-				"content":"Anya Kassoff was born and raised in Russia but now calls Florida home. She believes that the healthiest food is also the best-tasting food. Ant it doesn't hurt that her recipes, which are shot by her oldest daughter, are stunning. You'll find everything from a simmered squash soba bowl (pictured) to more indulgent dishes, like this rum and raisin bundt, which was inspired by a craving for her childhood favorite Russian rum babka."
-			},
-			{
-				"category": "food",
-				"title":"The Full Helping",
-				"content":"In 2015, Gena Hamshaw changed the name of her blog from Choosing Raw to The Full Helping. Now she posts recipes that are less extreme, although she is still inspired by her raw food background. Check out this gluten-free plum and blackberry crisp (pictured) or her totally addictive creamy cashew carrot dressing and quinoa bowl. As a certified nutritionist, Hamshaw brings lots of nutritional wisdom to the kitchen. She is also candid about being in recovery from anorexia and orthorexia and uses her site to encourage others to heal their broken relationship with food (often through plant-based diets)."
-			},
-			{
-				"category": "food",
-				"title":"Deliciously Ella",
-				"content":"All kinds of mouthwatering, plant-based dishes (including chickpea, quinoa, and turmeric curry; coconut and raspberry mousse; and sage and apricot nut roast with cranberry sauce) are turned out in Ella Woodward's sunny U.K. kitchen. But not everything here is sunbeams and smoothies: This blog is the result of the author's struggle with postural tachycardia syndrome, a rare and devastating disease that prompted her to revamp her diet and ditch processed foods."
-			},
-			{
-				"category": "food",
-				"title":"Running on Real Food",
-				"content":"Raw almond chocolate chip cookies, pumpkin spice latte granola, vegan tofu and cashew fried rice—workout fuel has never looked so good. Written by an avid triathlete and certified trainer, Running on Real Food covers nutritionally dense foods and fitness in a relatable way. Best of all, the author's healthy-eating philosophy is an open door: There's no right or wrong way to eat healthy... We're all different with different nutritional requirements; however we all need to eat whole, nutritious foods. Start there.We couldn't have said it better ourselves."
-			},
-			{
-				"category": "food",
-				"title":"Sweet Potato Soul",
-				"content":"The name says it all: This blog is all about real food prepared with heart and soul. Vegan chef Jenné Claiborne's recipes look so indulgent and appetizing, we believe her when she calls one cookie recipe life-changing. Recipes aside, Claiborne does an amazing job detailing all the ways her revamped diet has improved her life—from better digestion to thicker, healthier hair—carrying the banner forward for plant-powered peeps."
-			},
-			{
-				"category": "food",
-				"title":"Oh She Glows",
-				"content":"Blogger Angela Liddon reclaimed her health by creating vegan recipes that are free of gluten and soy. But her creations also had to appeal to her husband, who, at the time, was a devout fast-food lover that drank pop like water. Her efforts—recipes like smoky butternut squash sauce with pasta and greens; vegan Caesar salad; and sun-dried tomato, mushroom, and spinach tofu quiche—not only swayed her sig O, but a massive following of readers."
-			},
-			{
-				"category": "sports",
-				"title":"Captain’s Log, Durham 1999 Part 1",
-				"content":"Today I’d like to introduce a new series we hope to feature regularly on TFT. And you’ll be pleased to know that it has nothing to do with Jos Buttler and his towel. It’s a series for everyone who had a misspent youth playing cricket video games. And if you didn’t…"
-			},
-			{
-				"category": "sports",
-				"title":"Back To The Future? A Plan For Domestic 50 Over Cricket",
-				"content":"In the ECB’s brave new world there is very little to please the poor, beleaguered, run of the mill cricket supporter. The county championship is being ever more marginalised, the calendar is re-shuffled almost every year, and the ECB is intent on wooing a completely new audience. Current supporters are…"
-			},
-			{
-				"category": "sports",
-				"title":"TFT Talks To Athers, Beefy, Nasser, and Bumble",
-				"content":"I enjoy a good chinwag. I enjoy it even more when it’s with four guys I idolised as a kid. It has always been an ambition of mine to chew the cricketing fat with Athers and Co – perhaps over a couple of beers in the pub – so when…"
-			},
-			{
-				"category": "sports",
-				"title":"40 Not Out … And That’s Just The Waistline",
-				"content":"I turn 40 this week. Don’t worry, this isn’t a Brian Johnston style appeal for cake. I won’t suddenly be sending out “thank yous” to Mrs. Cholmondeley in Upper Piddle for delivering a rather nice chocolate sponge with strawberries on top. But cake or no cake, these type of milestones…"
-			},
-			{
-				"category": "sports",
-				"title":"A Knockout Idea",
-				"content":"What are cricket blogs for other than to relay drunken conversations you’ve had in the pub? That’s the joy of editing your own site. You can take a half serious conversation (which originally stemmed from a discussion of the Joshua versus Klitschko fight), turn it into a proposition, and then…"
-			},
-			{
-				"category": "sports",
-				"title":"City T20 – The Name Calling Has Started",
-				"content":"I don’t know what is happening in other counties but in Lancashire the in-fighting has erupted. Not about the fact that the club politbureau took a decision to join the T20 circus without consulting members – but what the new team will be called. The consensus outside Manchester appears to be that many will not follow a…"
-			},
-			{
-				"category": "sports",
-				"title":"Let’s Talk Turkey",
-				"content":"So what’s been in the news over the last couple of days? Although there hasn’t been too much on-field action to discuss, there have been two huge off-field developments – one very good news and the second, well, let’s just say it’s good news if you’re a huge admirer of Tom Harrison and…"
-			},
-			{
-				"category": "sports",
-				"title":"TFT Talks To Mark Butcher",
-				"content":"Back in November 1998, a young Englishman fresh out of uni left these shores to travel around Australia. Obviously it was a complete coincidence that the Ashes was on. On the third day of the first test in Brisbane, he saw another young(ish) Englishman flay McGrath, Fleming, Kasprowicz and MacGill to all corners of the…"
-			},
-			{
-				"category": "sports",
-				"title":"The Ben Stokes Supremacy",
-				"content":"He might not have the martial arts skills of Jason Bourne – not to my knowledge anyway – but England’s premier all rounder is certainly a wanted man right now. He’s dangerous. He’s gifted. He’s angry. And nothing can stand in his way … except for locker doors of course.…"
-			},
-			{
-				"category": "sports",
-				"title":"Glorious summer",
-				"content":"Some things can not be overhyped. A few events live up to every word of hyperbole. And occasionally our memories do not deceive us – the reality was every bit as good as our recollection. The 2005 Ashes, which began ten years ago this month, were one such passage of time.…"
-			},
-			{
-				"category": "politics",
-				"title":"AAP – a series of debacles – recovery ?",
-				"content":"There is a sense of mystery and intrigue regarding the fortunes of AAP. After its first government resigned, there was a sense of distrust about the reasons for the resignation, and the other parties jumped on that one. However, the second election in Delhi after that (which should have been a cakealk for the BJP given its immense wins in the Lok Sabha polls in Delhi and nationally) was an election in which the AAP won an immense victory (winning more than 50% of the vote and winning 67 of the seats up for grabs is an immense victory). However, soon after the second innings of the AAP in Delhi, there was an immense shock. The party had 3 main people at the helm – Arvind Kejriwal, Yogendra Yadav and Prashant Bhushan. Soon, there was news that there was an internal battle going on within the party and that there was not likely to be a reconciliation and resettlement. And so both Yadav and Bhushan were kicked out of the party (along with a couple others) and incidentally also losing the support of 2 out of the 4 MP’s that the party had from Punjab. This was a factor that provided a continuing ground for resentment at the treatment of the duo, and talk of a coterie around Kejriwal and leader kind of culture."
-			},
-			{
-				"category": "politics",
-				"title":"Uttar Pradesh and the BJP effort – the Dalit vote",
-				"content":"The state of Uttar Pradesh is key to the BJP and its long term political dominance of the country. As of now, even more than 2 years into the term of Narendra Modi and the BJP, people are satisfied with their performance; not enthusiastic, not ecstatic, but satisified. And the BJP would be fine with the electorate remaining satisfied. In the next elections to the country in 2019, they need people to feel that the Government worked and tried to make their lives better; even if they are not able to see a major change in their lives, as long as they feel that the people at the top are not corrupt, are trying hard and seemingly devoted to the job of Government, they will vote for the Government in enough numbers that the BJP will retain its Government (after all, it itself got only 31% of the vote, but that is more than adequate to defeat its rivals convincingly and especially when the Congress still remains down in the dumps). Back to UP."
-			},
-			{
-				"category": "politics",
-				"title":"The violence of the cow protection vigilantes, and government responsibility",
-				"content":"For some months now, there have been reports and videos of cow vigilatism coming in from the Hindi heartland, on the borders of Delhi and Haryana, and other places in Haryana and Uttar Pradesh. It was quite clear that these vigilantes were not an insignificant number, and it was equally clear that what they were doing was outside the scope of the law. No law gives the right to intercept vehicles or other people unless you are a law enforcer (police or similar agency). The police should be the first one to object to any private citizens taking the law into their own hands, but in this case, the police did not take any action. Now, it is not an unfair proposition that this was because of political influences, and it is only the BJP (and the parent organization, the RSS) which is encouraging this tactic, of promoting the cow as a symbol of Hindu and national pride, the mother animal for the entire country. This came dramatically to the forefront during the attack in Dadri, where mere suspicion of the consumption of cow meat caused the death of a Muslim man. This attack horrified large sections of the country, but the local BJP leaders were not at all defensive. They rose to the defense of those people charged with the death, and there were politicians from to place who claimed that the cow was the holy mother, and anybody taking action against the cow would be threatened."
-			},
-			{
-				"category": "politics",
-				"title":"Guido Fawkes",
-				"content":"Paul Staines, otherwise known as Guido Fawkes, maintains the top place in this year’s ranking. The aptly named Guido Fawkes uncovers the ‘’parliamentary plots, rumours and conspiracy’’ that politicians would rather you not know about. Having started off, not as a journalist or politico, but an international gaming champion and acid-house night organiser, Staines is not your typical political blogger. His aim – to uncover the hypocrisy which he believes is endemic in Westminster – has made him one of the most feared men in politics."
-			},
-			{
-				"category": "politics",
-				"title":"Political Betting",
-				"content":"Editor Mike Smithson breaks down political news with informed, intelligent analysis backed by polls and stats. As the blog’s name suggests, the former journalist and ex-Liberal Democrat politician is also a betting expert, so this is the blog for the best odds on your next political bet. The quality of content is shown through the fact that Political Betting’s readership is formed largely of readers who visit for its analysis, rather than its odds."
-			}
-		],
-		"comments":[
-			{
-				"msg":"Comprehensive object introspection."
-			},
-			{
-				"msg":"Input history, persistent across sessions."
-			},
-			{
-				"msg":"Caching of output results during a session with automatically generated references."
-			},
-			{
-				"msg":"Extensible tab completion, with support by default for completion of python variables and keywords, filenames and function keywords."
-			},
-			{
-				"msg":"Extensible system of commands for controlling the environment and performing many tasks related to IPython or the operating system."
-			},
-			{
-				"msg":"A rich configuration system with easy switching between different setups (simpler than changing environment variables every time)."
-			},
-			{
-				"msg":"Session logging and reloading."
-			},
-			{
-				"msg":"Extensible syntax processing for special purpose situations."
-			},
-			{
-				"msg":"Access to the system shell with user-extensible alias system."
-			},
-			{
-				"msg":"Easily embeddable in other Python programs and GUIs."
-			},
-			{
-				"msg":"Integrated access to the pdb debugger and the Python profiler."
-			}
-		]
-	}
+    {
+        "bloggers":[
+            {
+                "userId":"harsha",
+                "email":"harsha.n@techblog.com",
+                "firstName":"Harsha",
+                "lastName":"Nanjundaiah",
+                "passwd":"hn123"
+            },
+            {
+                "userId":"soumya",
+                "email":"soumya.s@techblog.com",
+                "firstName":"Soumya",
+                "lastName":"Sounsia",
+                "passwd":"ss123"
+            },
+            {
+                "userId":"admin",
+                "email":"admin@techblog.com",
+                "firstName":"admin",
+                "lastName":"",
+                "passwd":"a123"
+            },
+            {
+                "userId":"sirjadeja",
+                "email":"rabindra.jadeja@techblog.com",
+                "firstName":"Rabindra",
+                "lastName":"Jadeja",
+                "passwd":"rj123"
+            },
+            {
+                "userId":"ashwini",
+                "email":"rashwini@techblog.com",
+                "firstName":"Ashwini",
+                "lastName":"R",
+                "passwd":"ar123"
+            }
+        ],
+        "blogs":[
+            {
+                "category": "food",
+                "title":"Naturally Ella",
+                "content":"After her father had a heart attack, Erin Alderson (whose initials are ELLA) broke up with fast food and all processed meat. Her blog features seasonal vegetarian recipes that are pantry-inspired. Despite ditching Big Macs, Alderson doesn't believe in being obsessive or counting calories (her philosophy is simply to exercise and eat well). Given the results—beautifully photographed whole foods we want to gobble up immediately (curried vegetarian meatballs, we're looking at you!)—it's easy to see why her approach works."
+            },
+            {
+                "category": "food",
+                "title":"Minimalist Baker",
+                "content":"Few things are more disappointing than finding what seems like the perfect recipe only to click and learn that it has more than 20 ingredients, several of which you've never heard of. True to its name, Minimalist Baker keeps things simple by sticking to 10 ingredients or less and limiting cook time to 30 minutes tops. Bonus: The recipes are anything but boring! From General Tso's tofu stir fry (pictured) to spicy buffalo chickpea wraps to toasted coconut pancakes, the culinary duo (John and Kate) really know how to pack tons of flavor into simple and oh-so-delicious dishes."
+            },
+            {
+                "category": "food",
+                "title":"Food Heaven Made Easy",
+                "content":"Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled. The blog is actually a compilation of recipes, cooking videos, and nutrition tips. Adorable and extremely well-dressed dietitians Wendy Lopez and Jessica Jones appear in every video, teaching home cooks (no matter how strapped for time or inexperienced in the kitchen) that making healthy recipes from scratch is possible."
+            },
+            {
+                "category": "food",
+                "title":"101 Cookbooks",
+                "content":"Back in 2003, Heidi Swanson launched 101 Cookbooks with the goal of cooking through her monstrous collection of recipe books. More than 10 years later, the blog (which we want to live in, it's so gorgeous) focuses on natural, whole foods and Heidi's travels. Naturally it has won multiple awards, been featured in countless publications, and even turned into two bestselling cookbooks. Her latest, Near & Far: Recipes Inspired by Home and Travel, came out in late 2015."
+            },
+            {
+                "category": "food",
+                "title":"Green Kitchen Stories",
+                "content":"The globe-trotting family behind Green Kitchen Stories is hardly stuck on one type of cuisine. David and Luise met while studying in Rome before moving to Stockholm to start a family. They document their vegetarian cooking experiments on the blog, and they believe variety is the most important thing in a diet. Don't forget to follow them both on Instagram; David's and Luise's accounts will inspire you to live and eat better every day."
+            },
+            {
+                "category": "food",
+                "title":"My New Roots",
+                "content":"A self-taught cook, Sarah Britton started blogging in 2007 to share her knowledge of holistic nutrition. (She attended the Institute of Holistic Nutrition in Toronto.) She's passionate about whole and vegan food—and creates mouthwatering recipes that prove it. You'll find everything from chunky chocolate buckwheat granola to sweet potato noodle soup (pictured). We love that you can also pick recipes by season."
+            },
+            {
+                "category": "food",
+                "title":"Golubka Kitchen",
+                "content":"Anya Kassoff was born and raised in Russia but now calls Florida home. She believes that the healthiest food is also the best-tasting food. Ant it doesn't hurt that her recipes, which are shot by her oldest daughter, are stunning. You'll find everything from a simmered squash soba bowl (pictured) to more indulgent dishes, like this rum and raisin bundt, which was inspired by a craving for her childhood favorite Russian rum babka."
+            },
+            {
+                "category": "food",
+                "title":"The Full Helping",
+                "content":"In 2015, Gena Hamshaw changed the name of her blog from Choosing Raw to The Full Helping. Now she posts recipes that are less extreme, although she is still inspired by her raw food background. Check out this gluten-free plum and blackberry crisp (pictured) or her totally addictive creamy cashew carrot dressing and quinoa bowl. As a certified nutritionist, Hamshaw brings lots of nutritional wisdom to the kitchen. She is also candid about being in recovery from anorexia and orthorexia and uses her site to encourage others to heal their broken relationship with food (often through plant-based diets)."
+            },
+            {
+                "category": "food",
+                "title":"Deliciously Ella",
+                "content":"All kinds of mouthwatering, plant-based dishes (including chickpea, quinoa, and turmeric curry; coconut and raspberry mousse; and sage and apricot nut roast with cranberry sauce) are turned out in Ella Woodward's sunny U.K. kitchen. But not everything here is sunbeams and smoothies: This blog is the result of the author's struggle with postural tachycardia syndrome, a rare and devastating disease that prompted her to revamp her diet and ditch processed foods."
+            },
+            {
+                "category": "food",
+                "title":"Running on Real Food",
+                "content":"Raw almond chocolate chip cookies, pumpkin spice latte granola, vegan tofu and cashew fried rice—workout fuel has never looked so good. Written by an avid triathlete and certified trainer, Running on Real Food covers nutritionally dense foods and fitness in a relatable way. Best of all, the author's healthy-eating philosophy is an open door: There's no right or wrong way to eat healthy... We're all different with different nutritional requirements; however we all need to eat whole, nutritious foods. Start there.We couldn't have said it better ourselves."
+            },
+            {
+                "category": "food",
+                "title":"Sweet Potato Soul",
+                "content":"The name says it all: This blog is all about real food prepared with heart and soul. Vegan chef Jenné Claiborne's recipes look so indulgent and appetizing, we believe her when she calls one cookie recipe life-changing. Recipes aside, Claiborne does an amazing job detailing all the ways her revamped diet has improved her life—from better digestion to thicker, healthier hair—carrying the banner forward for plant-powered peeps."
+            },
+            {
+                "category": "food",
+                "title":"Oh She Glows",
+                "content":"Blogger Angela Liddon reclaimed her health by creating vegan recipes that are free of gluten and soy. But her creations also had to appeal to her husband, who, at the time, was a devout fast-food lover that drank pop like water. Her efforts—recipes like smoky butternut squash sauce with pasta and greens; vegan Caesar salad; and sun-dried tomato, mushroom, and spinach tofu quiche—not only swayed her sig O, but a massive following of readers."
+            },
+            {
+                "category": "sports",
+                "title":"Captain’s Log, Durham 1999 Part 1",
+                "content":"Today I’d like to introduce a new series we hope to feature regularly on TFT. And you’ll be pleased to know that it has nothing to do with Jos Buttler and his towel. It’s a series for everyone who had a misspent youth playing cricket video games. And if you didn’t…"
+            },
+            {
+                "category": "sports",
+                "title":"Back To The Future? A Plan For Domestic 50 Over Cricket",
+                "content":"In the ECB’s brave new world there is very little to please the poor, beleaguered, run of the mill cricket supporter. The county championship is being ever more marginalised, the calendar is re-shuffled almost every year, and the ECB is intent on wooing a completely new audience. Current supporters are…"
+            },
+            {
+                "category": "sports",
+                "title":"TFT Talks To Athers, Beefy, Nasser, and Bumble",
+                "content":"I enjoy a good chinwag. I enjoy it even more when it’s with four guys I idolised as a kid. It has always been an ambition of mine to chew the cricketing fat with Athers and Co – perhaps over a couple of beers in the pub – so when…"
+            },
+            {
+                "category": "sports",
+                "title":"40 Not Out … And That’s Just The Waistline",
+                "content":"I turn 40 this week. Don’t worry, this isn’t a Brian Johnston style appeal for cake. I won’t suddenly be sending out “thank yous” to Mrs. Cholmondeley in Upper Piddle for delivering a rather nice chocolate sponge with strawberries on top. But cake or no cake, these type of milestones…"
+            },
+            {
+                "category": "sports",
+                "title":"A Knockout Idea",
+                "content":"What are cricket blogs for other than to relay drunken conversations you’ve had in the pub? That’s the joy of editing your own site. You can take a half serious conversation (which originally stemmed from a discussion of the Joshua versus Klitschko fight), turn it into a proposition, and then…"
+            },
+            {
+                "category": "sports",
+                "title":"City T20 – The Name Calling Has Started",
+                "content":"I don’t know what is happening in other counties but in Lancashire the in-fighting has erupted. Not about the fact that the club politbureau took a decision to join the T20 circus without consulting members – but what the new team will be called. The consensus outside Manchester appears to be that many will not follow a…"
+            },
+            {
+                "category": "sports",
+                "title":"Let’s Talk Turkey",
+                "content":"So what’s been in the news over the last couple of days? Although there hasn’t been too much on-field action to discuss, there have been two huge off-field developments – one very good news and the second, well, let’s just say it’s good news if you’re a huge admirer of Tom Harrison and…"
+            },
+            {
+                "category": "sports",
+                "title":"TFT Talks To Mark Butcher",
+                "content":"Back in November 1998, a young Englishman fresh out of uni left these shores to travel around Australia. Obviously it was a complete coincidence that the Ashes was on. On the third day of the first test in Brisbane, he saw another young(ish) Englishman flay McGrath, Fleming, Kasprowicz and MacGill to all corners of the…"
+            },
+            {
+                "category": "sports",
+                "title":"The Ben Stokes Supremacy",
+                "content":"He might not have the martial arts skills of Jason Bourne – not to my knowledge anyway – but England’s premier all rounder is certainly a wanted man right now. He’s dangerous. He’s gifted. He’s angry. And nothing can stand in his way … except for locker doors of course.…"
+            },
+            {
+                "category": "sports",
+                "title":"Glorious summer",
+                "content":"Some things can not be overhyped. A few events live up to every word of hyperbole. And occasionally our memories do not deceive us – the reality was every bit as good as our recollection. The 2005 Ashes, which began ten years ago this month, were one such passage of time.…"
+            },
+            {
+                "category": "politics",
+                "title":"AAP – a series of debacles – recovery ?",
+                "content":"There is a sense of mystery and intrigue regarding the fortunes of AAP. After its first government resigned, there was a sense of distrust about the reasons for the resignation, and the other parties jumped on that one. However, the second election in Delhi after that (which should have been a cakealk for the BJP given its immense wins in the Lok Sabha polls in Delhi and nationally) was an election in which the AAP won an immense victory (winning more than 50% of the vote and winning 67 of the seats up for grabs is an immense victory). However, soon after the second innings of the AAP in Delhi, there was an immense shock. The party had 3 main people at the helm – Arvind Kejriwal, Yogendra Yadav and Prashant Bhushan. Soon, there was news that there was an internal battle going on within the party and that there was not likely to be a reconciliation and resettlement. And so both Yadav and Bhushan were kicked out of the party (along with a couple others) and incidentally also losing the support of 2 out of the 4 MP’s that the party had from Punjab. This was a factor that provided a continuing ground for resentment at the treatment of the duo, and talk of a coterie around Kejriwal and leader kind of culture."
+            },
+            {
+                "category": "politics",
+                "title":"Uttar Pradesh and the BJP effort – the Dalit vote",
+                "content":"The state of Uttar Pradesh is key to the BJP and its long term political dominance of the country. As of now, even more than 2 years into the term of Narendra Modi and the BJP, people are satisfied with their performance; not enthusiastic, not ecstatic, but satisified. And the BJP would be fine with the electorate remaining satisfied. In the next elections to the country in 2019, they need people to feel that the Government worked and tried to make their lives better; even if they are not able to see a major change in their lives, as long as they feel that the people at the top are not corrupt, are trying hard and seemingly devoted to the job of Government, they will vote for the Government in enough numbers that the BJP will retain its Government (after all, it itself got only 31% of the vote, but that is more than adequate to defeat its rivals convincingly and especially when the Congress still remains down in the dumps). Back to UP."
+            },
+            {
+                "category": "politics",
+                "title":"The violence of the cow protection vigilantes, and government responsibility",
+                "content":"For some months now, there have been reports and videos of cow vigilatism coming in from the Hindi heartland, on the borders of Delhi and Haryana, and other places in Haryana and Uttar Pradesh. It was quite clear that these vigilantes were not an insignificant number, and it was equally clear that what they were doing was outside the scope of the law. No law gives the right to intercept vehicles or other people unless you are a law enforcer (police or similar agency). The police should be the first one to object to any private citizens taking the law into their own hands, but in this case, the police did not take any action. Now, it is not an unfair proposition that this was because of political influences, and it is only the BJP (and the parent organization, the RSS) which is encouraging this tactic, of promoting the cow as a symbol of Hindu and national pride, the mother animal for the entire country. This came dramatically to the forefront during the attack in Dadri, where mere suspicion of the consumption of cow meat caused the death of a Muslim man. This attack horrified large sections of the country, but the local BJP leaders were not at all defensive. They rose to the defense of those people charged with the death, and there were politicians from to place who claimed that the cow was the holy mother, and anybody taking action against the cow would be threatened."
+            },
+            {
+                "category": "politics",
+                "title":"Guido Fawkes",
+                "content":"Paul Staines, otherwise known as Guido Fawkes, maintains the top place in this year’s ranking. The aptly named Guido Fawkes uncovers the ‘’parliamentary plots, rumours and conspiracy’’ that politicians would rather you not know about. Having started off, not as a journalist or politico, but an international gaming champion and acid-house night organiser, Staines is not your typical political blogger. His aim – to uncover the hypocrisy which he believes is endemic in Westminster – has made him one of the most feared men in politics."
+            },
+            {
+                "category": "politics",
+                "title":"Political Betting",
+                "content":"Editor Mike Smithson breaks down political news with informed, intelligent analysis backed by polls and stats. As the blog’s name suggests, the former journalist and ex-Liberal Democrat politician is also a betting expert, so this is the blog for the best odds on your next political bet. The quality of content is shown through the fact that Political Betting’s readership is formed largely of readers who visit for its analysis, rather than its odds."
+            }
+        ],
+        "comments":[
+            {
+                "msg":"Comprehensive object introspection."
+            },
+            {
+                "msg":"Input history, persistent across sessions."
+            },
+            {
+                "msg":"Caching of output results during a session with automatically generated references."
+            },
+            {
+                "msg":"Extensible tab completion, with support by default for completion of python variables and keywords, filenames and function keywords."
+            },
+            {
+                "msg":"Extensible system of commands for controlling the environment and performing many tasks related to IPython or the operating system."
+            },
+            {
+                "msg":"A rich configuration system with easy switching between different setups (simpler than changing environment variables every time)."
+            },
+            {
+                "msg":"Session logging and reloading."
+            },
+            {
+                "msg":"Extensible syntax processing for special purpose situations."
+            },
+            {
+                "msg":"Access to the system shell with user-extensible alias system."
+            },
+            {
+                "msg":"Easily embeddable in other Python programs and GUIs."
+            },
+            {
+                "msg":"Integrated access to the pdb debugger and the Python profiler."
+            }
+        ]
+    }
 ]
