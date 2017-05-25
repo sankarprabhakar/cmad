@@ -1,35 +1,35 @@
 package com.cisco.cmad.blogs.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 //import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.cisco.cmad.blogs.api.Blog;
-import com.cisco.cmad.blogs.api.DuplicateEntityException;
-import com.cisco.cmad.blogs.api.EntityException;
-import com.cisco.cmad.blogs.api.InvalidEntityException;
-import com.cisco.cmad.blogs.api.User;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.Iterator;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.cisco.cmad.blogs.api.Blog;
+import com.cisco.cmad.blogs.api.User;
+
 public class BlogInjector {
 	
-    private static BlogsService blogService;
-    private static UsersService userService;
-    private List<User> users;
-    private List<Blog> blogs;
+    private static BlogsService blogService = BlogsService.getInstance();
+    private static UsersService userService = UsersService.getInstance();
+    private List<User> users = new ArrayList<User>();
+//    final String filePath = "/Users/ssuansia/CISCO_PROJECT/temp/blogContents.json";
+    final String filePath = "/Users/ssuansia/SOUMYA_PROJECTS/CMAD-4/github_cmad4/cmad/cmad-blog/src/test/java/com/cisco/cmad/blogs/service/blogContents.json";
+    private List<Blog> blogs = new ArrayList<Blog>();;
+    
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
@@ -42,9 +42,7 @@ public class BlogInjector {
     }
 
     static List<User> fetchUser (){
-    	
     	return userService.readAllUsers();
-    	
     }
     
     void deleteUser() {
@@ -70,84 +68,72 @@ public class BlogInjector {
         blogService.delete(blogId);
     }
     
-    @SuppressWarnings("unchecked")
-	void blogContentjsonParsor(){
-    	final String filePath = "blogContents.json";
-    	JSONArray values = null;
-    	
-    	Hashtable<String,Hashtable[]> finalMap = new Hashtable<String,Hashtable[]>();  
-    	
-		try {
-			// read the json file
-			FileReader reader = new FileReader(filePath);
-			
-			// set parser
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+    private void readJson()  {
+        JSONArray blogDetails = null;
+        JSONParser parser = new JSONParser();
+        try {
+            File file = new File(filePath);
+            FileReader reader = new FileReader(file);
+            blogDetails = (JSONArray) parser.parse(reader);
 
-			// read the users
-			values= (JSONArray) jsonObject.get("bloggers");
-			
-			// update users list
-			for(int i=0; i < values.size(); i++){
-				User tu = null;
-				hashMap = (Hashtable<String, String>) values.get(i);
-				
-				tu.setId(hashMap.get("userId"));
-				tu.setFirstName(hashMap.get("firstName"));
-				tu.setLastName(hashMap.get("lastName"));
-				tu.setEmailId(hashMap.get("email"));
-				tu.setPassword(hashMap.get("passwd"));
-				
-				users.set(i, tu);
-				
-			}
-			// read the blogs
-			values= (JSONArray) jsonObject.get("blogs");
-			// update blogs list
-			for(int i=0; i<values.size(); i++){
-				Blog tu = null;
-				hashMap = (Hashtable<String, String>) values.get(i);
+        } catch (ParseException | IOException e) {
+        	System.out.println("Exception :: " + e.getMessage());
+        } 
 
-				
-				
-			}
-		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} catch (ParseException ex) {
-			ex.printStackTrace();
-		} catch (NullPointerException ex) {
-			ex.printStackTrace();
-		}
-		return values;
-
+        for(int c = 0 ; c < blogDetails.size() ; c++){
+        	JSONArray array  = (JSONArray)((JSONObject) blogDetails.get(c)).get("bloggers");
+        	System.out.println("***********");
+	    	 for(int c1 = 0; c1 < array.size() ; c1++){
+	    		 JSONObject obj = (JSONObject)array.get(c1);
+	    		 User tu = new User();
+	    		 
+	    		 tu.setUserId((String)obj.get("userId"));
+	    		 tu.setFirstName((String)obj.get("firstName"));
+	    		 tu.setLastName((String)obj.get("lastName"));
+	    		 tu.setEmailId((String)obj.get("email"));
+	    		 tu.setPassword((String)obj.get("passwd"));
+	    		 // stack users
+	    		 users.add(tu); 
+	    	 }
+	    	 
+	    	array  = (JSONArray)((JSONObject) blogDetails.get(c)).get("blogs");
+        	System.out.println("***********");
+	    	 for(int c1 = 0; c1 < array.size() ; c1++){
+	    		 JSONObject obj = (JSONObject)array.get(c1);
+	    		 Blog tb = new Blog();
+	    		 
+	    		 tb.setCategory((String) obj.get("category"));
+	    		 tb.setTitle((String) obj.get("title"));
+	    		 tb.setBlogText((String) obj.get("content"));
+	    		 
+	    		 // stack users
+	    		 blogs.add(tb); 
+	    	 }
+        }
     }
     
 	public static void main(String[] args) {
-		int NUM_OF_USER = 5 ;
-		int NUM_OF_BLOG = 25;
-		int USER_NUMBER = 0;
-		List<User> users = fetchUser();
-		User user;
+		int NUM_OF_USER, NUM_OF_BLOG , USER_NUMBER;
 		
-		String category ;
-		String title ;
-		String content ;
-		
-		// create number of users
-		for (int i = 0; i < NUM_OF_USER; i++){
-			createUser(userId, email, firstName, LastName, passWord);
-		}
-		for (int i = 0; i < NUM_OF_BLOG; i++){
-			if (i % NUM_OF_USER == 0){
-				user = users.get(USER_NUMBER);
-				USER_NUMBER += 1;
-			}
-			createBlog(user, category, title, content);
-		}
+		BlogInjector bobj = new BlogInjector();
+		bobj.readJson();
 
+		NUM_OF_USER = bobj.users.size();
+		NUM_OF_BLOG = bobj.blogs.size();
+		
+		for (int c = 0; c < NUM_OF_USER ; c++){
+			User usr = bobj.users.get(c);
+			bobj.createUser(usr.getUserId(), usr.getEmailId(), usr.getFirstName(), usr.getLastName(), usr.getPassword());
+		}
+		
+		List<User> usersList = bobj.fetchUser();
+		
+		for (int c = 0; c < NUM_OF_BLOG; c++){
+			Blog blog = bobj.blogs.get(c);
+			blog.setAuthor(usersList.get(c / NUM_OF_USER));
+			System.out.println(usersList.get(c / NUM_OF_USER).getFirstName());
+			bobj.blogService.create(blog);
+		}
 	}
 
 }
